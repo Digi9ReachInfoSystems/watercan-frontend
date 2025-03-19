@@ -6,10 +6,10 @@ import {
     ProfileContainer, 
     ProfileIcon, 
     DropdownMenu 
-} from "./Header.styles";
+} from "./vendorHeader.styles";
 import { FaUserCircle } from "react-icons/fa"; // Importing profile icon
 
-const Header = ({ title }) => {
+const VendorHeader = ({ title }) => {
     const [adminUsername, setAdminUsername] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -25,7 +25,7 @@ const Header = ({ title }) => {
                 <HeaderTitle>{title}</HeaderTitle> {/* Use title prop directly */}
                 
                 <ProfileContainer ref={dropdownRef}>
-                    <span>Welcome, admin!</span>
+                    <span>Welcome, vendor!</span>
                     
                     <ProfileIcon >
                         <FaUserCircle size={24} />
@@ -42,4 +42,4 @@ const Header = ({ title }) => {
     );
 };
 
-export default Header;
+export default VendorHeader;

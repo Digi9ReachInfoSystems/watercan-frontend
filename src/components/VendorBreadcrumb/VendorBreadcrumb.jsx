@@ -1,9 +1,9 @@
 import React from "react";
 import { Breadcrumb } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import { AppBarWrap } from "./Breadcrumb.styles";
+import { AppBarWrap } from "./VendorBreadcrumb.styles";
 
-function BreadCrumb() {
+function VendorBreadcrumb() {
   const location = useLocation();
 
   // Function to generate breadcrumb items dynamically
@@ -48,4 +48,4 @@ function BreadCrumb() {
   );
 }
 
-export default BreadCrumb;
+export default VendorBreadcrumb;

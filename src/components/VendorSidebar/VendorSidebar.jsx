@@ -1,12 +1,12 @@
 import React from "react";
-import { SideBarwrapper, Logo } from "../Sidebar/Sidebar.styles";
+import { SideBarwrapper, Logo } from "./VendorSidebar.styles";
 import { NavLink } from "react-router-dom";
 import { FaUsers, FaLaptop, FaCopy, FaImage } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { MdDashboard } from "react-icons/md";
 import { IoHomeSharp } from "react-icons/io5";
 
-const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
+const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
     { id: 1, name: "Home", path: "/admin", icon: <IoHomeSharp /> },
     { id: 2, name: "Dashboard", path: "/admin/dashboard", icon: <MdDashboard /> },
@@ -50,4 +50,4 @@ const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   );
 };
 
-export default Sidebar;
+export default VendorSidebar;
