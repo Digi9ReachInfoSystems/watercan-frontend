@@ -8,6 +8,7 @@ import ApplicationForm from "./module/vendor/Applicationform/Applicationform";
 import Signup from "./pages/Signup/Signup";
 import VendorList from "./module/admin/Vendorlist/Vendorlist";
 import Login from "./pages/Login/Login";
+import AdminPayment from "./module/admin/Payment/AdminPayment";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
 
         {/* Vendor List Route */}
         <Route path="/admin/vendorlist" element={<VendorList />} />
+        <Route path="/admin/userpayment" element={<AdminPayment />} />
 
         </Route>
       </Routes>
