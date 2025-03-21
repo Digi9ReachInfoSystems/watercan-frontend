@@ -186,6 +186,7 @@ const ApplicationForm = () => {
                 placeholder="Enter price"
                 value={pair.price}
                 onChange={(e) => handleChange(e, index, "price")}
+                min="1"
                 required
               />
               <InputField
@@ -193,6 +194,7 @@ const ApplicationForm = () => {
                 placeholder="Enter capacity"
                 value={pair.capacity}
                 onChange={(e) => handleChange(e, index, "capacity")}
+                min="1"
                 required
               />
               <button type="button" onClick={() => handleRemoveField(index)}>
