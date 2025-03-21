@@ -17,53 +17,29 @@ export const Title = styled.h2`
     margin-bottom: 20px;
 `;
 
-export const FilterContainer = styled.div`
+export const ToggleContainer = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-bottom: 20px;
+    gap: 10px;
+`;
 
-    label {
-        margin-right: 10px;
-        font-size: 16px;
-        color: #333;
+export const ToggleButton = styled.button`
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: ${({ isActive }) => (isActive ? "#1890ff" : "#ddd")};
+    color: ${({ isActive }) => (isActive ? "#fff" : "#333")};
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: ${({ isActive }) => (isActive ? "#1678c2" : "#bbb")};
     }
 `;
 
-export const StyledTable = styled.div`
-    .ant-table {
-        background: #fff;
-        border-radius: 8px;
-    }
-
-    .ant-table-thead > tr > th {
-        background: #fff;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .ant-table-tbody > tr > td {
-        text-align: center;
-    }
-
-    a {
-        color: #1890ff;
-        font-weight: bold;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-`;
-
-export const ModalContent = styled.div`
-    p {
-        font-size: 16px;
-        margin: 8px 0;
-    }
-`;
-
-export const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: space-between;
+export const ContentContainer = styled.div`
     margin-top: 20px;
 `;

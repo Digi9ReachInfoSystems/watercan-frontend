@@ -9,6 +9,7 @@ import Signup from "./pages/Signup/Signup";
 import VendorList from "./module/admin/Vendorlist/Vendorlist";
 import Login from "./pages/Login/Login";
 import AdminPayment from "./module/admin/Payment/AdminPayment";
+import VendorPayment from "./module/admin/VendorPayment/VendorPayment";
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
 
         {/* Vendor List Route */}
         <Route path="/admin/vendorlist" element={<VendorList />} />
-        <Route path="/admin/userpayment" element={<AdminPayment />} />
+        <Route path="/admin/payment" element={<AdminPayment />} />
+        
 
         </Route>
       </Routes>
