@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { getApplication } from "../../../api/serviceapi";
 import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer } from "./VendorList.styles";
 
 const { Option } = Select;
 
 const VendorList = () => {
+    const BASE_URL = "http://localhost:5000/vendorapplication";
     const [vendors, setVendors] = useState([]);
     const [filteredVendors, setFilteredVendors] = useState([]);
     const [selectedVendor, setSelectedVendor] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [statusFilter, setStatusFilter] = useState("All");
 
+    // Fetch vendors from backend
     useEffect(() => {
-        const dummyData = [
-            { key: "1", name: "John Doe", email: "john@example.com", phoneNumber: "9876543210", address: "123 Main Street", city: "New York", state: "NY", pincode: "10001", deliveryStartTime: "8:00 AM", deliveryEndTime: "12:00 PM", deliverableCans: 10, status: "Pending" },
-            { key: "2", name: "Jane Smith", email: "jane@example.com", phoneNumber: "9876543211", address: "456 Elm Street", city: "Los Angeles", state: "CA", pincode: "90001", deliveryStartTime: "9:00 AM", deliveryEndTime: "1:00 PM", deliverableCans: 20, status: "Approved" },
-            { key: "3", name: "Michael Johnson", email: "michael@example.com", phoneNumber: "9876543212", address: "789 Pine Street", city: "Chicago", state: "IL", pincode: "60601", deliveryStartTime: "7:30 AM", deliveryEndTime: "11:30 AM", deliverableCans: 15, status: "Rejected" }
-        ];
-
-        setVendors(dummyData);
-        setFilteredVendors(dummyData);
+        const fetchVendors = async () => {
+            try {
+                const data = await getApplication(); 
+                console.log("Fetched Vendors:", data); 
+                setVendors(data);
+                setFilteredVendors(data);
+            } catch (error) {
+                console.error("Error fetching vendor applications:", error);
+            }
+        };
+        fetchVendors();
     }, []);
 
     useEffect(() => {
@@ -36,15 +43,37 @@ const VendorList = () => {
         setIsModalOpen(true);
     };
 
-    const handleApprove = () => {
-        setVendors(prevVendors => prevVendors.map(v => v.key === selectedVendor.key ? { ...v, status: "Approved" } : v));
-        setIsModalOpen(false);
+    const handleApprove = async () => {
+        if (!selectedVendor || !selectedVendor._id) {
+            console.error("Error: No selected vendor or missing _id");
+            return;
+        }
+        
+        console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
+    
+        try {
+            const response = await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" });
+        
+            setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("Error updating vendor status:", error.response?.data || error.message);
+        }
     };
-
-    const handleReject = () => {
-        setVendors(prevVendors => prevVendors.map(v => v.key === selectedVendor.key ? { ...v, status: "Rejected" } : v));
-        setIsModalOpen(false);
+    
+    
+    const handleReject = async () => {
+        if (!selectedVendor) return;
+    
+        try {
+            await axios.put(`${BASE_URL}/rejectVendorApplication/${selectedVendor._id}`, { status: "rejected" }); 
+            setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "rejected" } : v));
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("Error updating vendor status:", error);
+        }
     };
+    
 
     const handleStatusFilterChange = (value) => {
         setStatusFilter(value);
@@ -54,8 +83,8 @@ const VendorList = () => {
         { title: "Name", dataIndex: "name", key: "name" },
         { title: "Email", dataIndex: "email", key: "email" },
         { title: "Phone Number", dataIndex: "phoneNumber", key: "phoneNumber" },
-        { title: "Delivery Start Time", dataIndex: "deliveryStartTime", key: "deliveryStartTime" },
-        { title: "Delivery End Time", dataIndex: "deliveryEndTime", key: "deliveryEndTime" },
+        { title: "Delivery Start Time", dataIndex: "delivery_start_time", key: "delivery_start_time" },
+        { title: "Delivery End Time", dataIndex: "delivery_end_time", key: "delivery_end_time" },
         { 
             title: "Status", 
             dataIndex: "status", 
@@ -77,9 +106,9 @@ const VendorList = () => {
                 <span style={{ marginTop: "8px" }}>Filter by Status: </span>
                 <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
                     <Option value="All">All</Option>
-                    <Option value="Pending">Pending</Option>
-                    <Option value="Approved">Approved</Option>
-                    <Option value="Rejected">Rejected</Option>
+                    <Option value="pending">Pending</Option>
+                    <Option value="approved">Approved</Option>
+                    <Option value="rejected">Rejected</Option>
                 </Select>
             </FilterContainer>
 
@@ -88,7 +117,7 @@ const VendorList = () => {
                     columns={columns} 
                     dataSource={filteredVendors} 
                     pagination={{ pageSize: 5, showSizeChanger: false }} 
-                    rowKey="key" 
+                    rowKey="_id" 
                 />
             </StyledTable>
 
@@ -108,9 +137,9 @@ const VendorList = () => {
                         <p><strong>City:</strong> {selectedVendor.city}</p>
                         <p><strong>State:</strong> {selectedVendor.state}</p>
                         <p><strong>Pincode:</strong> {selectedVendor.pincode}</p>
-                        <p><strong>Delivery Start Time:</strong> {selectedVendor.deliveryStartTime}</p>
-                        <p><strong>Delivery End Time:</strong> {selectedVendor.deliveryEndTime}</p>
-                        <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverableCans}</p>
+                        <p><strong>Delivery Start Time:</strong> {selectedVendor.delivery_start_time}</p>
+                        <p><strong>Delivery End Time:</strong> {selectedVendor.delivery_end_time}</p>
+                        <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverable_water_cans.length}</p>
 
                         <ButtonGroup>
                             <Button type="primary" onClick={handleApprove}>Approve</Button>
