@@ -5,6 +5,9 @@ import AdminDashboard from "../src/module/admin/Dashboard/AdminDashboard";
 import Layout from "./layout/Layout";
 import VendorDashboard from "./module/vendor/Dashboard/VendorDashboard";
 import ApplicationForm from "./module/vendor/Applicationform/Applicationform";
+import Signup from "./pages/Signup/Signup";
+import VendorList from "./module/admin/Vendorlist/Vendorlist";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
 
         {/* Optional: 404 Route */}
         <Route path="vendor" element={<VendorDashboard />} />
+
+        {/* Vendor List Route */}
+        <Route path="/admin/vendorlist" element={<VendorList />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
