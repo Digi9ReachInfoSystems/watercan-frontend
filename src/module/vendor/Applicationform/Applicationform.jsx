@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
@@ -34,6 +35,7 @@ const ApplicationForm = () => {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -137,10 +139,12 @@ const ApplicationForm = () => {
       };
   
       const response = await createApplication(formattedData);
-      
+
       if (response.success) {
         toast.success("Application submitted successfully!");
         setFormData(initialFormState);
+    navigate("/registration-successfully");
+
       } else {
         toast.error(response.message || "Submission failed!");
       }
