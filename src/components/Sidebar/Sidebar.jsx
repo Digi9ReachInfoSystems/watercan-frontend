@@ -16,7 +16,7 @@ const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
     // { id: 5, name: "Copies", path: "/admin/copy", icon: <FaCopy /> },
     // { id: 6, name: "Frames", path: "/admin/frame", icon: <FaImage /> },
     { id: 7, name: "Orders", path: "/admin/Orders", icon: <FaHandHoldingWater /> },
-    { id: 8, name: "Payment", path: "/admin/userpayment", icon: <RiMoneyRupeeCircleFill /> },
+    { id: 8, name: "Payment", path: "/admin/payment", icon: <RiMoneyRupeeCircleFill /> },
     { id: 9, name: "Vendor", path: "/admin/vendorlist", icon: <FaUsers />  },
   ];
 
