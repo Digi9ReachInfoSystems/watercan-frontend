@@ -15,6 +15,13 @@ export const createApplication = async (applicationData) => {
   
     return response.json();
   };
+
+  export const getApplication = async () => {
+    const response = await axios.get(`${BASE_URL}/getAllApplications`);
+    return response.data;
+  };
+
+
   
   
 
