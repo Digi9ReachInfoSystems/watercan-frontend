@@ -10,60 +10,25 @@ const VendorList = () => {
     const [filteredVendors, setFilteredVendors] = useState([]);
     const [selectedVendor, setSelectedVendor] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [statusFilter, setStatusFilter] = useState("Pending");
+    const [statusFilter, setStatusFilter] = useState("All");
 
     useEffect(() => {
         const dummyData = [
-            { 
-                key: "1", 
-                name: "John Doe", 
-                email: "john@example.com", 
-                phoneNumber: "9876543210", 
-                address: "123 Main Street", 
-                city: "New York", 
-                state: "NY", 
-                pincode: "10001", 
-                deliveryStartTime: "8:00 AM", 
-                deliveryEndTime: "12:00 PM", 
-                deliverableCans: 10, 
-                status: "Pending" 
-            },
-            { 
-                key: "2", 
-                name: "Jane Smith", 
-                email: "jane@example.com", 
-                phoneNumber: "9876543211", 
-                address: "456 Elm Street", 
-                city: "Los Angeles", 
-                state: "CA", 
-                pincode: "90001", 
-                deliveryStartTime: "9:00 AM", 
-                deliveryEndTime: "1:00 PM", 
-                deliverableCans: 20, 
-                status: "Approved" 
-            },
-            { 
-                key: "3", 
-                name: "Michael Johnson", 
-                email: "michael@example.com", 
-                phoneNumber: "9876543212", 
-                address: "789 Pine Street", 
-                city: "Chicago", 
-                state: "IL", 
-                pincode: "60601", 
-                deliveryStartTime: "7:30 AM", 
-                deliveryEndTime: "11:30 AM", 
-                deliverableCans: 15, 
-                status: "Rejected" 
-            }
+            { key: "1", name: "John Doe", email: "john@example.com", phoneNumber: "9876543210", address: "123 Main Street", city: "New York", state: "NY", pincode: "10001", deliveryStartTime: "8:00 AM", deliveryEndTime: "12:00 PM", deliverableCans: 10, status: "Pending" },
+            { key: "2", name: "Jane Smith", email: "jane@example.com", phoneNumber: "9876543211", address: "456 Elm Street", city: "Los Angeles", state: "CA", pincode: "90001", deliveryStartTime: "9:00 AM", deliveryEndTime: "1:00 PM", deliverableCans: 20, status: "Approved" },
+            { key: "3", name: "Michael Johnson", email: "michael@example.com", phoneNumber: "9876543212", address: "789 Pine Street", city: "Chicago", state: "IL", pincode: "60601", deliveryStartTime: "7:30 AM", deliveryEndTime: "11:30 AM", deliverableCans: 15, status: "Rejected" }
         ];
 
         setVendors(dummyData);
-        setFilteredVendors(dummyData.filter(vendor => vendor.status === statusFilter));
+        setFilteredVendors(dummyData);
     }, []);
 
     useEffect(() => {
-        setFilteredVendors(vendors.filter(vendor => vendor.status === statusFilter));
+        if (statusFilter === "All") {
+            setFilteredVendors(vendors);
+        } else {
+            setFilteredVendors(vendors.filter(vendor => vendor.status === statusFilter));
+        }
     }, [statusFilter, vendors]);
 
     const handleStatusClick = (vendor) => {
@@ -110,7 +75,8 @@ const VendorList = () => {
             {/* Dropdown Filter */}
             <FilterContainer>
                 <span style={{ marginTop: "8px" }}>Filter by Status: </span>
-                <Select defaultValue="Pending" style={{ width: 150 }} onChange={handleStatusFilterChange}>
+                <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
+                    <Option value="All">All</Option>
                     <Option value="Pending">Pending</Option>
                     <Option value="Approved">Approved</Option>
                     <Option value="Rejected">Rejected</Option>
