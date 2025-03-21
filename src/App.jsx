@@ -17,6 +17,8 @@ function App() {
       <Routes>
       <Route path="/applicationform" element={<ApplicationForm />} />
 
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         {/* Layout wraps all child routes */}
         <Route path="/" element={<Layout />}>
           {/* Admin Dashboard Route */}
