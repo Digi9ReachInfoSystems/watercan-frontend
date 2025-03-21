@@ -6,14 +6,12 @@ import Layout from "./layout/Layout";
 import VendorDashboard from "./module/vendor/Dashboard/VendorDashboard";
 import Signup from "./pages/Signup/Signup";
 import VendorList from "./module/admin/Vendorlist/Vendorlist";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-      <Route path="/signup" element={<Signup />} />
-
         {/* Layout wraps all child routes */}
         <Route path="/" element={<Layout />}>
           {/* Admin Dashboard Route */}
