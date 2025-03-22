@@ -3,15 +3,35 @@ import {
   Container, FormWrapper, Title, Input, Button, CheckboxWrapper, CheckboxLabel, 
   ForgotPassword, StyledCheckbox, SignupText, SignupLink 
 } from "./Login.styles";
+import { auth } from "../../config/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { loginUser } from "../../api/userApi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     console.log("Logging in:", { email, password });
+  
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("User signed in:", user);
+  
+      // Pass Firebase UID instead of MongoDB _id
+      const userData = await loginUser(user.uid);  
+  
+      console.log("Fetched user data:", userData);
+    } catch (error) {
+      console.error("Firebase error:", error.message);
+    }
+  
+    setEmail("");
+    setPassword("");
   };
+  
 
   return (
     <Container>
