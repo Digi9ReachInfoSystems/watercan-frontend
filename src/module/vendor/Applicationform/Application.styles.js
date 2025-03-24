@@ -60,7 +60,6 @@ export const SubmitButton = styled.button`
 export const ErrorMessage = styled.p`
   color: red;
   font-size: 0.9rem;
-  margin-top: -5px;
 `;
 
 export const Message = styled.p`
