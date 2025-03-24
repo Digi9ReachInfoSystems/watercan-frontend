@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { getApplication } from "../../../api/serviceapi";
 import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer } from "./VendorList.styles";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { Option } = Select;
 
@@ -56,6 +58,7 @@ const VendorList = () => {
         
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
             setIsModalOpen(false);
+            toast.success("Vendor approved successfully!");
         } catch (error) {
             console.error("Error updating vendor status:", error.response?.data || error.message);
         }
@@ -69,6 +72,7 @@ const VendorList = () => {
             await axios.put(`${BASE_URL}/rejectVendorApplication/${selectedVendor._id}`, { status: "rejected" }); 
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "rejected" } : v));
             setIsModalOpen(false);
+            toast.error("Vendor rejected successfully!");
         } catch (error) {
             console.error("Error updating vendor status:", error);
         }
@@ -89,16 +93,24 @@ const VendorList = () => {
             title: "Status", 
             dataIndex: "status", 
             key: "status", 
-            render: (_, record) => (
-                <Link to="#" onClick={() => handleStatusClick(record)}>
-                    {record.status}
-                </Link>
-            ) 
+            render: (_, record) => {
+                let color = "";
+                if (record.status === "pending") color = "#FFA500"; // Soft Orange
+                if (record.status === "approved") color = "#198754"; // Deep Teal Green
+                if (record.status === "rejected") color = "#C82333"; // Muted Red
+    
+                return (
+                    <Link to="#" onClick={() => handleStatusClick(record)} style={{ color, fontWeight: "bold" }}>
+                        {record.status}
+                    </Link>
+                );
+            }
         }
     ];
-
+    
     return (
         <Container>
+             <ToastContainer />  {/* Added ToastContainer for showing notifications */}
             <Title>Vendor List</Title>
 
             {/* Dropdown Filter */}
@@ -141,10 +153,23 @@ const VendorList = () => {
                         <p><strong>Delivery End Time:</strong> {selectedVendor.delivery_end_time}</p>
                         <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverable_water_cans.length}</p>
 
+                        
                         <ButtonGroup>
-                            <Button type="primary" onClick={handleApprove}>Approve</Button>
-                            <Button type="danger" onClick={handleReject}>Reject</Button>
-                        </ButtonGroup>
+              <Button
+                type="primary"
+                onClick={handleApprove}
+                disabled={selectedVendor?.status === "approved"}
+              >
+                Approve
+              </Button>
+              <Button
+                type="primary"
+                onClick={handleReject}
+                disabled={selectedVendor?.status === "rejected"}
+              >
+                Reject
+              </Button>
+            </ButtonGroup>
                     </ModalContent>
                 )}
             </Modal>
