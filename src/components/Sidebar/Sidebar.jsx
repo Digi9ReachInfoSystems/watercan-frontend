@@ -10,7 +10,7 @@ import { FaHandHoldingWater } from "react-icons/fa";
 const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
     // { id: 1, name: "Home", path: "/admin", icon: <IoHomeSharp /> },
-    { id: 2, name: "Dashboard", path: "/admin/dashboard", icon: <MdDashboard /> },
+    { id: 2, name: "Dashboard", path: "/", icon: <MdDashboard /> },
     // { id: 3, name: "Users", path: "/admin/users", icon: <FaUsers /> },
     // { id: 4, name: "Devices", path: "/admin/devices", icon: <FaLaptop /> },
     // { id: 5, name: "Copies", path: "/admin/copy", icon: <FaCopy /> },
