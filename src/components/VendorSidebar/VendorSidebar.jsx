@@ -8,13 +8,13 @@ import { IoHomeSharp } from "react-icons/io5";
 
 const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
-    { id: 1, name: "Home", path: "/admin", icon: <IoHomeSharp /> },
-    { id: 2, name: "Dashboard", path: "/admin/dashboard", icon: <MdDashboard /> },
-    { id: 3, name: "Users", path: "/admin/users", icon: <FaUsers /> },
-    { id: 4, name: "Devices", path: "/admin/devices", icon: <FaLaptop /> },
-    { id: 5, name: "Copies", path: "/admin/copy", icon: <FaCopy /> },
-    { id: 6, name: "Frames", path: "/admin/frame", icon: <FaImage /> },
-    { id: 7, name: "Payment", path: "/admin/payment", icon: <RiMoneyRupeeCircleFill /> },
+    // { id: 1, name: "Home", path: "/admin", icon: <IoHomeSharp /> },
+    { id: 2, name: "Dashboard", path: "/vendor", icon: <MdDashboard /> },
+    // { id: 3, name: "Users", path: "/vendor/users", icon: <FaUsers /> },
+    // { id: 4, name: "Devices", path: "/vendor/devices", icon: <FaLaptop /> },
+    // { id: 5, name: "Copies", path: "/vendor/copy", icon: <FaCopy /> },
+    // { id: 6, name: "Frames", path: "/vendor/frame", icon: <FaImage /> },
+    // { id: 7, name: "Payment", path: "/vendor/payment", icon: <RiMoneyRupeeCircleFill /> },
   ];
 
   return (

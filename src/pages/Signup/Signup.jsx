@@ -18,6 +18,7 @@ import {
 } from "./Signup.styles";
 import { createUser } from "../../api/userApi";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -26,6 +27,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Validation function for each field
   const validateField = (field, value) => {
@@ -96,6 +98,12 @@ const Signup = () => {
 
       await createUser(userData);
       toast.success("Signup successful!");
+
+          // Navigate to Applicationform.jsx
+    setTimeout(() => {
+      navigate("/applicationform");
+    }, 3000); // Delayed to allow toast to be visible
+
     } catch (error) {
       console.error("Firebase error:", error.message);
       toast.error(error.message);
