@@ -12,6 +12,7 @@ import AdminPayment from "./module/admin/Payment/AdminPayment";
 import VendorPayment from "./module/admin/VendorPayment/VendorPayment";
 import RegistrationSuccessfully from "./module/vendor/RegistrationSuccessfully/RegistrationSuccessfully";
 import OTP from "./pages/OTP/OTP";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/otp" element={<OTP />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/registration-successfully" element={<RegistrationSuccessfully />} />  
         {/* Layout wraps all child routes */}
         <Route path="/" element={<Layout />}>

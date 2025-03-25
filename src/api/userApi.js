@@ -18,3 +18,11 @@ export const loginUser = async (user_id) => {
     }
   };
   
+  export const forgotPassword = async (email) => {
+    try {
+      const response = await axiosConfig.post("/user/forgot-password", { email });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error("Server error");
+    }
+  };
