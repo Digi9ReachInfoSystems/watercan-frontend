@@ -30,7 +30,7 @@ export const Input = styled.input`
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
-  
+
   &:focus {
     border-color: ${({ error }) => (error ? "red" : "#007bff")};
     outline: none;
@@ -47,25 +47,9 @@ export const Button = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
-  
+
   &:hover {
     background: #0056b3;
-  }
-`;
-
-export const CheckboxWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  margin: 10px 0;
-`;
-
-export const ForgotPassword = styled.a`
-  text-decoration: none;
-  color: #007bff;  
-  &:hover {
-    text-decoration: underline;
   }
 `;
 

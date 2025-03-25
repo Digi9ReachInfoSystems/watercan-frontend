@@ -21,6 +21,7 @@ export const Title = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #333;
 `;
 
 export const SignupForm = styled.form`
@@ -31,11 +32,55 @@ export const SignupForm = styled.form`
 
 export const Input = styled.input`
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ error }) => (error ? "red" : "#ccc")};
   border-radius: 5px;
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
+  outline: none;
+  
+  &:focus {
+    border-color: ${({ error }) => (error ? "red" : "#0072ff")};
+  }
+`;
+
+export const SignupButton = styled.button`
+  background: ${({ disabled }) => (disabled ? "#ccc" : "#0072ff")};
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  width: 100%;
+  transition: 0.3s;
+  box-sizing: border-box;
+
+  &:hover {
+    background: ${({ disabled }) => (disabled ? "#ccc" : "#0052d4")};
+  }
+`;
+
+export const FooterText = styled.p`
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+
+  a {
+    color: #0072ff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin: -5px 0 10px;
+  text-align: left;
 `;
 
 export const Options = styled.div`
@@ -50,35 +95,3 @@ export const CheckboxLabel = styled.label`
   gap: 5px;
 `;
 
-export const SignupButton = styled.button`
-  background: #0072ff;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  transition: 0.3s;
-  box-sizing: border-box;
-
-  &:hover {
-    background: #0052d4;
-  }
-`;
-
-export const FooterText = styled.p`
-  margin-top: 10px;
-  font-size: 14px;
-
-  a {
-    color: #0072ff;
-    text-decoration: none;
-  }
-`;
-
-export const ErrorText = styled.p`
-  color: red;
-  font-size: 12px;
-  margin: -10px 0 10px;
-`;
