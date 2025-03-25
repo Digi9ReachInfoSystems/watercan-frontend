@@ -13,6 +13,7 @@ import VendorPayment from "./module/admin/VendorPayment/VendorPayment";
 import RegistrationSuccessfully from "./module/vendor/RegistrationSuccessfully/RegistrationSuccessfully";
 import OTP from "./pages/OTP/OTP";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import OrdersList from "./module/admin/Orders/OrdersList";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
         {/* Vendor List Route */}
         <Route path="/admin/vendorlist" element={<VendorList />} />
         <Route path="/admin/payment" element={<AdminPayment />} />
+        <Route path="/admin/Orders" element={<OrdersList />} />
+        
         
 
         </Route>
