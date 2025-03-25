@@ -14,6 +14,7 @@ import RegistrationSuccessfully from "./module/vendor/RegistrationSuccessfully/R
 import OTP from "./pages/OTP/OTP";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import OrdersList from "./module/admin/Orders/OrdersList";
+import VendorOrder from "./module/vendor/Orders/VendorOrder";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
 
         {/* Optional: 404 Route */}
         <Route path="vendor" element={<VendorDashboard />} />
+        <Route path="/vendor/Orders" element={<VendorOrder />} />
 
         {/* Vendor List Route */}
         <Route path="/admin/vendorlist" element={<VendorList />} />
