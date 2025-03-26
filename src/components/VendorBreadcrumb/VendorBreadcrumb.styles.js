@@ -7,9 +7,12 @@ export const AppBarWrap = styled.div`
   margin-bottom: 10px;
   background-color: #f9fafb;
   border-radius: 5px;
-  // margin-left: 40px;
+  margin-left: 40px;
   margin-top: 20px;
   font-family: "Montserrat", sans-serif;
+      @media screen and (max-width: 480px) {
+        margin-left: 0px;
+    }
 
   .ant-breadcrumb a {
     color: #374151;

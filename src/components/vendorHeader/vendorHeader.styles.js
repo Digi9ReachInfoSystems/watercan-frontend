@@ -12,7 +12,10 @@ export const HeaderContainer = styled.div`
     left: 0;
     z-index: 100;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    // margin-left: 40px;
+    margin-left: 40px;
+    @media screen and (max-width: 480px) {
+        margin-left: 0px;
+    }
 `;
 
 export const HeaderWrapper = styled.div`
