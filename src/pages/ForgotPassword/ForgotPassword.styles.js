@@ -1,15 +1,31 @@
 import styled from "styled-components";
+import waterBg from "../../assets/water5.jpg";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #007bff, #00c6ff);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130%;
+    background: url(${waterBg}) no-repeat center center/cover;
+    filter: blur(1px); /* Adjust the blur intensity */
+    z-index: -1;
+  }
 `;
 
 export const FormWrapper = styled.div`
-  background: #fff;
+  // background: #fff;
+      background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  backdrop-filter: blur(100px); /* Adds a blur effect for better readability */
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -55,7 +71,7 @@ export const Button = styled.button`
 
 export const SignupText = styled.p`
   margin-top: 15px;
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
 `;
 

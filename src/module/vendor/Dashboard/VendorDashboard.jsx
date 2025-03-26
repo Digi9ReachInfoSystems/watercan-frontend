@@ -3,7 +3,7 @@ import React from 'react';
 const VendorDashboard = () => {
     return (
         <div className="container">
-             <h1>Vendor Dashboard</h1>
+             <h1 style={{marginLeft:"50px"}}>Vendor Dashboard</h1>
         </div>
     );
 };
