@@ -60,10 +60,6 @@ const ForgotPassword = () => {
 
           <Button type="submit">Send Reset Link</Button>
         </form>
-
-        <SignupText>
-          Remember your password? <Link to="/login">Login</Link>
-        </SignupText>
       </FormWrapper>
     </Container>
   );

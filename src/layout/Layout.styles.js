@@ -15,6 +15,10 @@ export const ContentWrapper = styled.div`
   // overflow-y: auto;
   // position:absolute;
   font-family: "Montserrat", sans-serif;
+
+  @media (max-width: 480px) {
+    margin-left: 0;
+  }
   
 `;
 
