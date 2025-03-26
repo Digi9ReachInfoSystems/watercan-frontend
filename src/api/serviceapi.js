@@ -1,11 +1,11 @@
 import axios from "axios";
 
 // Set up the base URL for the API
-const BASE_URL = "http://localhost:5000/vendorapplication";
+const BASE_URL = "http://localhost:5000";
 
 // Function to create vendor application
 export const createApplication = async (applicationData) => {
-    const response = await fetch(`${BASE_URL}/createVendorApplication`, {
+    const response = await fetch(`${BASE_URL}/vendorapplication/createVendorApplication`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,10 +16,41 @@ export const createApplication = async (applicationData) => {
     return response.json();
   };
 
-  export const getApplication = async () => {
-    const response = await axios.get(`${BASE_URL}/getAllApplications`);
+export const getApplication = async () => {
+    const response = await axios.get(`${BASE_URL}/vendorapplication/getAllApplications`);
     return response.data;
   };
+
+export const createOrder = async (orderData) => {
+    const response = await axios.post(`${BASE_URL}/order/createOrder`, orderData);
+    return response.data;
+}
+
+export const getAllOrders = async () => {
+    const response = await axios.get(`${BASE_URL}/order/getAllOrders`);
+    return response.data;
+}
+
+// export const getOrdersByVendor = async (vendorId) => {
+//     const response = await axios.get(`${BASE_URL}/order/getOrdersByVendor/${vendorId}`);
+//     return response.data;
+// }
+
+export const getOrdersByVendor = async () => {
+  const vendorId = "67dc634bacfb078c3c5d6704"; 
+  try {
+      const response = await axios.get(`${BASE_URL}/order/getOrdersByVendor/${vendorId}`);
+      return response.data.data; // Extract orders array
+  } catch (error) {
+      console.error("Error fetching vendor orders:", error);
+      return [];
+  }
+};
+
+export const updateOrder = async (orderId, updatedData) => {
+    const response = await axios.put(`${BASE_URL}/order/updateOrder/${orderId}`, updatedData);
+    return response.data;
+}
 
 // import axiosConfig from "../config/axiosConfig";
 
