@@ -7,7 +7,7 @@ export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    // padding: 0 20px;
     top: 0;
     left: 0;
     z-index: 100;
@@ -24,7 +24,7 @@ export const HeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
-    padding-right: 20px;
+    padding-right: 5px;
     
 font-family: "Montserrat", sans-serif;
 `;
