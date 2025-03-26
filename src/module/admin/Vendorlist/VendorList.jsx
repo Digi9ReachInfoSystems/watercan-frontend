@@ -54,8 +54,7 @@ const VendorList = () => {
         console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
     
         try {
-            const response = await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" });
-        
+            await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" }); 
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
             setIsModalOpen(false);
             toast.success("Vendor approved successfully!");
@@ -90,19 +89,22 @@ const VendorList = () => {
         { title: "Delivery Start Time", dataIndex: "delivery_start_time", key: "delivery_start_time" },
         { title: "Delivery End Time", dataIndex: "delivery_end_time", key: "delivery_end_time" },
         { 
-            title: "Status", 
-            dataIndex: "status", 
-            key: "status", 
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
             render: (_, record) => {
                 let color = "";
-                if (record.status === "pending") color = "#FFA500"; // Soft Orange
-                if (record.status === "approved") color = "#198754"; // Deep Teal Green
-                if (record.status === "rejected") color = "#C82333"; // Muted Red
-    
+                let statusText = record.status.charAt(0).toUpperCase() + record.status.slice(1); // Capitalize first letter
+        
+                if (record.status === "pending") color = "orange"; 
+                if (record.status === "approved") color = "green"; 
+                if (record.status === "rejected") color = "red";
+        
                 return (
                     <Link to="#" onClick={() => handleStatusClick(record)} style={{ color, fontWeight: "bold" }}>
-                        {record.status}
+                        {statusText} 
                     </Link>
+        
                 );
             }
         }
@@ -110,7 +112,7 @@ const VendorList = () => {
     
     return (
         <Container>
-             <ToastContainer />  {/* Added ToastContainer for showing notifications */}
+             <ToastContainer />  
             <Title>Vendor List</Title>
 
             {/* Dropdown Filter */}

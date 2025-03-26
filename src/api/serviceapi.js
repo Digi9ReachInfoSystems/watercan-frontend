@@ -31,15 +31,13 @@ export const getAllOrders = async () => {
     return response.data;
 }
 
-// export const getOrdersByVendor = async (vendorId) => {
-//     const response = await axios.get(`${BASE_URL}/order/getOrdersByVendor/${vendorId}`);
-//     return response.data;
-// }
 
-export const getOrdersByVendor = async () => {
+
+export const getOrdersByVendor = async ( ) => {
   const vendorId = "67dc634bacfb078c3c5d6704"; 
   try {
       const response = await axios.get(`${BASE_URL}/order/getOrdersByVendor/${vendorId}`);
+      console.log("Vendor Orders Data:", response.data);  // ✅ Check response structure
       return response.data.data; // Extract orders array
   } catch (error) {
       console.error("Error fetching vendor orders:", error);
