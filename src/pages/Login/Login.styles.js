@@ -129,7 +129,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  position: relative;
+  // position: relative;
   overflow: hidden;
 `;
 
