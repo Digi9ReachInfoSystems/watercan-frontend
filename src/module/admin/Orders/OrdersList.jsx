@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
-import axios from "axios";
+// import axios from "axios";
 import { EyeOutlined } from "@ant-design/icons";
 import { Container, Title, StyledTable, ModalContent, FilterContainer } from "./OrdersList.styles";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const { Option } = Select;
