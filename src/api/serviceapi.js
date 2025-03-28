@@ -31,8 +31,6 @@ export const getAllOrders = async () => {
     return response.data;
 }
 
-
-
 export const getOrdersByVendor = async ( ) => {
   const vendorId = "67dc634bacfb078c3c5d6704"; 
   try {
@@ -44,6 +42,7 @@ export const getOrdersByVendor = async ( ) => {
       return [];
   }
 };
+
 
 export const updateOrder = async (orderId, updatedData) => {
     const response = await axios.put(`${BASE_URL}/order/updateOrder/${orderId}`, updatedData);
