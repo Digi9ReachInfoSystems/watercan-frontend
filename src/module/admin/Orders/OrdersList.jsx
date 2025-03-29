@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Table, Modal, Button, Select } from "antd";
-// import axios from "axios";
+import { Table, Modal, Button, Select, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { Container, Title, StyledTable, ModalContent, FilterContainer } from "./OrdersList.styles";
-// import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {  getOrdersByVendor } from "../../../api/serviceapi";
 
 const { Option } = Select;
 
 const OrdersList = () => {
-    const BASE_URL = "http://localhost:5000/orders"; 
     const [orders, setOrders] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [statusFilter, setStatusFilter] = useState("All");
+    const [loading, setLoading] = useState(true);
 
-    // Dummy Data for Testing
     useEffect(() => {
-        const dummyOrders = [
-            { 
-                _id: "1", username: "John Doe", vendorName: "ABC Ltd.", cans: 10, 
-                address: "123 Street", city: "New York", state: "NY", pincode: "10001",
-                status: "Order Placed", orderDate: "2024-03-25"
-            },
-            { 
-                _id: "2", username: "Jane Smith", vendorName: "XYZ Inc.", cans: 5, 
-                address: "456 Avenue", city: "Los Angeles", state: "CA", pincode: "90001",
-                status: "Shipped", orderDate: "2024-03-24"
-            },
-            { 
-                _id: "3", username: "John Doe", vendorName: "ABC Ltd.", cans: 10, 
-                address: "123 Street", city: "New York", state: "NY", pincode: "10001",
-                status: "Delivered", orderDate: "2024-03-25"
-            },
-            { 
-                _id: "4", username: "Jane Smith", vendorName: "XYZ Inc.", cans: 5, 
-                address: "456 Avenue", city: "Los Angeles", state: "CA", pincode: "90001",
-                status: "Cancelled", orderDate: "2024-03-24"
-            }
-            
-        ];
-        setOrders(dummyOrders);
-        setFilteredOrders(dummyOrders);
+        fetchOrders();
     }, []);
+
+    const fetchOrders = async () => {
+        try {
+            setLoading(true);
+            
+            // Get vendor_id from localStorage or any state management
+            const vendor_Id = localStorage.getItem("vendor_id") || sessionStorage.getItem("vendor_id");
+    
+            if (!vendor_Id) {
+                console.error("Vendor ID is missing");
+                message.error("Vendor ID is missing. Please log in again.");
+                return;
+            }
+    
+            const data = await getOrdersByVendor(vendor_Id);
+            setOrders(data);
+            setFilteredOrders(data);
+        } catch (error) {
+            message.error("Failed to fetch orders", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
 
     useEffect(() => {
         if (statusFilter === "All") {
@@ -72,10 +69,10 @@ const OrdersList = () => {
             key: "status",
             render: (status) => {
                 let color = "";
-                if (status === "Order Placed") color = "#FFA500";  // Orange
-                if (status === "Shipped") color = "#1890FF";      // Blue
-                if (status === "Delivered") color = "#28A745";    // Green
-                if (status === "Cancelled") color = "#DC3545";    // Red
+                if (status === "Order Placed") color = "#FFA500";
+                if (status === "Shipped") color = "#1890FF";
+                if (status === "Delivered") color = "#28A745";
+                if (status === "Cancelled") color = "#DC3545";
 
                 return <span style={{ color, fontWeight: "bold" }}>{status}</span>;
             }
@@ -94,13 +91,11 @@ const OrdersList = () => {
 
     return (
         <Container>
-            <ToastContainer />
             <Title>Orders List</Title>
 
-            {/* Dropdown Filter */}
             <FilterContainer>
                 <span>Filter by Status:</span>
-                <Select defaultValue="All" style={{ width: 150 , marginTop: -5}} onChange={handleStatusFilterChange}>
+                <Select defaultValue="All" style={{ width: 150, marginTop: -5 }} onChange={handleStatusFilterChange}>
                     <Option value="All">All</Option>
                     <Option value="Order Placed">Order Placed</Option>
                     <Option value="Shipped">Shipped</Option>
@@ -115,10 +110,10 @@ const OrdersList = () => {
                     dataSource={filteredOrders} 
                     pagination={{ pageSize: 5, showSizeChanger: false }} 
                     rowKey="_id"
+                    loading={loading}
                 />
             </StyledTable>
 
-            {/* Order Details Modal */}
             <Modal
                 title="Order Details"
                 open={isModalOpen}
@@ -149,3 +144,4 @@ const OrdersList = () => {
 };
 
 export default OrdersList;
+
