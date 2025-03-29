@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { 
     HeaderContainer, 
     HeaderWrapper, 
@@ -10,9 +10,11 @@ import {
 import { FaUserCircle } from "react-icons/fa"; // Importing profile icon
 
 const Header = ({ title }) => {
-    const [adminUsername, setAdminUsername] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const toggleDropdown = () => {
+        setDropdownOpen((prev) => !prev);
+    };
 
     const handleLogout = () => {
         localStorage.clear();
@@ -27,7 +29,8 @@ const Header = ({ title }) => {
                 <ProfileContainer ref={dropdownRef}>
                     <span>Welcome, admin!</span>
                     
-                    <ProfileIcon >
+                    {/* Add onClick to toggle dropdown */}
+                    <ProfileIcon onClick={toggleDropdown}>
                         <FaUserCircle size={24} />
                     </ProfileIcon>
 
