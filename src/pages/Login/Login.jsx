@@ -49,14 +49,16 @@ const Login = () => {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("FUID", userCredential.uid);
+      
       const user = userCredential.user;
-      console.log("User signed in:", user);
+      // console.log("User signed in:", user);
 
-      // Pass Firebase UID instead of MongoDB _id
-      const userData = await loginUser(user.uid);
-      console.log("Fetched user data:", userData);
+      // // Pass Firebase UID instead of MongoDB _id
+      // const userData = await loginUser(user.uid);
+      // console.log("Fetched user data:", userData);
 
-      localStorage.setItem("user", JSON.stringify(userData));
+      // localStorage.setItem("user", JSON.stringify(userData));
 
       if (userData.data?.role === "admin") {
         navigate("/admin");
