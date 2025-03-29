@@ -24,7 +24,7 @@ export const HeaderWrapper = styled.div`
     background-color: rgb(247, 245, 245);
     color: #1d1d1d;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     font-size: 20px;
     padding-right: 5px;

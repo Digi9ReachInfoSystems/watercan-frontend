@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SuccessContainer = styled.div`
   text-align: center;
-  margin-top: 50px;
+  margin-top: 350px;
 `;
 
 export const SuccessGif = styled.img`
@@ -13,11 +13,11 @@ export const SuccessGif = styled.img`
 
 export const SuccessHeading = styled.h2`
   color: #333;
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 10px;
 `;
 
 export const SuccessMessage = styled.p`
   color: #666;
-  font-size: 18px;
+  font-size: 22px;
 `;
