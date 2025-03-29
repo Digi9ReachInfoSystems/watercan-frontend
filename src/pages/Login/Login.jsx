@@ -6,7 +6,7 @@ import {
 import { auth } from "../../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { loginUser } from "../../api/userApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,6 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const validateEmail = (value) => {
     if (!value) return "Email is required!";
@@ -55,6 +56,15 @@ const Login = () => {
       const userData = await loginUser(user.uid);
       console.log("Fetched user data:", userData);
 
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      if (userData.data?.role === "admin") {
+        navigate("/admin");
+      } else if (userData.data?.role === "vendor") {
+        navigate("/vendor");
+      } else {
+        toast.error("Login failed! Role not recognized.");
+      }
       toast.success("Login successful!");
     } catch (error) {
       toast.error(error.message);

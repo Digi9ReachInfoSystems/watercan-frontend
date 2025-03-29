@@ -10,7 +10,7 @@ import {
 import { FaUserCircle } from "react-icons/fa"; 
 import { getOrdersByVendor } from "../../api/serviceapi";
 
-const VendorHeader = ({ title }) => {
+const VendorHeader = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const [vendorName, setVendorName] = useState("");
@@ -53,7 +53,7 @@ const VendorHeader = ({ title }) => {
     return (
         <HeaderContainer>
             <HeaderWrapper>
-                <HeaderTitle>{title}</HeaderTitle>
+                {/* <HeaderTitle>{title}</HeaderTitle> */}
                 
                 <ProfileContainer ref={dropdownRef}>
                 <p>Welcome, {vendorName || "Vendor"}!</p>  {/* Display Vendor Name */}
