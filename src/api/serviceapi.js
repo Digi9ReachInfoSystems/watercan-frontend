@@ -18,6 +18,24 @@ export const getApplication = async () => {
   }
 }
 
+export const approveApplication = async (applicationId) => {
+  try {
+    const response = await axiosConfig.put(`/vendorapplication/approveVendorApplication/${applicationId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+}
+
+export const rejectApplication = async (id) => {
+  try {
+    const response = await axiosConfig.put(`/vendorapplication/rejectVendorApplication/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response ? error.response.data : new Error("Server error");
+  }
+}
+
 // export const createOrder = async (orderData) => {
 //     const response = await axios.post(`${BASE_URL}/order/createOrder`, orderData);
 //     return response.data;

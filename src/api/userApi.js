@@ -26,3 +26,12 @@ export const loginUser = async (user_id) => {
       throw error.response ? error.response.data : new Error("Server error");
     }
   };
+
+  export const getUserByFirebaseId = async (UTD) => {
+    try{
+      const response = await axiosConfig.post("/user/get-user-by-firebase-id/${UTD}", { UTD });
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error("Server error");
+    }
+  }
