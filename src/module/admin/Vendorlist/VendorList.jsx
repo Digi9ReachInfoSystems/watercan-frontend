@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { getApplication } from "../../../api/serviceapi";
+// import axios from "axios";
+import { getApplication, rejectApplication, approveApplication} from "../../../api/serviceapi";
 import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer } from "./VendorList.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const { Option } = Select;
 
 const VendorList = () => {
-    const BASE_URL = "http://localhost:5000/vendorapplication";
+    // const BASE_URL = "http://localhost:5000/vendorapplication";
     const [vendors, setVendors] = useState([]);
     const [filteredVendors, setFilteredVendors] = useState([]);
     const [selectedVendor, setSelectedVendor] = useState(null);
@@ -22,15 +22,20 @@ const VendorList = () => {
         const fetchVendors = async () => {
             try {
                 const data = await getApplication(); 
-                console.log("Fetched Vendors:", data); 
-                setVendors(data);
-                setFilteredVendors(data);
+                console.log("Fetched Vendors:", data);
+    
+                // Sort vendors by createdAt timestamp in descending order
+                const sortedVendors = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+                setVendors(sortedVendors);
+                setFilteredVendors(sortedVendors);
             } catch (error) {
                 console.error("Error fetching vendor applications:", error);
             }
         };
         fetchVendors();
     }, []);
+    
 
     useEffect(() => {
         if (statusFilter === "All") {
@@ -45,6 +50,24 @@ const VendorList = () => {
         setIsModalOpen(true);
     };
 
+    // const handleApprove = async () => {
+    //     if (!selectedVendor || !selectedVendor._id) {
+    //         console.error("Error: No selected vendor or missing _id");
+    //         return;
+    //     }
+        
+    //     console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
+    
+    //     try {
+    //         await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" }); 
+    //         setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
+    //         setIsModalOpen(false);
+    //         toast.success("Vendor approved successfully!");
+    //     } catch (error) {
+    //         console.error("Error updating vendor status:", error.response?.data || error.message);
+    //     }
+    // };
+
     const handleApprove = async () => {
         if (!selectedVendor || !selectedVendor._id) {
             console.error("Error: No selected vendor or missing _id");
@@ -54,28 +77,35 @@ const VendorList = () => {
         console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
     
         try {
-            await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" }); 
+            await approveApplication(selectedVendor._id);
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
             setIsModalOpen(false);
             toast.success("Vendor approved successfully!");
         } catch (error) {
             console.error("Error updating vendor status:", error.response?.data || error.message);
+            toast.error(error.response?.data?.message || "Failed to approve vendor");
         }
     };
-    
-    
+
     const handleReject = async () => {
-        if (!selectedVendor) return;
+        if (!selectedVendor || !selectedVendor._id) {
+            console.error("Error: No selected vendor or missing _id");
+            return;
+        }
+        
+        console.log("Rejecting vendor with ID:", selectedVendor._id); // Debug log
     
         try {
-            await axios.put(`${BASE_URL}/rejectVendorApplication/${selectedVendor._id}`, { status: "rejected" }); 
+            await rejectApplication(selectedVendor._id);
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "rejected" } : v));
             setIsModalOpen(false);
             toast.error("Vendor rejected successfully!");
         } catch (error) {
-            console.error("Error updating vendor status:", error);
+            console.error("Error updating vendor status:", error.response?.data || error.message);
+            toast.error(error.response?.data?.message || "Failed to reject vendor");
         }
     };
+    
     
 
     const handleStatusFilterChange = (value) => {

@@ -1,23 +1,26 @@
 import React from "react";
 import { SideBarwrapper, Logo } from "../Sidebar/Sidebar.styles";
 import { NavLink } from "react-router-dom";
-import { FaUsers, FaLaptop, FaCopy, FaImage } from "react-icons/fa";
+import { FaUsers, FaCopy, FaImage } from "react-icons/fa";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { MdDashboard } from "react-icons/md";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaHandHoldingWater } from "react-icons/fa";
+import { GiWaterGallon } from "react-icons/gi";
+
 
 const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
     // { id: 1, name: "Home", path: "/admin", icon: <IoHomeSharp /> },
-    { id: 2, name: "Dashboard", path: "/", icon: <MdDashboard /> },
+    { id: 1, name: "Dashboard", path: "/", icon: <MdDashboard /> },
     // { id: 3, name: "Users", path: "/admin/users", icon: <FaUsers /> },
     // { id: 4, name: "Devices", path: "/admin/devices", icon: <FaLaptop /> },
     // { id: 5, name: "Copies", path: "/admin/copy", icon: <FaCopy /> },
     // { id: 6, name: "Frames", path: "/admin/frame", icon: <FaImage /> },
-    { id: 7, name: "Orders", path: "/admin/Orders", icon: <FaHandHoldingWater /> },
-    { id: 8, name: "Payment", path: "/admin/payment", icon: <RiMoneyRupeeCircleFill /> },
-    { id: 9, name: "Vendor", path: "/admin/vendorlist", icon: <FaUsers />  },
+    { id: 2, name: "Orders", path: "/admin/Orders", icon: <FaHandHoldingWater /> },
+    { id: 3, name: "Payment", path: "/admin/payment", icon: <RiMoneyRupeeCircleFill /> },
+    { id: 4, name: "Vendor", path: "/admin/vendorlist", icon: <FaUsers />  },
+    { id: 5, name: "Water Can", path: "/admin/waterCan", icon: <GiWaterGallon /> },
   ];
 
   return (

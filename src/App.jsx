@@ -15,6 +15,7 @@ import OTP from "./pages/OTP/OTP";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import OrdersList from "./module/admin/Orders/OrdersList";
 import VendorOrder from "./module/vendor/Orders/VendorOrder";
+import WaterCansProduct from "./module/admin/WaterCansProduct/WaterCansProduct";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/admin/vendorlist" element={<VendorList />} />
         <Route path="/admin/payment" element={<AdminPayment />} />
         <Route path="/admin/Orders" element={<OrdersList />} />
+        <Route path="/admin/waterCan" element={<WaterCansProduct />} />
         
         
 
