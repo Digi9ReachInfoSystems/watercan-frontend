@@ -23,11 +23,28 @@ const Login = () => {
     return "";
   };
 
+  // const validatePassword = (value) => {
+  //   if (!value) return "Password is required!";
+  //   if (value.length < 6) return "Password must be at least 6 characters!";
+  //   return "";
+  // };
   const validatePassword = (value) => {
     if (!value) return "Password is required!";
-    if (value.length < 6) return "Password must be at least 6 characters!";
+    
+    const minLength = 6;
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  
+    if (value.length < minLength) return "Password must be at least 6 characters!";
+    if (!hasUpperCase) return "Password must contain at least one uppercase letter!";
+    if (!hasLowerCase) return "Password must contain at least one lowercase letter!";
+    if (!hasNumber) return "Password must contain at least one number!";
+    if (!hasSpecialChar) return "Password must contain at least one special character!";
+  
     return "";
-  };
+  };  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
