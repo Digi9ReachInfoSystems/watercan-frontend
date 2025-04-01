@@ -6,6 +6,7 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   background-color:rgb(159, 211, 235);
+
 `;
 
 export const ContentContainer = styled.div`
@@ -45,7 +46,7 @@ height: 100vh;
 
 export const FormContainer = styled.div`
   display: flex;
-  width: 60%;
+  width: 40%;
   flex-direction: column;
   // max-width: 650px;
   // margin: auto;
@@ -55,6 +56,7 @@ export const FormContainer = styled.div`
   background-color: #fff;
   font-family: Arial, sans-serif;
   // margin: 20px;
+  justify-content: center;
 `;
 
 export const FormTitle = styled.h2`
