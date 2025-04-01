@@ -36,11 +36,6 @@ export const rejectApplication = async (id) => {
   }
 }
 
-// export const createOrder = async (orderData) => {
-//     const response = await axios.post(`${BASE_URL}/order/createOrder`, orderData);
-//     return response.data;
-// }
-
 
 export const getAllOrders = async () => {
   try {
@@ -72,24 +67,16 @@ export const updateOrder = async (orderId, updatedData) => {
   }
 }
 
-// export const getAllOrders = async () => {
-//     const response = await axios.get(`${BASE_URL}/order/getAllOrders`);
-//     return response.data;
-// }
+export const fetchPincodeDetails = async (search) => {
+  try {
+    if (!search) throw new Error("Search term is required");
 
-// export const getOrdersByVendor = async ( ) => {
-//   const vendorId = "67dc634bacfb078c3c5d6704"; 
-//   try {
-//       const response = await axios.get(`${BASE_URL}/order/getOrdersByVendor/${vendorId}`);
-//       console.log("Vendor Orders Data:", response.data);  // ✅ Check response structure
-//       return response.data.data; // Extract orders array
-//   } catch (error) {
-//       console.error("Error fetching vendor orders:", error);
-//       return [];
-//   }
-// };
+    const response = await axiosConfig.post("/vendorapplication/api/pincode", { search }); 
+    console.log("Pincode Details:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching pincode details:", error.response?.data || error.message);
+    return { error: error.response?.data?.error || "Failed to fetch pincode details" };
+  }
+};
 
-// export const updateOrder = async (orderId, updatedData) => {
-//     const response = await axios.put(`${BASE_URL}/order/updateOrder/${orderId}`, updatedData);
-//     return response.data;
-// }
