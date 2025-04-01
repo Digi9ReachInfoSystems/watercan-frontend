@@ -14,33 +14,34 @@ const OrdersList = () => {
     const [statusFilter, setStatusFilter] = useState("All");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchOrders();
-    }, []);
-
-    const fetchOrders = async () => {
-        try {
-            setLoading(true);
+    // Dummy Data for Testing
+    // useEffect(() => {
+    //     const dummyOrders = [
+    //         { 
+    //             _id: "1", username: "John Doe", vendorName: "ABC Ltd.", cans: 10, 
+    //             address: "123 Street", city: "New York", state: "NY", pincode: "10001",
+    //             status: "Order Placed", orderDate: "2024-03-25"
+    //         },
+    //         { 
+    //             _id: "2", username: "Jane Smith", vendorName: "XYZ Inc.", cans: 5, 
+    //             address: "456 Avenue", city: "Los Angeles", state: "CA", pincode: "90001",
+    //             status: "Shipped", orderDate: "2024-03-24"
+    //         },
+    //         { 
+    //             _id: "3", username: "John Doe", vendorName: "ABC Ltd.", cans: 10, 
+    //             address: "123 Street", city: "New York", state: "NY", pincode: "10001",
+    //             status: "Delivered", orderDate: "2024-03-25"
+    //         },
+    //         { 
+    //             _id: "4", username: "Jane Smith", vendorName: "XYZ Inc.", cans: 5, 
+    //             address: "456 Avenue", city: "Los Angeles", state: "CA", pincode: "90001",
+    //             status: "Cancelled", orderDate: "2024-03-24"
+    //         }
             
-            // Get vendor_id from localStorage or any state management
-            const vendor_Id = localStorage.getItem("vendor_id") || sessionStorage.getItem("vendor_id");
-    
-            if (!vendor_Id) {
-                console.error("Vendor ID is missing");
-                message.error("Vendor ID is missing. Please log in again.");
-                return;
-            }
-    
-            const data = await getOrdersByVendor(vendor_Id);
-            setOrders(data);
-            setFilteredOrders(data);
-        } catch (error) {
-            message.error("Failed to fetch orders", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-    
+    //     ];
+    //     setOrders(dummyOrders);
+    //     setFilteredOrders(dummyOrders);
+    // }, []);
 
     useEffect(() => {
         if (statusFilter === "All") {
