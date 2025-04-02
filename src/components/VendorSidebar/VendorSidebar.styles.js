@@ -136,13 +136,6 @@ export const SideBarwrapper = styled.div`
   }
 `;
 
-// export const Logo = styled.div`
-//   margin-top: 20px;
-//   .sidebar-logo {
-//     width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
-//     transition: width 0.3s ease-in-out;
-//   }
-// `;
 export const Logo = styled.div`
   margin-top: 20px;
   .sidebar-logo {
