@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { 
-  Container, FormWrapper, Title, Input, Button, SignupText, ErrorText 
+import {
+  Container,
+  FormWrapper,
+  Title,
+  Input,
+  Button,
+  SignupText,
+  ErrorText,
 } from "./ForgotPassword.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,10 +54,10 @@ const ForgotPassword = () => {
       <FormWrapper>
         <Title>Forgot Password</Title>
         <form onSubmit={handleSubmit}>
-          <Input 
-            type="email" 
-            placeholder="Enter your email" 
-            value={email} 
+          <Input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
             onChange={handleEmailChange}
             error={error}
             required
@@ -62,7 +68,19 @@ const ForgotPassword = () => {
         </form>
 
         <SignupText>
-          Back to <Link to="/login">Login</Link>
+          Back to
+          <Link
+            to="/login"
+            style={{
+              textDecoration: "none",
+              color: "#4a90e2",
+              marginLeft: "10px",
+            }}
+            onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+            onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+          >
+            Login
+          </Link>
         </SignupText>
       </FormWrapper>
     </Container>

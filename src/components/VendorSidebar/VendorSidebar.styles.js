@@ -39,7 +39,6 @@ export const SideBarwrapper = styled.div`
      margin-top: 10px;
      font-family: "Montserrat", sans-serif;
      width: 100%;
-     position: absolute;
    }
         .menu-list {
      list-style: none;
@@ -138,11 +137,11 @@ export const SideBarwrapper = styled.div`
 `;
 
 export const Logo = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  color: #1f2937;
-  margin-top: 30px;
-  margin-bottom: 50px;
+  margin-top: 20px;
+  .sidebar-logo {
+    width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
+    transition: width 0.3s ease-in-out;
+  }
 `;
 
 /* Hamburger Menu Button */
