@@ -142,7 +142,13 @@ export const Logo = styled.div`
     width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
     transition: width 0.3s ease-in-out;
   }
+
+  @media (max-width: 480px) {
+    // margin-left: 80px; /* Move logo down to prevent overlap */
+    display: none; /* Hide logo on mobile view */
+  }
 `;
+
 
 /* Hamburger Menu Button */
 export const HamburgerMenu = styled.div`
