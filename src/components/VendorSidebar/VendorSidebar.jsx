@@ -3,6 +3,7 @@ import { SideBarwrapper, Logo, HamburgerMenu } from "./VendorSidebar.styles";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaHandHoldingWater, FaBars, FaTimes } from "react-icons/fa"; // Import icons
+import logo from "../../assets/logo.png"; 
 
 const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const [isMobileExpanded, setIsMobileExpanded] = useState(false); // State for mobile menu
@@ -24,7 +25,9 @@ const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
         {isMobileExpanded ? <FaTimes /> : <FaBars />} {/* Toggle Icon */}
       </HamburgerMenu>
 
-      <Logo>{/* Logo */}</Logo>
+      <Logo isCollapsed={isCollapsed}>
+        <img src={logo} alt="Logo" className="sidebar-logo" style={{ borderRadius: "50%"}}/>
+      </Logo>
 
       <div className="menu">
         <ul className="menu-list">

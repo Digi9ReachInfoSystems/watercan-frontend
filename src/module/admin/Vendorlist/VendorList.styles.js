@@ -5,8 +5,8 @@ export const Container = styled.div`
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 95%;
-    margin-left: 35px;
+    // max-width: 95%;
+    margin-left: 40px;
 `;
 
 export const Title = styled.h2`
