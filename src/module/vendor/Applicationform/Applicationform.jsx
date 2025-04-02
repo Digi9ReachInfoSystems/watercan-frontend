@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
@@ -20,7 +20,9 @@ import {
   DatePickerContainer,
 } from "./Application.styles.js";
 import { Select } from "antd";
-// import { Content } from "antd/es/layout/layout.js";
+import {getAllWaterCans} from "../../../api/waterCanApi.js";
+import { getUserByFirebaseId } from "../../../api/userApi.js"; // Import function
+import { auth } from "../../../config/firebaseConfig.js"; // Import Firebase auth instance
 
 const ApplicationForm = () => {
   const initialFormState = {
@@ -35,20 +37,73 @@ const ApplicationForm = () => {
     areas: [], // Store available areas from API
     delivery_start_time: null,
     delivery_end_time: null,
-    deliverable_water_cans: "0",
+    deliverable_water_cans: [],
     proof_image: "",
-    priceCapacityPairs: [{ price: "", capacity: "" }],
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [availableWaterCans, setAvailableWaterCans] = useState([]);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // To manage the loading state
+
 
   const { Option } = Select;
 
   const [fileName, setFileName] = useState("Upload File");
+
+
+
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const user = await getUserByFirebaseId(auth.currentUser.uid);
+        setFormData((prevData) => ({
+          ...prevData,
+          name: user.name,
+          email: user.email,
+          address: user.address,
+          phoneNumber: user.phoneNumber,
+          pincode: user.pincode,
+          city: user.city,
+          state: user.state,
+          areas: user.areas,
+          selectedArea: user.areas[0],
+          delivery_end_time: user.delivery_end_time,
+          delivery_start_time: user.delivery_start_time,
+          deliverable_water_cans: user.deliverable_water_cans
+        }));
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    const fetchWaterCans = async () => {
+      try {
+        const response = await getAllWaterCans();
+        console.log("Water Cans Response:", response);
+        // Extract available capacities and update the available options state
+        const capacities = response.data.map(can => can.capacityInLiters);
+        setAvailableWaterCans(capacities);
+      } catch (error) {
+        console.error("Error fetching water cans:", error);
+        toast.error("Failed to fetch water can capacities!");
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchWaterCans();
+    if (auth.currentUser) {
+      getUsers(); 
+    }
+  }, []);
+  
+  
+
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -147,176 +202,112 @@ const handleChange = async (e, index = null, field = null) => {
 
   // Handle price & capacity fields dynamically
   if (index !== null && field) {
-    const updatedArray = [...formData.priceCapacityPairs];
+    const updatedArray = [...formData.deliverable_water_cans];
     updatedArray[index][field] = value;
-    setFormData((prevData) => ({ ...prevData, priceCapacityPairs: updatedArray }));
+    setFormData((prevData) => ({ ...prevData, deliverable_water_cans: updatedArray }));
   }
 };  
 
-const handleAddField = () => {
-  setFormData((prevData) => ({
-    ...prevData,
-    priceCapacityPairs: [
-      ...prevData.priceCapacityPairs,
-      { id: Date.now(), price: "", capacity: "" }, // Generate a unique ID
-    ],
-  }));
+
+
+useEffect(() => {
+
+}, []);
+
+
+const validateField = (name, value) => {
+  switch (name) {
+    case "name":
+      return value.trim() ? "" : "Name is required";
+
+    case "email":
+      if (!value.trim()) return "Email is required";
+      return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value) ? "" : "Email must be in the format example@gmail.com";
+
+      case "phoneNumber":
+        if (!value.trim()) return "Phone number is required";
+        return /^\d{10}$/.test(value) ? null : "Phone number must be exactly 10 digits!";
+      
+    case "address":
+      return value.trim() ? "" : "Address is required";
+
+    case "pincode":
+      if (!value.trim()) return "Pincode is required";
+      return /^\d{6}$/.test(value) ? "" : "Pincode must be exactly 6 digits!";
+
+    case "selectedArea":
+      return value ? "" : "Select an area";
+
+    case "city":
+      return value.trim() ? "" : "City is required";
+
+    case "state":
+      return value.trim() ? "" : "State is required";
+
+    case "deliverable_water_cans":
+      return value.length ? "" : "Select at least one water can size";
+
+    case "delivery_start_time":
+      return value ? "" : "Delivery start time is required";
+
+    case "delivery_end_time":
+      if (!value) return "Delivery end time is required";
+      return value > formData.delivery_start_time ? "" : "End time must be after start time";
+
+    case "proof_image":
+      return value ? "" : "Please upload a file before submitting!";
+
+    case "aadharFile":
+    case "panFile":
+    case "gstFile":
+      return value && isValidFileType(value) ? "" : `Invalid file type for ${name}`;
+
+    default:
+      return "";
+  }
 };
 
+// Updated handleSubmit function
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  let validationErrors = {};
 
-  const handleRemoveField = (index) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      priceCapacityPairs: prevData.priceCapacityPairs.filter((_, i) => i !== index),
-    }));
-  };
-
-  const formatTime = (date) => {
-    if (!date || isNaN(date.getTime())) return ""; // Prevents errors
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
-  };
- 
-  const validateField = (name, value) => {
-    let errorMessage = "";
-  
-    if (!value.trim()) {
-      errorMessage = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+  // Validate all fields
+  Object.keys(formData).forEach((field) => {
+    const errorMessage = validateField(field, formData[field]);
+    if (errorMessage) {
+      validationErrors[field] = errorMessage;
     }
-     else {
-      switch (name) {
-        case "name":
-          if (!/^[A-Za-z\s]+$/.test(value)) {
-            errorMessage = "Name should contain only alphabets";
-          }
-          break;
-  
-        case "email":
-          if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value)) {
-            errorMessage = "Email must be in the format example@gmail.com";
-          }
-          break;
-  
-          case "phoneNumber":
-            isValid = /^[0-9]{0,10}$/.test(value); // Only numbers, max length 10
-            if (!isValid || value.length > 10) newErrors[name] = "Only numbers allowed, max 10 digits!";
-            break;
-  
-        case "pincode":
-          if (!/^\d{6}$/.test(value)) {
-            errorMessage = "Pincode must be exactly 6 digits!";
-          }
-          break;
-  
-        default:
-          break;
-      }
-    }
-  
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: errorMessage,
-    }));
-  
-    // ** Ensure input is updated even if validation fails **
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  
+  });
 
-    const convertToDate = (timeStr) => {
-      if (!timeStr) return null;
-      const [hours, minutes] = timeStr.split(":");
-      const date = new Date();
-      date.setHours(hours, minutes, 0, 0); // Set time while keeping today's date
-      return date;
+  // Stop submission if there are errors
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    setMessage("");
+    setIsSuccess(false);
+    return;
+  }
+
+  try {
+    const formattedData = {
+      ...formData,
+      delivery_start_time: formData.delivery_start_time ? formData.delivery_start_time.toISOString() : "",
+      delivery_end_time: formData.delivery_end_time ? formData.delivery_end_time.toISOString() : "",
     };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      let validationErrors = {};
-    
-      // Validate all fields
-      Object.keys(formData).forEach((field) => {
-        if (!formData[field] && field !== "city" && field !== "state") {
-          validationErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-        }
-      });
-    
-      // Specific field validations
-      if (formData.email && !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(formData.email)) {
-        validationErrors.email = "Email must be in the format example@gmail.com";
-      }
-      if (formData.phoneNumber && !/^\d{10}$/.test(formData.phoneNumber)) {
-        validationErrors.phoneNumber = "Phone number must be exactly 10 digits!";
-      }
-      if (formData.pincode && !/^\d{6}$/.test(formData.pincode)) {
-        validationErrors.pincode = "Pincode must be exactly 6 digits!";
-      }
-      if (!formData.delivery_start_time || !formData.delivery_end_time) {
-        validationErrors.delivery_start_time = "Required";
-        validationErrors.delivery_end_time = "Required";
-      }
-    
-// **File validation (Optional)**
-if (formData.aadharFile && !isValidFileType(formData.aadharFile)) {
-  validationErrors.aadharFile = "Invalid file type for Aadhar";
-}
+    const response = await createApplication(formattedData);
 
-if (formData.panFile && !isValidFileType(formData.panFile)) {
-  validationErrors.panFile = "Invalid file type for PAN";
-}
-
-if (formData.gstFile && !isValidFileType(formData.gstFile)) {
-  validationErrors.gstFile = "Invalid file type for GST";
-}
-
-      // Stop submission if there are errors
-      if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-        setMessage("");
-        setIsSuccess(false);
-        return;
-      }
-    
-      try {
-        const formattedData = {
-          ...formData,
-          delivery_start_time: formData.delivery_start_time ? formData.delivery_start_time.toISOString() : "",
-          delivery_end_time: formData.delivery_end_time ? formData.delivery_end_time.toISOString() : "",
-        };
-
-        if (!formData.proof_image) {
-          toast.error("Please upload a file before submitting!");
-          return;
-        }
-    
-        const response = await createApplication(formattedData);
-    
-        if (response.success) {
-          navigate("/registration-successfully");
-          setFormData(initialFormState);
-        } else {
-          toast.error(response.message || "Submission failed!");
-        }
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        toast.error("An error occurred!");
-      }
-    };
-    
-
-      const [selectedFile, setSelectedFile] = useState(null);
-     
-
-     
-      const handleUpload = () => {
-        if (selectedFile) {
-          console.log("Uploading:", selectedFile.name);
-          // Handle file upload logic here (API call, etc.)
-        }
-      };
+    if (response.success) {
+      navigate("/registration-successfully");
+      setFormData(initialFormState);
+    } else {
+      toast.error(response.message || "Submission failed!");
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    toast.error("An error occurred!");
+  }
+};
 
  
   return (
@@ -346,7 +337,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       placeholder="Name"
       value={formData.name}
       onChange={handleChange}
-      // onBlur={(e) => validateField(field,e.target.value)}
+      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
       required
     />
     {errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
@@ -360,23 +351,30 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       placeholder="Email"
       value={formData.email}
       onChange={handleChange}
+      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
       required
     />
     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
   </div>
-
   <div>
-    <InputField
-      type="text"
-      name="phone"
-      placeholder="Phone Number"
-      value={formData.phone}
-      onChange={handleChange}
-      maxLength="10"
-      required
-    />
-    {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
-  </div>
+
+  <InputField
+  type="text"
+  name="phoneNumber"
+  placeholder="Phone Number"
+  value={formData.phoneNumber}
+  onChange={handleChange}
+  onBlur={(e) => {
+    const errorMsg = validateField(e.target.name, e.target.value);
+    setErrors((prev) => ({ ...prev, phoneNumber: errorMsg })); // Store error
+  }}
+  maxLength="10"
+  required
+/>
+{errors.phoneNumber && <ErrorMessage>{errors.phoneNumber}</ErrorMessage>}
+
+</div>
+
 </div>
   
 <div>
@@ -386,9 +384,11 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       placeholder="Address"
       value={formData.address}
       onChange={handleChange}
+      onBlur={(e) => 
+      { const errorMsg = validateField(e.target.name, e.target.value); setErrors((prev) => ({ ...prev, address: errorMsg } ) ); } } 
       required
     />
-    {errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
+    {errors.address && <ErrorMessage>{errors.address}</ErrorMessage>}
   </div>
 
   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr ", gap: "20px" }}>
@@ -400,20 +400,24 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       value={formData.pincode}
       onChange={async (e) => {
         handleChange(e);
-        if (e.target.value.length === 6) {
-          try {
-            const pincodeData = await fetchPincodeDetails(e.target.value);
-            if (pincodeData && pincodeData[0]) {
-              setFormData((prevData) => ({
-                ...prevData,
-                city: pincodeData[0].city || "",
-                state: pincodeData[0].state || "",
-              }));
-            }
-          } catch (error) {
-            toast.error("Failed to fetch city and state!");
-          }
-        }
+        // if (e.target.value.length === 6) {
+        //   try {
+        //     const pincodeData = await fetchPincodeDetails(e.target.value);
+        //     if (pincodeData && pincodeData[0]) {
+        //       setFormData((prevData) => ({
+        //         ...prevData,
+        //         city: pincodeData[0].city || "",
+        //         state: pincodeData[0].state || "",
+        //       }));
+        //     }
+        //   } catch (error) {
+        //     toast.error("Failed to fetch city and state!");
+        //   }
+        // }
+      }}
+      onBlur={(e) => {
+        const errorMsg = validateField(e.target.name, e.target.value);
+        setErrors((prev) => ({ ...prev, pincode: errorMsg }));
       }}
       required
     />
@@ -425,6 +429,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
   name="selectedArea"
   value={formData.selectedArea || undefined} // Ensure it's undefined when no value is selected
   onChange={(value) => handleChange({ target: { name: "selectedArea", value } })}
+  onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
   placeholder="Select Area"
   required
 >
@@ -449,6 +454,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       placeholder="City"
       value={formData.city}
       onChange={handleChange}
+      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
       required
     />
     {errors.city && <ErrorMessage>{errors.city}</ErrorMessage>}
@@ -461,6 +467,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
       placeholder="State"
       value={formData.state}
       onChange={handleChange}
+      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
       required
     />
     {errors.state && <ErrorMessage>{errors.state}</ErrorMessage>}
@@ -468,36 +475,30 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
 
   </div>
 
-  
+
+<div>
+  <Select
+    mode="multiple"
+    name="deliverable_water_cans"
+    value={formData.deliverable_water_cans}
+    onChange={(value) => setFormData(prevData => ({ ...prevData, deliverable_water_cans: value }))}
+    placeholder={loading ? "Loading..." : "Select Deliverable Water Cans"}
+    style={{ width: "100%", border: "1px solid #ccc", borderRadius: "5px" }}
+    onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
+    required
+    disabled={loading}  // Disable the dropdown while loading
+  >
+    {!loading && [...new Set(availableWaterCans)].map((capacity, index) => (
+      <Option key={index} value={capacity}>
+        {capacity} Liters
+      </Option>
+    ))}
+  </Select>
+  {errors.deliverable_water_cans && <ErrorMessage>{errors.deliverable_water_cans}</ErrorMessage>}
+</div>
 
 
-      <div style={{ display:"flex", flexDirection:"column", gap:"10px"}}>
-      {formData.priceCapacityPairs.map((pair, index) => (
-        <div style={{ display:"flex", width:"100%", gap:"20px"}} key={index}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", width:"90%" }} >
-          <InputField
-              type="number"
-              placeholder="Enter price"
-              value={pair.price}
-              onChange={(e) => handleChange(e, index, "price")}
-              min="1"
-              required
-            />
 
-            <InputField
-              type="number"
-              placeholder="Enter capacity"
-              value={pair.capacity}
-              onChange={(e) => handleChange(e, index, "capacity")}
-              min="1"
-              required
-            />
-          </div>
-          <button style={{width:"5%", borderRadius:"5px", padding:"8px", border:"none"}} type="button" onClick={() => handleRemoveField(index)}>❌</button>
-          </div>
-          ))}
-          <button style={{width:"40%", borderRadius:"5px", padding:"8px", border:"none"}} type="button" onClick={handleAddField}>➕ Add Price & Capacity</button>
-          </div>
   
   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       <DatePickerContainer>
@@ -510,6 +511,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
           timeFormat="HH:mm"
           dateFormat="HH:mm"
           placeholderText="Delivery Start Time"
+          onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
           // filterTime={filterTime}
           minTime={new Date().setHours(9, 0, 0)}
           maxTime={new Date().setHours(20, 0, 0)}
@@ -527,6 +529,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
           dateFormat="HH:mm"
           placeholderText="Delivery End Time"
           // filterTime={filterTime}
+          onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
           minTime={new Date().setHours(10, 0, 0)}
           maxTime={new Date().setHours(21, 0, 0)}
         />
@@ -565,6 +568,7 @@ if (formData.gstFile && !isValidFileType(formData.gstFile)) {
             height: "100%",
             cursor: "pointer",
           }}
+          onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
         />
       </label>
     </div>

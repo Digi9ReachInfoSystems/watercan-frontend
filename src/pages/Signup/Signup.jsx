@@ -13,12 +13,16 @@ import {
   SignupForm,
   Input,
   SignupButton,
-  FooterText,
+  // FooterText,
   ErrorText,
+  FooterContent,
+  PasswordWrapper, 
+  EyeIcon
 } from "./Signup.styles";
 import { createUser } from "../../api/userApi";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { VscEye , VscEyeClosed } from "react-icons/vsc";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -28,6 +32,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   // Validation function for each field
   const validateField = (field, value) => {
@@ -67,6 +72,11 @@ const Signup = () => {
       setErrors((prevErrors) => ({ ...prevErrors, [field]: message }));
     }
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,6 +124,7 @@ const Signup = () => {
   return (
     <SignupContainer>
       <SignupWrapper>
+        <div style={{ padding: "30px"}}>
         <Title>Signup</Title>
         <SignupForm onSubmit={handleSubmit}>
           <Input
@@ -132,6 +143,7 @@ const Signup = () => {
                 }));
               }
             }}
+            error={errors.name}
           />
           {errors.name && <ErrorText>{errors.name}</ErrorText>}
 
@@ -143,6 +155,7 @@ const Signup = () => {
               setEmail(e.target.value);
               validateField("email", e.target.value);
             }}
+            error={errors.email}
           />
           {errors.email && <ErrorText>{errors.email}</ErrorText>}
 
@@ -164,18 +177,25 @@ const Signup = () => {
                 }));
               }
             }}
+            error={errors.phone}
           />
           {errors.phone && <ErrorText>{errors.phone}</ErrorText>}
 
+          <PasswordWrapper>
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
               validateField("password", e.target.value);
             }}
+            error={errors.password}
           />
+                      <EyeIcon onClick={togglePasswordVisibility}>
+                        {showPassword ? <VscEye /> : <VscEyeClosed />}
+                      </EyeIcon>
+                    </PasswordWrapper>
           {errors.password && <ErrorText>{errors.password}</ErrorText>}
 
           <SignupButton
@@ -185,9 +205,10 @@ const Signup = () => {
             {loading ? "Signing Up..." : "Sign Up"}
           </SignupButton>
         </SignupForm>
-        <FooterText>
-          Already have an account? <Link to="/login">Log In</Link>
-        </FooterText>
+        </div>
+        <FooterContent>
+            <Link to="/login" className="link">Login</Link>
+        </FooterContent>
       </SignupWrapper>
 
       {/* Toast container for displaying notifications */}
