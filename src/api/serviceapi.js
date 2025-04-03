@@ -1,13 +1,34 @@
 import axiosConfig from "../config/axiosConfig";
 
+// export const createApplication = async (applicationData) => {
+//   try{
+//     const response = await axiosConfig.post("/vendorapplication/createVendorApplication", applicationData);
+//     console.log("dsafghjkjhgfd:", response.data);
+//     return response.data;
+//   } catch (error) {
+//     throw error.response ? error.response.data : new Error("Server error");
+//   }  
+// }
+
 export const createApplication = async (applicationData) => {
-  try{
-    const response = await axiosConfig.post("/vendorapplication/createVendorApplication", applicationData);
+  try {
+    const response = await axiosConfig.post(
+      "/vendorapplication/createVendorApplication",
+      applicationData,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
+    console.error("API Error:", error.response?.data || error.message);
     throw error.response ? error.response.data : new Error("Server error");
-  }  
-}
+  }
+};
+
 
 export const getApplication = async () => {
   try {

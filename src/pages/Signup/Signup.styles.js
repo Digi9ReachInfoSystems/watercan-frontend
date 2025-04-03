@@ -31,6 +31,11 @@ export const SignupWrapper = styled.div`
   box-shadow: 0 4px 10px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   min-width: 450px;
+
+  @media (max-width: 480px) {
+    min-width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 export const Title = styled.h1`
@@ -99,10 +104,10 @@ export const FooterContent = styled.div`
 
 export const ErrorText = styled.p`
   color: red;
-  font-size: 12px;
+  font-size: 16px;
   margin: -5px 0 10px;
   text-align: left;
-  background: #ffffff80;
+  background:#0009;
   back-filter: blur(100px);
 
 `;
