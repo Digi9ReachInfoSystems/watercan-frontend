@@ -70,9 +70,12 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       const user = userCredential.user;
+      
       console.log("User signed in:", user);
 
       const userData = await loginUser(user.uid);
+
+      localStorage.setItem("UID", user.uid);
 
       if (userData.data?.role === "admin") {
         navigate("/admin");
