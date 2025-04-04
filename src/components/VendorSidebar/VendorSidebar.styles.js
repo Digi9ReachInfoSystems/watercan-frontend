@@ -62,6 +62,7 @@ export const SideBarwrapper = styled.div`
      text-decoration: none;
      font-size: ${({ isCollapsed }) => (isCollapsed ? "16px" : "18px")};
      font-weight: 500;
+    box-shadow: none;
      border-radius: 8px;
      transition: all 0.3s ease-in-out;
      white-space: nowrap;
@@ -119,10 +120,11 @@ export const SideBarwrapper = styled.div`
    }
 
   /* Mobile View (≤480px) */
-  @media (max-width: 480px) {
-    width: ${({ isMobileExpanded }) => (isMobileExpanded ? "250px" : "60px")}; /* Expand on menu click */
-    background: none;
-    box-shadow: none;
+@media (max-width: 480px) {
+  width: ${({ isMobileExpanded }) => (isMobileExpanded ? "250px" : "60px")};
+  background: ${({ isMobileExpanded }) => (isMobileExpanded ? "#f9fafb" : "none")};
+  box-shadow: ${({ isMobileExpanded }) => (isMobileExpanded ? "2px 0 10px rgba(0, 0, 0, 0.1)" : "none")};
+
 
     /* Hide menu items initially */
     .menu-list {
@@ -137,15 +139,14 @@ export const SideBarwrapper = styled.div`
 `;
 
 export const Logo = styled.div`
-  margin-top: 20px;
   .sidebar-logo {
     width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
     transition: width 0.3s ease-in-out;
   }
 
   @media (max-width: 480px) {
-    // margin-left: 80px; /* Move logo down to prevent overlap */
-    display: none; /* Hide logo on mobile view */
+    margin-top: 20px;
+    margin-bottom: -40px;
   }
 `;
 
