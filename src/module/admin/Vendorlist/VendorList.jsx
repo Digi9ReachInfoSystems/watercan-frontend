@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
 import { Link } from "react-router-dom";
-// import axios from "axios";
-import { getApplication, rejectApplication, approveApplication} from "../../../api/serviceapi";
-import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer } from "./VendorList.styles";
+import { getApplication, rejectApplication, approveApplication } from "../../../api/serviceapi";
+import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer, OrderStatus } from "./VendorList.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 const { Option } = Select;
 
 const VendorList = () => {
-    // const BASE_URL = "http://localhost:5000/vendorapplication";
     const [vendors, setVendors] = useState([]);
     const [filteredVendors, setFilteredVendors] = useState([]);
     const [selectedVendor, setSelectedVendor] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [statusFilter, setStatusFilter] = useState("All");
 
-    // Fetch vendors from backend
     useEffect(() => {
         const fetchVendors = async () => {
             try {
-                const data = await getApplication(); 
-                console.log("Fetched Vendors:", data);
-    
-                // Sort vendors by createdAt timestamp in descending order
+                const data = await getApplication();
                 const sortedVendors = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
                 setVendors(sortedVendors);
                 setFilteredVendors(sortedVendors);
             } catch (error) {
@@ -35,7 +29,6 @@ const VendorList = () => {
         };
         fetchVendors();
     }, []);
-    
 
     useEffect(() => {
         if (statusFilter === "All") {
@@ -50,63 +43,29 @@ const VendorList = () => {
         setIsModalOpen(true);
     };
 
-    // const handleApprove = async () => {
-    //     if (!selectedVendor || !selectedVendor._id) {
-    //         console.error("Error: No selected vendor or missing _id");
-    //         return;
-    //     }
-        
-    //     console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
-    
-    //     try {
-    //         await axios.put(`${BASE_URL}/approveVendorApplication/${selectedVendor._id}`, { status: "approved" }); 
-    //         setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
-    //         setIsModalOpen(false);
-    //         toast.success("Vendor approved successfully!");
-    //     } catch (error) {
-    //         console.error("Error updating vendor status:", error.response?.data || error.message);
-    //     }
-    // };
-
     const handleApprove = async () => {
-        if (!selectedVendor || !selectedVendor._id) {
-            console.error("Error: No selected vendor or missing _id");
-            return;
-        }
-        
-        console.log("Approving vendor with ID:", selectedVendor._id); // Debug log
-    
+        if (!selectedVendor || !selectedVendor._id) return;
         try {
             await approveApplication(selectedVendor._id);
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "approved" } : v));
             setIsModalOpen(false);
             toast.success("Vendor approved successfully!");
         } catch (error) {
-            console.error("Error updating vendor status:", error.response?.data || error.message);
             toast.error(error.response?.data?.message || "Failed to approve vendor");
         }
     };
 
     const handleReject = async () => {
-        if (!selectedVendor || !selectedVendor._id) {
-            console.error("Error: No selected vendor or missing _id");
-            return;
-        }
-        
-        console.log("Rejecting vendor with ID:", selectedVendor._id); // Debug log
-    
+        if (!selectedVendor || !selectedVendor._id) return;
         try {
             await rejectApplication(selectedVendor._id);
             setVendors(prev => prev.map(v => v._id === selectedVendor._id ? { ...v, status: "rejected" } : v));
             setIsModalOpen(false);
             toast.error("Vendor rejected successfully!");
         } catch (error) {
-            console.error("Error updating vendor status:", error.response?.data || error.message);
             toast.error(error.response?.data?.message || "Failed to reject vendor");
         }
     };
-    
-    
 
     const handleStatusFilterChange = (value) => {
         setStatusFilter(value);
@@ -116,36 +75,35 @@ const VendorList = () => {
         { title: "Name", dataIndex: "name", key: "name" },
         { title: "Email", dataIndex: "email", key: "email" },
         { title: "Phone Number", dataIndex: "phoneNumber", key: "phoneNumber" },
-        { title: "Delivery Start Time", dataIndex: "delivery_start_time", key: "delivery_start_time" },
-        { title: "Delivery End Time", dataIndex: "delivery_end_time", key: "delivery_end_time" },
-        { 
+        {
+            title: "Delivery Start Time",
+            dataIndex: "delivery_start_time",
+            key: "delivery_start_time",
+            render: (text) => moment(text).isValid() ? moment(text).format("h:mm A") : 'Invalid date',
+        },
+        {
+            title: "Delivery End Time",
+            dataIndex: "delivery_end_time",
+            key: "delivery_end_time",
+            render: (text) => moment(text).isValid() ? moment(text).format("h:mm A") : 'Invalid date',
+        },
+        {
             title: "Status",
             dataIndex: "status",
             key: "status",
-            render: (_, record) => {
-                let color = "";
-                let statusText = record.status.charAt(0).toUpperCase() + record.status.slice(1); // Capitalize first letter
-        
-                if (record.status === "pending") color = "orange"; 
-                if (record.status === "approved") color = "green"; 
-                if (record.status === "rejected") color = "red";
-        
-                return (
-                    <Link to="#" onClick={() => handleStatusClick(record)} style={{ color, fontWeight: "bold" }}>
-                        {statusText} 
-                    </Link>
-        
-                );
-            }
+            render: (_, record) => (
+                <OrderStatus status={record.status} onClick={() => handleStatusClick(record)}>
+                    {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
+                </OrderStatus>
+            )
         }
+        
     ];
-    
+
     return (
         <Container>
-             <ToastContainer />  
+            <ToastContainer />
             <Title>Vendor List</Title>
-
-            {/* Dropdown Filter */}
             <FilterContainer>
                 <span style={{ marginTop: "8px" }}>Filter by Status: </span>
                 <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
@@ -155,7 +113,6 @@ const VendorList = () => {
                     <Option value="rejected">Rejected</Option>
                 </Select>
             </FilterContainer>
-
             <StyledTable>
                 <Table 
                     columns={columns} 
@@ -164,7 +121,6 @@ const VendorList = () => {
                     rowKey="_id" 
                 />
             </StyledTable>
-
             <Modal
                 title="Vendor Details"
                 open={isModalOpen}
@@ -181,27 +137,13 @@ const VendorList = () => {
                         <p><strong>City:</strong> {selectedVendor.city}</p>
                         <p><strong>State:</strong> {selectedVendor.state}</p>
                         <p><strong>Pincode:</strong> {selectedVendor.pincode}</p>
-                        <p><strong>Delivery Start Time:</strong> {selectedVendor.delivery_start_time}</p>
-                        <p><strong>Delivery End Time:</strong> {selectedVendor.delivery_end_time}</p>
+                        <p><strong>Delivery Start Time:</strong> {moment(selectedVendor.delivery_start_time).format("h:mm A")}</p>
+                        <p><strong>Delivery End Time:</strong> {moment(selectedVendor.delivery_end_time).format("h:mm A")}</p>
                         <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverable_water_cans.length}</p>
-
-                        
                         <ButtonGroup>
-              <Button
-                type="primary"
-                onClick={handleApprove}
-                disabled={selectedVendor?.status === "approved"}
-              >
-                Approve
-              </Button>
-              <Button
-                type="primary"
-                onClick={handleReject}
-                disabled={selectedVendor?.status === "rejected"}
-              >
-                Reject
-              </Button>
-            </ButtonGroup>
+                            <Button type="primary" onClick={handleApprove} disabled={selectedVendor?.status === "approved"}>Approve</Button>
+                            <Button type="primary" onClick={handleReject} disabled={selectedVendor?.status === "rejected"}>Reject</Button>
+                        </ButtonGroup>
                     </ModalContent>
                 )}
             </Modal>
