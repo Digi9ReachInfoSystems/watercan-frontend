@@ -96,7 +96,8 @@ const Signup = () => {
         email,
         password
       );
-      console.log("User signed up:", userCredential.user);
+      localStorage.setItem("FUID", userCredential.user.uid); // Store UID in localStorage
+    
 
       const userData = {
         name,
