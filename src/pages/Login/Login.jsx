@@ -75,7 +75,7 @@ const Login = () => {
 
       const userData = await loginUser(user.uid);
 
-      localStorage.setItem("UID", user.uid);
+      localStorage.setItem("FUID",  userCredential.user.uid);
 
       if (userData.data?.role === "admin") {
         navigate("/admin");

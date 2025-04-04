@@ -61,7 +61,7 @@ const ApplicationForm = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const UID = localStorage.getItem("UID");
+        const UID = localStorage.getItem("FUID");
         console.log("Stored UID:", UID); // Debugging log
     
         if (!UID) throw new Error("UID not found in localStorage");
@@ -114,23 +114,7 @@ const ApplicationForm = () => {
 
     fetchWaterCans();
 
-    // const fetchWaterCans = async () => {
-    //   try {
-    //     const response = await getAllWaterCans();
-    //     console.log("Water Cans Response:", response);
-    //     // Extract available capacities and update the available options state
-    //     const capacities = response.data.map(can => can.capacityInLiters);
-    //     setAvailableWaterCans(capacities);
-    //   } catch (error) {
-    //     console.error("Error fetching water cans:", error);
-    //     toast.error("Failed to fetch water can capacities!");
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-  
-    // fetchWaterCans();
-    // if (auth.currentUser) {
+
       getUsers(); 
     // }
   }, []);
@@ -204,48 +188,7 @@ const handleChange = async (e, index = null, field = null) => {
     [name]: value,
   }));
 
-  // Fetch city & state when pincode is 6 digits
-  // Pincode validation & area fetching
-  // if (name === "pincode" && value.length === 6) {
-  //   try {
-  //     const pincodeData = await fetchPincodeDetails(value);
   
-  //     if (!pincodeData || !Array.isArray(pincodeData) || pincodeData.length === 0) {
-  //       throw new Error("Invalid Pincode or API Error!");
-  //     }
-  
-  //     let postOffices = [];
-  
-  //     // ✅ Handle response correctly
-  //     if (Array.isArray(pincodeData)) {
-  //       postOffices = pincodeData.map(({ area, district, state }) => ({
-  //         area,
-  //         district,
-  //         state,
-  //       }));
-  //     }
-  
-  //     if (postOffices.length > 0) {
-  //       const { district, state } = postOffices[0];
-  
-  //       setFormData((prevData) => ({
-  //         ...prevData,
-  //         city: district || prevData.city,
-  //         state: state || prevData.state,
-  //         areas: postOffices.map(areaObj => areaObj.area), // ✅ Corrected field for area names
-  //         area: "", // Reset selected area
-  //       }));
-
-
-  //     } else {
-  //       throw new Error("Invalid Pincode or No Data Found!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Pincode API Error:", error.message);
-  //     toast.error(error.message || "Failed to fetch city, state, and areas!");
-  //   }
-  // }
-
   if (name === "pincode" && value.length === 6) {
     try {
       const pincodeData = await fetchPincodeDetails(value);
