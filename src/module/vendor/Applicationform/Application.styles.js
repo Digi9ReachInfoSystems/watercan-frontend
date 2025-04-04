@@ -6,12 +6,14 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   background-color:rgb(159, 211, 235);
+
 `;
 
 export const ContentContainer = styled.div`
   flex: 1;
-  // padding: 20px;
   width: 40%;
+
+
 .container {
   position: relative;
   display: inline-block; /* Adjust width based on content */
@@ -22,7 +24,6 @@ export const ContentContainer = styled.div`
 width: 100%;
 height: 100vh;
   display: block;
-  // border-radius: 20px;
 }
 
 .overlay-text {
@@ -41,11 +42,19 @@ height: 100vh;
   margin: 5px 0;
 }
 
+@media (max-width: 1170px) {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  display: none;
+}
+
 `;
 
 export const FormContainer = styled.div`
   display: flex;
-  width: 60%;
+  width: 40%;
   flex-direction: column;
   // max-width: 650px;
   // margin: auto;
@@ -55,13 +64,31 @@ export const FormContainer = styled.div`
   background-color: #fff;
   font-family: Arial, sans-serif;
   // margin: 20px;
+  justify-content: center;
+  background-color:rgb(159, 211, 235);
+
+  @media (max-width: 1170px) {
+    width: 50%;
+    
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    background-color:rgb(159, 211, 235);
+  }
+
 `;
 
 export const FormTitle = styled.h2`
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+  margin-bottom: 50px;
+  font-size: 2.5rem;
   color: #333;
+  text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 export const StyledForm = styled.form`
@@ -79,6 +106,42 @@ export const StyledForm = styled.form`
 .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
   border: none;
   background: none;
+       background-color: #fff;
+           padding: 8px;
+  }
+
+  .form-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-row-two{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-row-time{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 1170px) {
+      grid-template-columns: 1fr;
+    }
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+        
+      }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 

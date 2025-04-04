@@ -7,7 +7,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaHandHoldingWater } from "react-icons/fa";
 import { GiWaterGallon } from "react-icons/gi";
-
+import logo from "../../assets/logo.png"; 
 
 const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
@@ -29,9 +29,10 @@ const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
       onMouseEnter={() => setIsCollapsed(false)}
       onMouseLeave={() => setIsCollapsed(true)}
     >
-      <Logo>
-        Logo
-      </Logo>
+<Logo isCollapsed={isCollapsed}>
+  <img src={logo} alt="Logo" className="sidebar-logo" style={{ borderRadius: "50%"}}/>
+</Logo>
+
       <div className="menu">
         <ul className="menu-list">
           {SidebarItem.map((item) => (
