@@ -1,15 +1,5 @@
 import axiosConfig from "../config/axiosConfig";
 
-// export const createApplication = async (applicationData) => {
-//   try{
-//     const response = await axiosConfig.post("/vendorapplication/createVendorApplication", applicationData);
-//     console.log("dsafghjkjhgfd:", response.data);
-//     return response.data;
-//   } catch (error) {
-//     throw error.response ? error.response.data : new Error("Server error");
-//   }  
-// }
-
 export const createApplication = async (applicationData) => {
   try {
     const response = await axiosConfig.post(
