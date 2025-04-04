@@ -83,3 +83,28 @@ export const ButtonGroup = styled.div`
         font-size: 16px;
     }
 `;
+
+export const OrderStatus = styled.div`
+  font-weight: bold;
+  padding: 5px 6px;
+  border-radius: 10px;
+  display: inline-block; 
+  width: 60%;
+  text-align: center;
+  cursor: pointer;
+  
+color: ${({ status }) =>
+    status === "pending" ? "orange" :
+    status === "approved" ? "green" :
+    status === "rejected" ? "red" : "black"};
+
+background-color: ${({ status }) =>
+    status === "pending" ? "rgba(255, 166, 0, 0.38)" :
+    status === "approved" ? "rgba(20, 255, 71, 0.53)" :
+    status === "rejected" ? "rgba(255, 0, 0, 0.31)" : "rgba(200, 200, 200, 0.3)"};
+
+border: 0.5px solid ${({ status }) =>
+    status === "pending" ? "orange" :
+    status === "approved" ? "green" :
+    status === "rejected" ? "red" : "black"};
+`;

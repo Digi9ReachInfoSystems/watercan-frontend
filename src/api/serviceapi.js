@@ -47,6 +47,7 @@ export const getAllOrders = async () => {
       const response = await axiosConfig.get("/order/getAllOrders");
       return response.data;
   } catch (error) {
+      console.error("Error fetching orders:", error);
       throw error.response ? error.response.data : new Error("Server error");
   }
 }
@@ -93,3 +94,4 @@ export const updateOrder = async (orderId, updatedData) => {
 //     const response = await axios.put(`${BASE_URL}/order/updateOrder/${orderId}`, updatedData);
 //     return response.data;
 // }
+
