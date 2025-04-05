@@ -36,5 +36,15 @@ export const loginUser = async (user_id) => {
       throw error.response ? error.response.data : new Error("Server error");
     }
   };
+
+  export const getUserById = async (user_id) => {
+    try {
+      const response = await axiosConfig.get("/user/get-all-users/${user_id}", { user_id });
+      console.log("Response data:", response.data);
+      return response.data;
+    } catch (error) {
+      throw error.response ? error.response.data : new Error("Server error");
+    }
+  };
   
   

@@ -19,7 +19,7 @@ const Header = ({ title }) => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const firebaseUID = localStorage.getItem("UID"); // or whatever the actual key is
+                const firebaseUID = localStorage.getItem("FUID"); // or whatever the actual key is
     
                 if (!firebaseUID) {
                     console.warn("No UID found in localStorage.");

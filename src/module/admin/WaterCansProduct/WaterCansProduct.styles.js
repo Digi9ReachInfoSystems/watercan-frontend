@@ -78,6 +78,7 @@ export const StyledTable = styled(Table)`
     color: black !important; 
     font-weight: bold;
     text-align: center;
+    width: 200px;
   }
 
   .ant-table-tbody > tr > td {
@@ -88,4 +89,5 @@ export const StyledTable = styled(Table)`
   .ant-table-row:hover {
     background-color: #f0f5ff !important; 
   }
+
 `;

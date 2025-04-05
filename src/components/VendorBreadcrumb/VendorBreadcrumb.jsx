@@ -6,25 +6,24 @@ import { AppBarWrap } from "./VendorBreadcrumb.styles";
 function VendorBreadcrumb() {
   const location = useLocation();
 
-  // Function to generate breadcrumb items dynamically
+  // Generate breadcrumbs from the current path
   const generateBreadcrumbs = () => {
     const pathnames = location.pathname.split("/").filter((x) => x);
     const breadcrumbItems = [];
 
     let currentPath = "";
 
-    // Add the breadcrumbs dynamically based on the path segments
     pathnames.forEach((segment, index) => {
       currentPath += `/${segment}`;
 
+      // Clean and format each segment
       const displayText =
         segment.toLowerCase() === "faq"
           ? "FAQ"
-          : segment.charAt(0).toUpperCase() + segment.slice(1);
+          : decodeURIComponent(segment.charAt(0).toUpperCase() + segment.slice(1));
 
       breadcrumbItems.push(
         <Breadcrumb.Item key={currentPath}>
-          {/* Only link if it's NOT the last breadcrumb */}
           {index !== pathnames.length - 1 ? (
             <Link to={currentPath}>{displayText}</Link>
           ) : (
@@ -40,8 +39,6 @@ function VendorBreadcrumb() {
   return (
     <AppBarWrap>
       <Breadcrumb>
-
-        {/* Dynamic breadcrumbs */}
         {generateBreadcrumbs()}
       </Breadcrumb>
     </AppBarWrap>

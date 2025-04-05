@@ -78,12 +78,13 @@ const Login = () => {
       localStorage.setItem("FUID",  userCredential.user.uid);
 
       if (userData.data?.role === "admin") {
-        navigate("/admin");
+        navigate("/admin/dashboard");
       } else if (userData.data?.role === "vendor") {
-        navigate("/vendor");
+        navigate(`/vendor/${userData.data._id}/dashboard`);
       } else {
         toast.error("Login failed! Role not recognized.");
       }
+      
       toast.success("Login successful!");
     } catch (error) {
       toast.error(error.message);
