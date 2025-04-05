@@ -1,77 +1,54 @@
 import React, { useEffect, useState, useRef } from "react";
-import { 
-    HeaderContainer, 
-    HeaderWrapper, 
-    HeaderTitle, 
-    ProfileContainer, 
-    ProfileIcon, 
-    DropdownMenu 
+import { FaUserCircle } from "react-icons/fa";
+import { getVendorById } from "../../api/waterCanApi";
+import {
+  HeaderContainer,
+  HeaderWrapper,
+  ProfileContainer,
+  ProfileIcon,
+  DropdownMenu
 } from "./vendorHeader.styles";
-import { FaUserCircle } from "react-icons/fa"; 
-import { getOrdersByVendor } from "../../api/serviceapi";
 
-const VendorHeader = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
-    const [vendorName, setVendorName] = useState("");
+const VendorHeader = ({ vendorId }) => {
+  const [vendorName, setVendorName] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-    useEffect(() => {
-        const fetchVendorData = async () => {
-            const orders = await getOrdersByVendor();
-            if (orders.length > 0) {
-                setVendorName(orders[0].vendor_id.name);  // ✅ Extract vendor name
-            }
-        };
-        fetchVendorData();
-    }, []);
+  useEffect(() => {
+    const fetchVendorName = async () => {
+        try {
+          const vendor = await getVendorById(vendorId);
+          console.log("Fetched vendor:", vendor); // 👈 add this
+          setVendorName(vendor?.name || "Vendor");
+        } catch (err) {
+          console.error("Error fetching vendor name:", err);
+        }
+      };
+    fetchVendorName();
+  }, [vendorId]);
 
-    // Function to toggle the dropdown menu
-    const toggleDropdown = () => {
-        setDropdownOpen((prev) => !prev);
-    };
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  };
 
-    // Handle click outside to close dropdown
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    // Logout function
-    const handleLogout = () => {
-        localStorage.clear();
-        window.location.href = "/login";
-    };
-
-    return (
-        <HeaderContainer>
-            <HeaderWrapper>
-                {/* <HeaderTitle>{title}</HeaderTitle> */}
-                
-                <ProfileContainer ref={dropdownRef}>
-                <p>Welcome, {vendorName || "Vendor"}!</p>  {/* Display Vendor Name */}
-                    
-                    {/* Click on icon to toggle dropdown */}
-                    <ProfileIcon onClick={toggleDropdown}>
-                        <FaUserCircle size={24} />
-                    </ProfileIcon>
-
-                    {dropdownOpen && (
-                        <DropdownMenu>
-                            <button onClick={handleLogout}>Logout</button>
-                        </DropdownMenu>
-                    )}
-                </ProfileContainer>
-            </HeaderWrapper>
-        </HeaderContainer>
-    );
+  return (
+    <HeaderContainer>
+      <HeaderWrapper>
+        <ProfileContainer ref={dropdownRef}>
+          <p>Welcome, {vendorName}</p>
+          <ProfileIcon onClick={() => setDropdownOpen((prev) => !prev)}>
+            <FaUserCircle size={24} />
+          </ProfileIcon>
+          {dropdownOpen && (
+            <DropdownMenu>
+              <button onClick={handleLogout}>Logout</button>
+            </DropdownMenu>
+          )}
+        </ProfileContainer>
+      </HeaderWrapper>
+    </HeaderContainer>
+  );
 };
 
 export default VendorHeader;

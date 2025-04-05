@@ -29,24 +29,22 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/registration-successfully" element={<RegistrationSuccessfully />} />  
         {/* Layout wraps all child routes */}
-        <Route path="/" element={<Layout />}>
-          {/* Admin Dashboard Route */}
-          <Route path="admin" element={<AdminDashboard />} />
-        
 
-        {/* Optional: 404 Route */}
-        <Route path="vendor" element={<VendorDashboard />} />
-        <Route path="/vendor/Orders" element={<VendorOrder />} />
+    {/* Admin Routes - wrap with Layout if needed */}
+    <Route path="/admin" element={<Layout />}>
+      <Route path="dashboard" element={<AdminDashboard />} />
+      <Route path="vendorlist" element={<VendorList />} />
+      <Route path="payment" element={<AdminPayment />} />
+      <Route path="Orders" element={<OrdersList />} />
+      <Route path="waterCan" element={<WaterCansProduct />} />
+    </Route>
 
-        {/* Vendor List Route */}
-        <Route path="/admin/vendorlist" element={<VendorList />} />
-        <Route path="/admin/payment" element={<AdminPayment />} />
-        <Route path="/admin/Orders" element={<OrdersList />} />
-        <Route path="/admin/waterCan" element={<WaterCansProduct />} />
-        
-        
+    {/* Vendor Routes - vendorId passed via URL param */}
+    <Route path="/vendor/:vendorId" element={<Layout />}>
+      <Route path="dashboard" element={<VendorDashboard />} />
+      <Route path="orders" element={<VendorOrder />} />
+    </Route>
 
-        </Route>
       </Routes>
     </BrowserRouter>
   );

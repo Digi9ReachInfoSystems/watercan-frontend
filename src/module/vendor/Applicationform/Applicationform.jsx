@@ -91,6 +91,9 @@ const ApplicationForm = () => {
           delivery_end_time: user.delivery_end_time,
           delivery_start_time: user.delivery_start_time,
           deliverable_water_cans: user.deliverable_water_cans,
+          proof_image: user.proof_image,
+          latitude: user.latitude,
+          longitude: user.longitude,
         }));
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -197,10 +200,12 @@ const handleChange = async (e, index = null, field = null) => {
         throw new Error("Invalid Pincode or API Error!");
       }
   
-      let postOffices = pincodeData.map(({ area, district, state }) => ({
+      let postOffices = pincodeData.map(({ area, district, state, lat, lng}) => ({
         area,
         district,
         state,
+        latitude: lat,  
+        longitude: lng,
       }));
   
       if (postOffices.length > 0) {
@@ -209,6 +214,8 @@ const handleChange = async (e, index = null, field = null) => {
           ...prevData,
           city: postOffices[0].district || prevData.city,
           state: postOffices[0].state || prevData.state,
+          latitude: postOffices[0].latitude || prevData.latitude,
+          longitude: postOffices[0].longitude || prevData.longitude,
           area: "", // Reset selected area so user can pick
         }));
       } else {
@@ -327,12 +334,14 @@ const handleSubmit = async (e) => {
 
     const response = await createApplication(formattedData);
 
-    if (response.success) {
-      navigate("/registration-successfully");
-      setFormData(initialFormState);
-    } else {
-      toast.error(response.message || "Submission failed!");
-    }
+    console.log( "all data", formData)
+
+    // if (response.success) {
+    //   navigate("/registration-successfully");
+    //   setFormData(initialFormState);
+    // } else {
+    //   toast.error(response.message || "Submission failed!");
+    // }
   } catch (error) {
     console.error("Error submitting form:", error);
     toast.error("An error occurred!");
