@@ -30,20 +30,32 @@ const CreateWaterCanForm = ({ onSuccess, onClose }) => {
     <FormContainer>
       <Title>Create Water Can</Title>
       <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          label="Brand"
-          name="Brand"
-          rules={[{ required: true, message: "Please enter brand name" }]}
-        >
-          <Input placeholder="Enter brand" />
-        </Form.Item>
+      <Form.Item
+  label="Brand"
+  name="Brand"
+  rules={[
+    { required: true, message: "Please enter brand name" },
+    {
+      pattern: /^[A-Za-z\s]+$/,
+      message: "Brand name should contain only letters",
+    },
+  ]}
+>
+  <Input placeholder="Enter brand" />
+</Form.Item>
+
 
         <Form.Item
           label="MRP"
           name="MRP"
           rules={[{ required: true, message: "Please enter MRP" }]}
         >
-          <InputNumber min={1} style={{ width: "100%" }} />
+          <InputNumber
+  min={1}
+  style={{ width: "100%" }}
+  parser={(value) => value.replace(/[^\d]/g, '')} // removes non-numeric input
+  formatter={(value) => `${value}`} // keeps it plain
+/>
         </Form.Item>
 
         <Form.Item
@@ -51,7 +63,12 @@ const CreateWaterCanForm = ({ onSuccess, onClose }) => {
           name="selling_price"
           rules={[{ required: true, message: "Please enter selling price" }]}
         >
-          <InputNumber min={1} style={{ width: "100%" }} />
+          <InputNumber
+  min={1}
+  style={{ width: "100%" }}
+  parser={(value) => value.replace(/[^\d]/g, '')} // removes non-numeric input
+  formatter={(value) => `${value}`} // keeps it plain
+/>
         </Form.Item>
 
         <Form.Item
@@ -59,7 +76,12 @@ const CreateWaterCanForm = ({ onSuccess, onClose }) => {
           name="capacityInLiters"
           rules={[{ required: true, message: "Please enter capacity in litres" }]}
         >
-          <InputNumber min={1} style={{ width: "100%" }} />
+          <InputNumber
+  min={1}
+  style={{ width: "100%" }}
+  parser={(value) => value.replace(/[^\d]/g, '')} // removes non-numeric input
+  formatter={(value) => `${value}`} // keeps it plain
+/>
         </Form.Item>
 
         <Form.Item>
