@@ -91,3 +91,18 @@ export const fetchPincodeDetails = async (search) => {
     return { error: error.response?.data?.error || "Failed to fetch pincode details" };
   }
 };
+
+export const getApplicationByUserId = async (user_id) => {
+  try {
+    const response = await axiosConfig.get(`/vendorapplication/getApplicationByUserId/${user_id}`);
+    console.log("Application data:", response.data);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return null;
+    } else {
+      // Handle other errors
+      throw error.response ? error.response.data : new Error("Server error");
+    }
+  }
+};
