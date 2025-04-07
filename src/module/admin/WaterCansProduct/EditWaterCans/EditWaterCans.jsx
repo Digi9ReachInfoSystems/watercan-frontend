@@ -1,21 +1,42 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getWaterCanById, updateWaterCan } from "../../../../api/waterCanApi";
+import { Form, Input, InputNumber, Button } from "antd";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
+const FormContainer = styled.div`
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
 
-const Input = styled.input`
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-`;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
 
-const Label = styled.label`
-  font-weight: bold;
+  .ant-form-item {
+    margin-bottom: 15px;
+  }
+
+  .ant-btn {
+    width: 150px;
+  }
+
+  .ant-modal .ant-modal-title{
+    text-align: center;
+  }
+
+  .ant-form-item .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    margin-top: 5px;
+  }
+
+  .ant-form-item .ant-form-item-control-input{
+      min-height: 0px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -32,7 +53,14 @@ const SubmitButton = styled.button`
   }
 `;
 
+const Title = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
+
+    const [form] = Form.useForm();
   const [formData, setFormData] = useState({
     Brand: "",
     MRP: "",
@@ -86,32 +114,80 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
     }
   };
 
+
+
   return (
-    <FormWrapper onSubmit={handleSubmit}>
-      <Label>Brand</Label>
-      <Input name="Brand" value={formData.Brand} onChange={handleChange} required />
+    // <FormWrapper onSubmit={handleSubmit}>
+    //   <Label>Brand</Label>
+    //   <Input name="Brand" value={formData.Brand} onChange={handleChange} required />
 
-      <Label>MRP</Label>
-      <Input name="MRP" value={formData.MRP} onChange={handleChange} required />
+    //   <Label>MRP</Label>
+    //   <Input name="MRP" value={formData.MRP} onChange={handleChange} required />
 
-      <Label>Selling Price</Label>
-      <Input
-        name="selling_price"
+    //   <Label>Selling Price</Label>
+    //   <Input
+        // name="selling_price"
+        // value={formData.selling_price}
+        // onChange={handleChange}
+        // required
+    //   />
+
+    //   <Label>Capacity (Litres)</Label>
+    //   <Input
+    //     name="capacityInLiters"
+    //     value={formData.capacityInLiters}
+    //     onChange={handleChange}
+    //     required
+    //   />
+
+    //   <div style={{display: "flex", justifyContent: "flex-end"}}><SubmitButton type="submit">{isLoading ? "Updating" : "Update"} </SubmitButton></div>
+    // </FormWrapper>
+
+        <FormContainer>
+          <Title>Edit Water Can</Title>
+          <Form form={form} layout="vertical" onFinish={handleSubmit}>
+            <Form.Item
+              label="Brand"
+              name="Brand"
+              rules={[{ required: true, message: "Please enter brand name" }]}
+            >
+              <Input name="Brand" value={formData.Brand} onChange={handleChange} required />
+            </Form.Item>
+    
+            <Form.Item
+              label="MRP"
+              name="MRP"
+              rules={[{ required: true, message: "Please enter MRP" }]}
+            >
+              <InputNumber min={1} style={{ width: "100%" }} name="MRP" value={formData.MRP} onChange={handleChange} required />
+            </Form.Item>
+    
+            <Form.Item
+              label="Selling Price"
+              name="selling_price"
+              rules={[{ required: true, message: "Please enter selling price" }]}
+            >
+              <InputNumber min={1} style={{ width: "100%" }}      name="selling_price"
         value={formData.selling_price}
         onChange={handleChange}
-        required
-      />
-
-      <Label>Capacity (Litres)</Label>
-      <Input
-        name="capacityInLiters"
+        required/>
+            </Form.Item>
+    
+            <Form.Item
+              label="Capacity (Litres)"
+              name="capacityInLiters"
+              rules={[{ required: true, message: "Please enter capacity in litres" }]}
+            >
+              <InputNumber min={1} style={{ width: "100%" }}       name="capacityInLiters"
         value={formData.capacityInLiters}
         onChange={handleChange}
-        required
-      />
-
-      <div style={{display: "flex", justifyContent: "flex-end"}}><SubmitButton type="submit">{isLoading ? "Updating" : "Update"} </SubmitButton></div>
-    </FormWrapper>
+        required/>
+            </Form.Item>
+    
+            <div style={{display: "flex", justifyContent: "flex-end"}}><SubmitButton type="submit">{isLoading ? "Updating" : "Update"} </SubmitButton></div>
+          </Form>
+          <ToastContainer />
+        </FormContainer>
   );
 };
 

@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { VscEye , VscEyeClosed } from "react-icons/vsc";
+import { getApplicationByUserId } from "../../api/serviceapi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -78,13 +79,36 @@ const Login = () => {
       localStorage.setItem("FUID",  userCredential.user.uid);
 
       if (userData.data?.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin");
       } else if (userData.data?.role === "vendor") {
-        navigate(`/vendor/${userData.data._id}/dashboard`);
+        const userId = userData.data._id;
+        console.log("User ID:", userId);
+        
+        const application = await getApplicationByUserId(userId);
+        
+        if (!application || !application.data || application.data.length === 0) {
+          // No application found — navigate to application form
+          navigate("/applicationform");
+          return;
+        }
+        
+        console.log("Application found:", application.data);
+        
+        const status = application.data[0].status;
+        
+        if (status === "approved") {
+          navigate("/vendor");
+          toast.success("Login successful!");
+        } else if (status === "pending") {
+          navigate("/registration-successfully");
+          toast.info("Your application is still under review.");
+        } else {
+          toast.error("Your application is not approved yet!");
+        }
+        
       } else {
         toast.error("Login failed! Role not recognized.");
       }
-      
       toast.success("Login successful!");
     } catch (error) {
       toast.error(error.message);
