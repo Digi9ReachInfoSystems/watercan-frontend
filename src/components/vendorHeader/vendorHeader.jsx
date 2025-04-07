@@ -1,29 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { getVendorById } from "../../api/waterCanApi";
+import UserProfile from "../../module/vendor/vendorProfile/vendorProfile";
 import {
   HeaderContainer,
   HeaderWrapper,
   ProfileContainer,
   ProfileIcon,
-  DropdownMenu
 } from "./vendorHeader.styles";
+import { SidebarContainer, Overlay } from "../vendorHeader/vendorHeader.styles";
 
 const VendorHeader = ({ vendorId }) => {
   const [vendorName, setVendorName] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchVendorName = async () => {
-        try {
-          const vendor = await getVendorById(vendorId);
-          console.log("Fetched vendor:", vendor); // 👈 add this
-          setVendorName(vendor?.name || "Vendor");
-        } catch (err) {
-          console.error("Error fetching vendor name:", err);
-        }
-      };
+      try {
+        const vendor = await getVendorById(vendorId);
+        console.log("Fetched vendor:", vendor);
+        setVendorName(vendor?.name || "Vendor");
+      } catch (err) {
+        console.error("Error fetching vendor name:", err);
+      }
+    };
     fetchVendorName();
   }, [vendorId]);
 
@@ -33,21 +33,23 @@ const VendorHeader = ({ vendorId }) => {
   };
 
   return (
-    <HeaderContainer>
-      <HeaderWrapper>
-        <ProfileContainer ref={dropdownRef}>
-          <p>Welcome, {vendorName}</p>
-          <ProfileIcon onClick={() => setDropdownOpen((prev) => !prev)}>
-            <FaUserCircle size={24} />
-          </ProfileIcon>
-          {dropdownOpen && (
-            <DropdownMenu>
-              <button onClick={handleLogout}>Logout</button>
-            </DropdownMenu>
-          )}
-        </ProfileContainer>
-      </HeaderWrapper>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <HeaderWrapper>
+          <ProfileContainer>
+            <p>Welcome, {vendorName}</p>
+            <ProfileIcon onClick={() => setSidebarOpen((prev) => !prev)}>
+              <FaUserCircle size={24} />
+            </ProfileIcon>
+          </ProfileContainer>
+        </HeaderWrapper>
+      </HeaderContainer>
+
+      <Overlay open={sidebarOpen} onClick={() => setSidebarOpen(false)} />
+      <SidebarContainer open={sidebarOpen}>
+        <UserProfile handleLogout={handleLogout} />
+      </SidebarContainer>
+    </>
   );
 };
 
