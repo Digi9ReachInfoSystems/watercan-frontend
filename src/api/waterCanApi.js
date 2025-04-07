@@ -55,6 +55,7 @@ export const deleteWaterCan = async (waterCanId) => {
 
 export const getVendorById = async (vendorId) => {
     try {
+        console.log("Fetching vendor with ID:", vendorId); // Debugging line
         const response = await axiosConfig.get(`/vendor/getVendorById/${vendorId}`);
         console.log("Full API Response:", response.data);
         return response.data.data; // vendor object

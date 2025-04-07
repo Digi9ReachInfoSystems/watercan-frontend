@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useLocation,useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { PageWrapper, ContentWrapper } from "../layout/Layout.styles";
 import Header from "../components/Header/Header";
@@ -11,17 +11,12 @@ import VendorBreadcrumb from "../components/VendorBreadcrumb/VendorBreadcrumb";
 const Layout = () => {
   const [title, setTitle] = useState("Home"); // Default title
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const params = useParams();
-
-  const vendorId = params.vendorId;
 
   // Get the current route path
   const location = useLocation();
 
   // Check if the path contains 'vendor' for vendor dashboard
- 
-  const isVendorDashboard = location.pathname.includes(`/vendor/${vendorId}`);
-
+  const isVendorDashboard = location.pathname.startsWith("/vendor");
 
   return (
     <>
@@ -30,7 +25,7 @@ const Layout = () => {
         <PageWrapper>
           <VendorSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           <ContentWrapper isCollapsed={isCollapsed}>
-            <VendorHeader  vendorId={vendorId} />
+            <VendorHeader />
             <VendorBreadcrumb />
             <Outlet />
           </ContentWrapper>
