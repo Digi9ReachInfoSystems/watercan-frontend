@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-    height: 80px;
-    background-color: rgb(247, 245, 245);
+    // height: 80px;
+    // background-color: rgb(247, 245, 245);
+        background-color: ;
     color: #1d1d1d;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    // padding: 0 20px;
     top: 0;
     left: 0;
     z-index: 100;
@@ -18,7 +19,7 @@ export const HeaderContainer = styled.div`
 export const HeaderWrapper = styled.div`
     width: 100%;
     height: 80px;
-    background-color: rgb(247, 245, 245);
+    background-color: #2290AC20;
     color: #1d1d1d;
     display: flex;
     justify-content: space-between;
@@ -39,8 +40,6 @@ font-weight: bold;
 margin-right:200px;
 font-family: "Montserrat", sans-serif;
 `;
-
-
 
 export const ProfileContainer = styled.div`
     display: flex;

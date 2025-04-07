@@ -10,7 +10,7 @@ export const ContentWrapper = styled.div`
   flex: 1;
   margin-left: ${({ isCollapsed }) => (isCollapsed ? "20px" : "200px")}; /* Adjust dynamically */
   width: calc(100% - ${({ isCollapsed }) => (isCollapsed ? "10px" : "200px")});
-  padding: 20px;
+  // padding: 20px;
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
   // overflow-y: auto;
   // position:absolute;

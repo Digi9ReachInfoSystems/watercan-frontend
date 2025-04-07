@@ -84,3 +84,27 @@ export const DropdownMenu = styled.div`
         }
     }
 `;
+
+export const SidebarContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: ${({ open }) => (open ? "0" : "-100%")};
+  width: 100%;
+  max-width: 450px;
+  background-color: #ffffff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out;
+  z-index: 999;
+  overflow-y: auto;
+`;
+
+export const Overlay = styled.div`
+  display: ${({ open }) => (open ? "block" : "none")};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+`;
