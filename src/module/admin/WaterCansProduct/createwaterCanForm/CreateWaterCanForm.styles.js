@@ -34,3 +34,8 @@ export const FormContainer = styled.div`
       min-height: 0px;
   }
 `;
+
+export const Title = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+`;
