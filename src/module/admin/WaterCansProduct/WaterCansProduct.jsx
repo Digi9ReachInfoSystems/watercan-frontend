@@ -18,10 +18,12 @@ import {
 import EditWaterCan from "./EditWaterCans/EditWaterCans";
 import { IoClose } from "react-icons/io5";
 import { FiEdit3 } from "react-icons/fi";
+import CreateWaterCanForm from "./createwaterCanForm/CreateWaterCanForm";
 
 const WaterCansProduct = () => {
   const [data, setData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
   const [editingWaterCan, setEditingWaterCan] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -53,9 +55,9 @@ const WaterCansProduct = () => {
   };
 
   const handleCreate = () => {
-    setIsEditMode(false);
+    // setIsEditMode(false);
     setEditingWaterCan(null);
-    setIsModalOpen(true);
+    setIsModalCreateOpen(true);
   };
 
   const handleEdit = async (id) => {
@@ -138,6 +140,23 @@ const WaterCansProduct = () => {
               initialData={editingWaterCan}
             />
             <CloseButton onClick={() => setIsModalOpen(false)}>
+              <IoClose />
+            </CloseButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
+
+      {isModalCreateOpen && (
+        <ModalOverlay>
+          <ModalContent>
+            <CreateWaterCanForm
+              onSuccess={() => {
+                // fetchData();
+                setIsModalCreateOpen(false);
+              }}
+              onClose={() => setIsModalCreateOpen(false)}
+            />
+            <CloseButton onClick={() => setIsModalCreateOpen(false)}>
               <IoClose />
             </CloseButton>
           </ModalContent>

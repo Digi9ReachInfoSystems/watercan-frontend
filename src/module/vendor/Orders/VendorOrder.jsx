@@ -17,8 +17,10 @@ import {
 } from "./VendorOrder.styles";
 import { FaTimes } from "react-icons/fa";
 import { TbDotsVertical } from "react-icons/tb";
-import { getOrdersByVendor } from "../../../api/serviceapi";
+// import { getOrdersByVendor } from "../../../api/serviceapi";
+import { getOrdersByVendor } from "../../../api/OrdersApi";
 import noorder from "../../../assets/noOrder.png"
+import { getUserByFirebaseId } from "../../../api/userApi";
 
 // Static time slots for filtering
 const STATIC_TIME_SLOTS = ["10AM-12PM", "12PM-3PM", "3PM-6PM", "6PM-9PM"];
@@ -50,30 +52,76 @@ const VendorOrder = () => {
     fetchVendorOrders();
   }, []);
 
+  // const fetchVendorOrders = async () => {
+  //   try {
+  //     const data = await getOrdersByVendor();
+  //     console.log("Fetched orders from API:", data);
+
+  //     if (!data || data.length === 0) {
+  //       console.warn("No orders received from API");
+  //       setOrders([]);
+  //       return;
+  //     }
+
+  //     // Normalize time slots before storing orders
+  //     const normalizedOrders = data.map((order) => ({
+  //       ...order,
+  //       timeSlot: normalizeTimeSlot(order.timeSlot),
+  //     }));
+
+  //     setOrders(normalizedOrders);
+  //   } catch (error) {
+  //     console.error("Error fetching vendor orders:", error);
+  //   }
+  // };
+
+  // Filter orders based on selected tab
+
   const fetchVendorOrders = async () => {
     try {
-      const data = await getOrdersByVendor();
-      console.log("Fetched orders from API:", data);
+      const firebaseId = localStorage.getItem("FUID");
+      console.log("Vendor Firebase ID from localStorage:", firebaseId);
+  
+      const vendorUser = await getUserByFirebaseId(firebaseId);
 
-      if (!data || data.length === 0) {
-        console.warn("No orders received from API");
-        setOrders([]);
+      // const vendorUserId = "67ef94f79464fe34bb3b9147";
+      const vendorUserId = vendorUser?.data?._id;
+      console.log("Vendor User ID:", vendorUserId);
+  
+      if (!vendorUserId) {
+        console.error("Vendor user ID not found.");
         return;
       }
 
-      // Normalize time slots before storing orders
-      const normalizedOrders = data.map((order) => ({
+
+  
+      const ordersResponse = await getOrdersByVendor(vendorUserId);
+      const ordersArray = ordersResponse?.data || [];
+  
+      if (ordersArray.length === 0) {
+        setOrders([]);
+        return;
+      }
+  
+      const normalizedOrders = ordersArray.map((order) => ({
         ...order,
         timeSlot: normalizeTimeSlot(order.timeSlot),
       }));
-
+  
       setOrders(normalizedOrders);
     } catch (error) {
       console.error("Error fetching vendor orders:", error);
+      setOrders([]);
     }
   };
+  
+  
 
-  // Filter orders based on selected tab
+
+      // Normalize time slots before storing orders
+
+
+
   const filteredOrders = orders.filter((order) => order.timeSlot === activeTab);
 
   return (
