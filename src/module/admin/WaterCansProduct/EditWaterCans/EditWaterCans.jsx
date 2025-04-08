@@ -64,8 +64,10 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
 
   const handleSubmit = async (values) => {
     setIsLoading(true);
+    const { MRP, selling_price } = values;
+  
     try {
-      await updateWaterCan(initialData._id, values);
+      await updateWaterCan(initialData._id, { MRP, selling_price });
       toast.success("Water Can updated successfully!");
       onSuccess();
     } catch (err) {
@@ -76,6 +78,7 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
       onClose();
     }
   };
+  
 
   return (
     <FormContainer>
@@ -92,7 +95,7 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
             },
           ]}
         >
-          <Input placeholder="Enter brand" />
+          <Input placeholder="Enter brand"  disabled/>
         </Form.Item>
 
         <Form.Item
@@ -116,7 +119,7 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
           name="capacityInLiters"
           rules={[{ required: true, message: "Please enter capacity in litres" }]}
         >
-          <InputNumber min={1} style={{ width: "100%" }} />
+          <InputNumber min={1} style={{ width: "100%" }} disabled />
         </Form.Item>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
