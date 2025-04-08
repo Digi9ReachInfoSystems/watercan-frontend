@@ -124,7 +124,7 @@ const WaterCansProduct = () => {
           </StyledButton>
         </div>
         <StyledHeading>Water Cans List</StyledHeading>
-        <StyledTable columns={columns} dataSource={data} pagination={false} />
+        <StyledTable columns={columns} dataSource={data} pagination={{ pageSize: 7 }} />
       </Container>
 
       {isModalOpen && (
