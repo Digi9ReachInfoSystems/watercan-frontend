@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
-export const PageWrapper = styled.div`
-  display: flex;
-  height: 100vh;
-`;
+
 
 export const SideBarwrapper = styled.div`
   width: ${({ isCollapsed }) => (isCollapsed ? "60px" : "250px")};
@@ -21,22 +18,41 @@ export const SideBarwrapper = styled.div`
   padding-top: 20px;
   padding: 10px;
 
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    color: #1f2937;
-    font-size: ${({ isCollapsed }) => (isCollapsed ? "18px" : "24px")};
-    transition: font-size 0.3s ease-in-out;
-    font-weight: bold;
+  @media (max-width: 1360px){
+    width: ${({ isCollapsed }) => (isCollapsed ? "60px" : "200px")};
   }
+
+    .sidebar-toggle{
+    margin-top: 10px;
+
+  .sidebar-logo {
+    width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
+    transition: width 0.3s ease-in-out;
+    border-radius: 50%;
+
+    @media (max-width: 1360px) {
+      width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "60px")};
+    }
+  }
+
+  }
+
+  // .logo {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   padding: 20px;
+  //   color: #1f2937;
+  //   font-size: ${({ isCollapsed }) => (isCollapsed ? "18px" : "24px")};
+  //   transition: font-size 0.3s ease-in-out;
+  //   font-weight: bold;
+  // }
 
   .menu {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-top: 20px;
     font-family: "Montserrat", sans-serif;
     width: 100%;
   }
@@ -52,6 +68,11 @@ export const SideBarwrapper = styled.div`
 
   .menu-item {
     width: 100%;
+
+    @media (max-width: 1360px) {
+      width: ${({ isCollapsed }) => (isCollapsed ? "80%" : "100%")};
+      margin: 0 auto;
+    }
   }
 
   .menu-link {
@@ -84,6 +105,10 @@ export const SideBarwrapper = styled.div`
         color: white;
       }
     }
+      @media (max-width: 1360px) {
+        font-size: 14px;
+        padding: ${({ isCollapsed }) => (isCollapsed ? "8px" : "8px")};
+      }
   }
 
   .menu-link-icon {
@@ -94,6 +119,10 @@ export const SideBarwrapper = styled.div`
     align-items: center;
     color: white; 
     transition: color 0.3s ease-in-out;
+
+    @media (max-width: 1360px) {
+      font-size: 18px;
+    }
   }
 
   .menu-link.active .menu-link-icon {
@@ -124,22 +153,8 @@ export const SideBarwrapper = styled.div`
     display: ${({ isOpen }) => (isOpen ? "block" : "none")};
     padding-left: ${({ isCollapsed }) => (isCollapsed ? "0px" : "20px")};
   }
-`;
 
-export const ContentWrapper = styled.div`
-  margin-left: ${({ isCollapsed }) => (isCollapsed ? "60px" : "250px")};
-  width: calc(100% - ${({ isCollapsed }) => (isCollapsed ? "60px" : "250px")});
-  padding: 20px;
-  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-  overflow-y: auto;
-  font-family: "Montserrat", sans-serif;
+
 `;
 
 
-export const Logo = styled.div`
-  margin-top: 20px;
-  .sidebar-logo {
-    width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
-    transition: width 0.3s ease-in-out;
-  }
-`;

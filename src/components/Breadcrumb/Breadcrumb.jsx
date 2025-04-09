@@ -26,9 +26,9 @@ function BreadCrumb() {
         <Breadcrumb.Item key={currentPath}>
           {/* Only link if it's NOT the last breadcrumb */}
           {index !== pathnames.length - 1 ? (
-            <Link to={currentPath}>{displayText}</Link>
+            <Link to={currentPath} className="displaytext">{displayText}</Link>
           ) : (
-            <span>{displayText}</span>
+            <span className="displaytext">{displayText}</span>
           )}
         </Breadcrumb.Item>
       );

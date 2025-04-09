@@ -103,7 +103,7 @@ const AdminPayment = () => {
             dataIndex: "status", 
             key: "status", 
             render: (_, record) => (
-                <a href="#" onClick={() => handleStatusClick(record)}>
+                <a href="#" onClick={() => handleStatusClick(record)} className="created">
                     {record.status}
                 </a>
             ) 

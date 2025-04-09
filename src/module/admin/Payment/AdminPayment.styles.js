@@ -2,10 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // max-width: 95%;
     margin-left: 40px;
 `;
 
@@ -31,15 +27,23 @@ export const ToggleButton = styled.button`
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: ${({ isActive }) => (isActive ? "#1890ff" : "#ddd")};
+    background-color: ${({ isActive }) => (isActive ? "#2290AC" : "#ddd")};
     color: ${({ isActive }) => (isActive ? "#fff" : "#333")};
     transition: background-color 0.3s ease;
 
     &:hover {
-        background-color: ${({ isActive }) => (isActive ? "#1678c2" : "#bbb")};
+        background-color: ${({ isActive }) => (isActive ? "#2290AC60" : "#bbb")};
     }
 `;
 
 export const ContentContainer = styled.div`
     margin-top: 20px;
+`;
+
+
+export const ToggleEvent = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 `;

@@ -7,12 +7,10 @@ export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // padding: 0 20px;
     top: 0;
     left: 0;
     z-index: 100;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-left: 40px;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -27,6 +25,12 @@ export const HeaderWrapper = styled.div`
     padding-right: 20px;
     
 font-family: "Montserrat", sans-serif;
+
+@media (max-width: 1360px) {
+height: 60px;
+    padding-right: 10px;
+    font-size: 18px;
+}
 `;
 
 export const HeaderTitle = styled.h1`
@@ -52,6 +56,11 @@ export const ProfileIcon = styled.div`
     font-size: 24px;
     color: #333;
     cursor: pointer;
+
+    @media (max-width: 1360px) {
+        font-size: 20px;
+        margin-left: 5px;
+    }
 `;
 
 export const DropdownMenu = styled.div`
@@ -77,5 +86,14 @@ export const DropdownMenu = styled.div`
         &:hover {
             background: #f0f0f0;
         }
+
+        @media (max-width: 1360px) {
+            font-size: 12px;
+            padding: 8px 15px;
+        }
     }
+        @media (max-width: 1360px) {
+            padding: 0px;
+            top: 30px;
+}
 `;

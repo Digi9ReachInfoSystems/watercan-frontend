@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import { Container, Title, StyledTable, FilterContainer, StyledModal, ModalContent, DetailRow, OrderStatus } from "./OrdersList.styles";
+import { Container, Title, StyledTable, FilterContainer, StyledModal, ModalContent, DetailRow, OrderStatus, TitleContent } from "./OrdersList.styles";
 import { getAllOrders } from "../../../api/serviceapi";
 import moment from "moment";
 
@@ -95,19 +95,28 @@ const OrdersList = () => {
 
     return (
         <Container>
+            <TitleContent>
             <Title>Orders List</Title>
 
             <FilterContainer>
-                <span>Filter by Status:</span>
-                <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
-                    <Option value="All">All</Option>
-                    <Option value="Order placed">Order Placed</Option>
-                    <Option value="confirmed">Confirmed</Option>
-                    <Option value="Shipped">Shipped</Option>
-                    <Option value="Delivered">Delivered</Option>
-                    <Option value="Cancelled">Cancelled</Option>
-                </Select>
+                <span className="span">Filter by Status:</span>
+                <Select
+  defaultValue="All"
+  style={{ width: 150 }}
+  className="custom-select"
+  dropdownClassName="custom-select-dropdown"
+  onChange={handleStatusFilterChange}
+>
+  <Option value="All">All</Option>
+  <Option value="Order placed">Order Placed</Option>
+  <Option value="confirmed">Confirmed</Option>
+  <Option value="Shipped">Shipped</Option>
+  <Option value="Delivered">Delivered</Option>
+  <Option value="Cancelled">Cancelled</Option>
+</Select>
+
             </FilterContainer>
+            </TitleContent>
 
             <StyledTable>
                 <Table
