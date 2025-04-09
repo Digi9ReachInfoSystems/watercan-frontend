@@ -43,6 +43,7 @@ const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
       onMouseEnter={() => setIsCollapsed(false)}
       onMouseLeave={() => setIsCollapsed(true)}
     >
+      <div>
       {/* Show Hamburger only if menu is NOT expanded */}
       {!isMobileExpanded && (
         <HamburgerMenu onClick={() => setIsMobileExpanded(true)}>
@@ -61,6 +62,7 @@ const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
           />
         </Logo>
       )}
+      </div>
 
       <div className="menu">
         <ul className="menu-list">

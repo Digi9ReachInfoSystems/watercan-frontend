@@ -9,18 +9,14 @@ import {
     Title,
     FieldGroup,
     SaveButton,
-    LogoutButton,
 } from "./vendorprofile.styles";
-import { TbLogout } from "react-icons/tb";
 import vendorProfile from "../../../assets/vendorProfile.jpg";
-import { getVendorById } from "../../../api/waterCanApi"; 
+import { getUserByFirebaseId, getVendorsByUserId, updateVendorsByUserId } from "../../../api/userApi";
 
 
 const UserProfile = () => {
     const [profile, setProfile] = useState({
-        firstName: "",
-        lastName: "",
-        username: "",
+        name: "",
         email: "",
         phone: "",
         address: "",
@@ -33,34 +29,35 @@ const UserProfile = () => {
 
     const [isEditable, setIsEditable] = useState(false);
 
-    const vendorId = localStorage.getItem("vendorId"); // Or get from auth context
+
 
     useEffect(() => {
         const fetchVendorData = async () => {
             try {
-                const vendorData = await getVendorById(vendorId);
+                const vendorId = localStorage.getItem("FUID"); // Or get from auth context
+
+                const vendorRes = await getUserByFirebaseId(vendorId);
+
+                const vendorData = await getVendorsByUserId(vendorRes.data._id);
+                console.log("Vendor ID from localStorage:", vendorData); // Add this
                 setProfile({
-                    firstName: vendorData.firstName || "",
-                    lastName: vendorData.lastName || "",
-                    username: vendorData.username || "",
-                    email: vendorData.email || "",
-                    phone: vendorData.phone || "",
-                    address: vendorData.address || "",
-                    area: vendorData.area || "",
-                    pincode: vendorData.pincode || "",
-                    city: vendorData.city || "",
-                    state: vendorData.state || "",
-                    proof: vendorData.proof || "",
+                    name: vendorData.data[0].name || "",
+                    email: vendorData.data[0].email || "",
+                    phone: vendorData.data[0].phoneNumber || "",
+                    address: vendorData.data[0].address || "",
+                    area: vendorData.data[0].area || "",
+                    pincode: vendorData.data[0].pincode || "",
+                    city: vendorData.data[0].city || "",
+                    state: vendorData.data[0].state || "",
+                    proof: vendorData.data[0].proof_image || "",
                 });
             } catch (error) {
                 console.error("Failed to fetch vendor data:", error.message);
             }
         };
 
-        if (vendorId) {
-            fetchVendorData();
-        }
-    }, [vendorId]);
+        fetchVendorData();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -71,6 +68,35 @@ const UserProfile = () => {
         setIsEditable(true);
     };
 
+    const handleSave = async () => {
+        try {
+            const firebaseId = localStorage.getItem("FUID");
+
+            const userRes = await getUserByFirebaseId(firebaseId);
+            const userId = userRes.data._id;
+
+            const updatePayload = {
+                name: profile.name,
+                phoneNumber: profile.phone,
+                address: profile.address,
+                area: profile.area,
+                pincode: profile.pincode,
+                city: profile.city,
+                state: profile.state,
+            };
+
+            const res = await updateVendorsByUserId(userId, updatePayload);
+            console.log("Vendor update response:", res);
+
+            alert("Vendor updated successfully");
+            setIsEditable(false);
+        } catch (error) {
+            console.error("Failed to update vendor profile:", error.message);
+            alert("Error updating vendor");
+        }
+    };
+
+
     return (
         <ProfileContainer>
             <FormWrapper>
@@ -80,7 +106,7 @@ const UserProfile = () => {
                     <ProfileImage src={vendorProfile} alt="profile" />
                 </ProfileImageWrapper>
 
-                <Title>{profile.name} {profile.lastName}</Title>
+                <Title style={{ textTransform: "uppercase" }} >{profile.name}</Title>
 
                 <div className="edit-button">
                     <EditIcon onClick={handleEditToggle}>✎ Edit</EditIcon>
@@ -89,8 +115,8 @@ const UserProfile = () => {
                 <FieldGroup>
                     <label>Username</label>
                     <input
-                        name="username"
-                        value={profile.username}
+                        name="name"
+                        value={profile.name}
                         onChange={handleChange}
                         disabled={!isEditable}
                     />
@@ -102,7 +128,7 @@ const UserProfile = () => {
                         name="email"
                         value={profile.email}
                         onChange={handleChange}
-                        disabled={!isEditable}
+                        disabled
                     />
                 </FieldGroup>
 
@@ -167,20 +193,32 @@ const UserProfile = () => {
                 </FieldGroup>
 
                 <FieldGroup>
-                    <label>Proof Aadhar/Pan card</label>
-                    <input
-                        name="proof"
-                        value={profile.proof}
-                        onChange={handleChange}
-                        disabled={!isEditable}
-                    />
+                    <label>Proof (Aadhar / PAN Card)</label>
+                    {profile.proof ? (
+                        <div style={{ marginTop: "5px" }}>
+                            <a
+                                href={profile.proof}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download
+                                style={{ color: "#0e5b9d", fontSize: "14px" }}
+                            >
+                                Download Proof
+                            </a>
+                        </div>
+                    ) : (
+                        <p style={{ marginTop: "8px", color: "#888" }}>No proof uploaded</p>
+                    )}
+
                 </FieldGroup>
 
-                <SaveButton disabled={!isEditable}>
+
+
+
+
+                <SaveButton disabled={!isEditable} onClick={handleSave}>
                     Save
                 </SaveButton>
-
-                <LogoutButton> <TbLogout/> Logout</LogoutButton>
 
             </FormWrapper>
         </ProfileContainer>

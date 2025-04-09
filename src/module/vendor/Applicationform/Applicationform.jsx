@@ -336,12 +336,12 @@ const handleSubmit = async (e) => {
 
     console.log( "all data", formData)
 
-    // if (response.success) {
-    //   navigate("/registration-successfully");
-    //   setFormData(initialFormState);
-    // } else {
-    //   toast.error(response.message || "Submission failed!");
-    // }
+    if (response.success) {
+      navigate("/registration-successfully");
+      setFormData(initialFormState);
+    } else {
+      toast.error(response.message || "Submission failed!");
+    }
   } catch (error) {
     console.error("Error submitting form:", error);
     toast.error("An error occurred!");

@@ -11,6 +11,8 @@ import {
 } from "./vendorHeader.styles";
 import { getUserByFirebaseId, getVendorsByUserId } from "../../api/userApi";
 import UserProfile from "../../module/vendor/vendorProfile/vendorProfile";
+import { TbLogout } from "react-icons/tb";
+import { CgProfile } from "react-icons/cg";
 
 const VendorHeader = () => {
   const [vendorName, setVendorName] = useState("");
@@ -67,8 +69,8 @@ const VendorHeader = () => {
 
             {dropdownOpen && (
               <DropdownMenu>
-                <button onClick={() => setSidebarOpen(true)}>Profile</button>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={() => setSidebarOpen(true)}> <CgProfile/> Profile</button>
+                <button onClick={handleLogout}> <TbLogout/> Logout</button>
               </DropdownMenu>
             )}
           </ProfileContainer>
@@ -85,3 +87,6 @@ const VendorHeader = () => {
 };
 
 export default VendorHeader;
+
+
+
