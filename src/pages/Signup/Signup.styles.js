@@ -32,6 +32,10 @@ export const SignupWrapper = styled.div`
   text-align: center;
   min-width: 450px;
 
+  @media (max-width: 1360px) {
+    min-width: 350px;
+  }
+
   @media (max-width: 480px) {
     min-width: 100%;
     margin: 0 auto;
@@ -41,12 +45,21 @@ export const SignupWrapper = styled.div`
 export const Title = styled.h1`
   margin-bottom: 20px;
   color: #fff;
+  font-size: 2rem;
+
+  @media (max-width: 1360px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  @media (max-width: 1360px) {
+    gap: 10px;
+  }
 `;
 
 export const Input = styled.input`
@@ -61,6 +74,11 @@ export const Input = styled.input`
   
   &:focus {
     border-color: ${({ error }) => (error ? "red" : "#0072ff")};
+  }
+
+  @media (max-width: 1360px) {
+    font-size: 12px;
+    padding: 8px;
   }
 `;
 
@@ -81,6 +99,11 @@ export const SignupButton = styled.button`
   &:hover {
     background: ${({ disabled }) => (disabled ? "#ccc" : "#0052d4")};
   }
+
+  @media (max-width: 1360px) {
+    font-size: 12px;
+    padding: 8px;
+  }
 `;
 
 export const FooterContent = styled.div`
@@ -100,6 +123,20 @@ export const FooterContent = styled.div`
     &:hover {
       text-decoration: underline;
     }
+}
+    @media (max-width: 1360px) {
+    padding: 15px;
+    border-top-left-radius: 70%;
+    border-top-right-radius: 70%;
+
+
+    .link {
+      font-size: 16px;
+    }
+}
+
+
+      
 `;
 
 export const ErrorText = styled.p`

@@ -3,10 +3,6 @@ import { Modal } from "antd";
 
 export const Container = styled.div`
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // max-width: 95%;
     margin-left: 40px;
 `;
 
@@ -16,18 +12,43 @@ export const Title = styled.h2`
     color: #333;
     text-align: center;
     margin-bottom: 20px;
+
+@media (max-width: 1360px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 `;
 
 export const FilterContainer = styled.div`
     display: flex;
-    justify-content: end;   
+    justify-content: center;
+    align-items: center;   
     margin-bottom: 15px;
     
-    span {
+    .span {
         font-size: 16px;
         margin-right: 10px;
         font-weight: bold;
+
+        @media (max-width: 1360px) {
+            font-size: 14px;
+        }
     }
+
+    @media (max-width: 1360px) {
+    
+    .ant-select-single{
+    font-size: 10px;
+    height: 25px;
+    }
+    .ant-select .ant-select-arrow{
+    right: 20px;
+    }
+
+    .ant-select-single.ant-select-show-arrow .ant-select-selection-item {
+    font-size: 10px;}
+
+}
 `;
 
 export const StyledTable = styled.div`
@@ -51,10 +72,13 @@ export const StyledTable = styled.div`
         margin-top: 20px;
     }
 
+    :where(.css-dev-only-do-not-override-tjsggz).ant-table-wrapper .ant-table-tbody>tr>td {
+        padding: 5px;
+    }
+
     a {
         color: #1890ff;
         text-decoration: none;
-        font-weight: bold;
     }
 
     a:hover {
@@ -95,7 +119,7 @@ export const OrderStatus = styled.div`
   padding: 7px 8px;
   border-radius: 10px;
   display: inline-block; 
-  width: 40%;
+  width: 80%;
   text-align: center;
   
 color: ${({ status }) =>
@@ -118,4 +142,10 @@ border: 0.5px solid ${({ status }) =>
     status === "Shipped" ? "purple" :
     status === "Delivered" ? "green" :
     status === "Cancelled" ? "red" : "black"};
+`;
+
+export const TitleContent = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;

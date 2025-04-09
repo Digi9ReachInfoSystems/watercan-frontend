@@ -16,6 +16,11 @@ export const ContentWrapper = styled.div`
   // position:absolute;
   font-family: "Montserrat", sans-serif;
 
+  @media (max-width: 1360px) {
+    margin-left: ${({ isCollapsed }) => (isCollapsed ? "20px" : "150px")};
+    width: calc(100% - ${({ isCollapsed }) => (isCollapsed ? "10px" : "150px")});
+  }
+
   @media (max-width: 480px) {
     margin-left: 0;
   }

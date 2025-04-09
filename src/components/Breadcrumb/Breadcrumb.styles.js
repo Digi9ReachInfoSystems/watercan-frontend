@@ -11,11 +11,18 @@ export const AppBarWrap = styled.div`
   margin-top: 20px;
   font-family: "Montserrat", sans-serif;
 
+@media (max-width: 1360px) {
+  margin-top: 0px;
+  font-size: 10px;
+  padding: 5px 20px;
+}
+
+
   .ant-breadcrumb a {
     color: #374151;
     text-decoration: none;
     font-weight: 500;
-    
+
     &:hover {
       text-decoration: underline;
     }
@@ -23,5 +30,15 @@ export const AppBarWrap = styled.div`
 
   .ant-breadcrumb-separator {
     color: #9ca3af;
+  }
+
+  .displaytext {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+
+    @media (max-width: 1360px) {
+      font-size: 10px;
+    }
   }
 `;

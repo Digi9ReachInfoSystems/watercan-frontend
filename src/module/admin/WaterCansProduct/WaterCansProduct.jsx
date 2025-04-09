@@ -118,13 +118,14 @@ const WaterCansProduct = () => {
   return (
     <>
       <Container>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <StyledHeading>Water Cans List</StyledHeading>
           <StyledButton type="primary" onClick={handleCreate}>
             Create Water Can
           </StyledButton>
         </div>
-        <StyledHeading>Water Cans List</StyledHeading>
-        <StyledTable columns={columns} dataSource={data} pagination={{ pageSize: 7 }} />
+        
+        <StyledTable columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
       </Container>
 
       {isModalOpen && (

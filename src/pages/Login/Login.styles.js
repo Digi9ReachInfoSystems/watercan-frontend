@@ -19,6 +19,10 @@ export const FormWrapper = styled.div`
   min-width: 450px;
   text-align: center;
 
+  @media (max-width: 1360px) {
+    min-width: 350px;
+  }
+
   @media (max-width: 480px) {
   min-width: 90%;
   }
@@ -27,6 +31,11 @@ export const FormWrapper = styled.div`
 export const Title = styled.h1`
   color: #333;
   margin: 3rem 1rem;
+
+  @media (max-width: 1360px) {
+    font-size: 1.5rem;
+        margin: 1.5rem 1rem;
+  }
 `;
 
 export const Input = styled.input`
@@ -44,11 +53,16 @@ export const Input = styled.input`
     outline: none;
     border-bottom-color: ${({ error }) => (error ? "red" : "#007bff")};
   }
+
+  @media (max-width: 1360px) {
+    font-size: 14px;
+    padding: 8px;
+    margin: 8px 0;
+  }
 `;
 
 export const Button = styled.button`
   width: 100%;
-  height: 45px;
   padding: 10px;
   background: linear-gradient(to right, #4a90e2, #8e44ad);
   color: #fff;
@@ -57,8 +71,8 @@ export const Button = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   &:hover {
     background: #4a90e2;
@@ -76,8 +90,14 @@ export const CheckboxWrapper = styled.div`
 export const ForgotPassword = styled.a`
   text-decoration: none;
   color: #007bff;
+  font-size: 16px;
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 1360px) {
+    font-size: 14px;
+    color: #007bff;
   }
 `;
 

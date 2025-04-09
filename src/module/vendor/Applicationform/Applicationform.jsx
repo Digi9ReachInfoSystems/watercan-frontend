@@ -22,7 +22,6 @@ import {
 import { Select } from "antd";
 import {getAllWaterCans} from "../../../api/waterCanApi.js";
 import { getUserByFirebaseId } from "../../../api/userApi.js"; // Import function
-import { auth } from "../../../config/firebaseConfig.js"; // Import Firebase auth instance
 
 const ApplicationForm = () => {
   const initialFormState = {
@@ -336,12 +335,12 @@ const handleSubmit = async (e) => {
 
     console.log( "all data", formData)
 
-    // if (response.success) {
-    //   navigate("/registration-successfully");
-    //   setFormData(initialFormState);
-    // } else {
-    //   toast.error(response.message || "Submission failed!");
-    // }
+    if (response.success) {
+      navigate("/registration-successfully");
+      setFormData(initialFormState);
+    } else {
+      toast.error(response.message || "Submission failed!");
+    }
   } catch (error) {
     console.error("Error submitting form:", error);
     toast.error("An error occurred!");
@@ -449,20 +448,6 @@ const handleSubmit = async (e) => {
   </div>
 
   <div>
-  {/* <Select
-  name="area"
-  value={formData.area || undefined} // Ensure it's undefined when no value is selected
-  onChange={(value) => handleChange({ target: { name: "area", value } })}
-  onBlur={(e) => setErrors((prev) => ({ ...prev, area: validateField(e.target.name, e.target.value) }))}
-  placeholder="Select Area"
-  required
->
-  {formData.areas.map((area, index) => (
-    <Option key={index} value={area}>
-      {area}
-    </Option>
-  ))}
-</Select> */}
 
 <Select
   name="area"
@@ -589,57 +574,14 @@ const handleSubmit = async (e) => {
       </DatePickerContainer>
       </div>
 
-{/* <div className="form-row-time">
-  <DatePickerContainer>
-    <Select
-      name="delivery_start_time"
-      value={formData.delivery_start_time}
-      onChange={(e) => setFormData({ ...formData, delivery_start_time: e.target.value })}
-      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
-      required
-      placeholder="Select Delivery Start Time"
-    >
-      {timeSlots.slice(0, -1).map((slot, index) => (
-        <option key={index} value={slot}>{slot}</option>
-      ))}
-    </Select>
-  </DatePickerContainer>
-
-  <DatePickerContainer>
-    <Select
-      name="delivery_end_time"
-      value={formData.delivery_end_time}
-      onChange={(e) => setFormData({ ...formData, delivery_end_time: e.target.value })}
-      onBlur={(e) => setErrors((prev) => ({ ...prev, name: validateField(e.target.name, e.target.value) }))}
-      required
-      placeholder="Select Delivery End Time"
-    >
-      {timeSlots.slice(1).map((slot, index) => (
-        <option key={index} value={slot}>{slot}</option>
-      ))}
-    </Select>
-  </DatePickerContainer>
-</div> */}
-
 
 
 <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
       {/* First Upload Button */}
       <label
-        style={{
-          display: "inline-block",
-          padding: "8px 20px",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-          cursor: "pointer",
-          position: "relative",
-          background: "#fff",
-          textAlign: "center",
-          fontSize: "16px",
-          // fontWeight: "bold",
-          width: "100%",
-          color: "#ccc"
-        }}
+
+
+        className="upload-button"
       >
         {fileName}
         <input
