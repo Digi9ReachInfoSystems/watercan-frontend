@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-        background-color: ;
+    // height: 80px;
+    // background-color: rgb(247, 245, 245);
     color: #1d1d1d;
     display: flex;
     justify-content: space-between;

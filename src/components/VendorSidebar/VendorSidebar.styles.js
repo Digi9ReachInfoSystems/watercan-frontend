@@ -12,7 +12,7 @@ export const SideBarwrapper = styled.div`
   font-family: "Montserrat", sans-serif;
   display: flex;
   flex-direction: column;
-  background: #f9fafb;
+  background: #2290AC;
   transition: width 0.3s ease-in-out;
   overflow: hidden;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -33,7 +33,7 @@ export const SideBarwrapper = styled.div`
    }
 
       .menu {
-     flex-grow: 1;
+    //  flex-grow: 1;
      display: flex;
      flex-direction: column;
      margin-top: 10px;
@@ -70,12 +70,12 @@ export const SideBarwrapper = styled.div`
      font-family: "Montserrat", sans-serif;
     //  margin-top: 60px; 
      &:hover {
-       background: #e5e7eb; /* Light hover effect */
+      background:rgba(165, 170, 179, 0.71);
        color: #1f2937;
      }
  
      &.active {
-       background: #4f46e5; /* Active state */
+      background:rgba(229, 231, 235, 0.94); 
        color: white;
        font-weight: bold;
  
@@ -92,16 +92,21 @@ export const SideBarwrapper = styled.div`
      display: flex;
      justify-content: center;
      align-items: center;
-     color: #1f2937; /* Default icon color (Black) */
+     color: white;
      transition: color 0.3s ease-in-out;
    }
  
    .menu-link.active .menu-link-icon {
-     color: white !important; /* Ensure icon turns white when selected */
+     color: black !important; 
    }
  
    .menu-link-text {
      display: ${({ isCollapsed }) => (isCollapsed ? "none" : "inline")};
+     color: white;
+   }
+
+   .menu-link.active .menu-link-text {
+   color: black !important;
    }
  
    /* Channels Section */
@@ -122,7 +127,7 @@ export const SideBarwrapper = styled.div`
   /* Mobile View (≤480px) */
 @media (max-width: 480px) {
   width: ${({ isMobileExpanded }) => (isMobileExpanded ? "250px" : "60px")};
-  background: ${({ isMobileExpanded }) => (isMobileExpanded ? "#f9fafb" : "none")};
+  background: ${({ isMobileExpanded }) => (isMobileExpanded ? "#2290AC" : "none")};
   box-shadow: ${({ isMobileExpanded }) => (isMobileExpanded ? "2px 0 10px rgba(0, 0, 0, 0.1)" : "none")};
 
 
@@ -131,7 +136,7 @@ export const SideBarwrapper = styled.div`
       display: ${({ isMobileExpanded }) => (isMobileExpanded ? "flex" : "none")}; 
       flex-direction: column;
       width: 100%;
-      background: #f9fafb;
+      background: #2290AC;
       height: 100vh;
       margin-top: 60px; 
     }

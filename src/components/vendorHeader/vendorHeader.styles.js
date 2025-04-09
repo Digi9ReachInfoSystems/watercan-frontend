@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-    height: 80px;
-    background-color: rgb(247, 245, 245);
+    height: 70px;
+    // background-color: rgb(247, 245, 245);
     color: #1d1d1d;
     display: flex;
     justify-content: space-between;
@@ -20,8 +20,8 @@ export const HeaderContainer = styled.div`
 
 export const HeaderWrapper = styled.div`
     width: 100%;
-    height: 80px;
-    background-color: rgb(247, 245, 245);
+    height: 70px;
+    background-color: #2290AC20;
     color: #1d1d1d;
     display: flex;
     justify-content: flex-end;
@@ -42,8 +42,6 @@ font-weight: bold;
 margin-right:200px;
 font-family: "Montserrat", sans-serif;
 `;
-
-
 
 export const ProfileContainer = styled.div`
     display: flex;
@@ -95,7 +93,11 @@ export const SidebarContainer = styled.div`
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   transition: right 0.3s ease-in-out;
   z-index: 999;
-  overflow-y: auto;
+//   overflow-y: auto;
+
+  @media (max-width: 480px) {
+    max-width: 80%;
+  }
 `;
 
 export const Overlay = styled.div`
@@ -105,6 +107,6 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.46);
   z-index: 998;
 `;
