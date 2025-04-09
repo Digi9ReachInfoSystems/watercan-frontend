@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // max-width: 95%;
-    margin-left: 40px;
 `;
 
 export const Title = styled.h2`
@@ -45,9 +39,22 @@ export const StyledTable = styled.div`
         text-align: center;
     }
 
-    a {
-        color: #1890ff;
-        font-weight: bold;
+    .created {
+  font-weight: bold;
+  padding: 5px 6px;
+  border-radius: 10px;
+  display: inline-block; 
+  width: 90%;
+  text-align: center;
+  cursor: pointer;
+background: #2290AC;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    }
+
+    :where(.css-dev-only-do-not-override-tjsggz).ant-table-wrapper .ant-table-tbody>tr>td {
+        padding: 5px;
     }
 
     a:hover {

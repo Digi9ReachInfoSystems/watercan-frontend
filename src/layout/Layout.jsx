@@ -36,7 +36,7 @@ const Layout = () => {
           <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
           <ContentWrapper isCollapsed={isCollapsed}>
             <Header />
-            <Breadcrumb />
+            <Breadcrumb/>
             <Outlet />
           </ContentWrapper>
         </PageWrapper>

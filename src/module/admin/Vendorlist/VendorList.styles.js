@@ -2,10 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    // max-width: 95%;
     margin-left: 40px;
 `;
 
@@ -45,15 +41,23 @@ export const StyledTable = styled.div`
         text-align: center;
     }
 
+    .ant-table-wrapper .ant-table-tbody>tr>td{
+        padding: 5px;
+    }
+
     .ant-pagination {
         text-align: center;
         margin-top: 20px;
     }
+        :where(.css-dev-only-do-not-override-tjsggz).ant-spin-nested-loading .ant-spin-container {
+    position: relative;
+    transition: opacity 0.3s;
+    height: 35vh;
+}
 
     a {
         color: #1890ff;
         text-decoration: none;
-        font-weight: bold;
     }
 
     a:hover {
@@ -89,7 +93,7 @@ export const OrderStatus = styled.div`
   padding: 5px 6px;
   border-radius: 10px;
   display: inline-block; 
-  width: 60%;
+  width: 90%;
   text-align: center;
   cursor: pointer;
   

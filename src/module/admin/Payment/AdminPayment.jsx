@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import UserPayment from "../UserPayment/UserPayment";
 import VendorPayment from "../VendorPayment/VendorPayment";
-import { Container, Title, ToggleContainer, ToggleButton, ContentContainer } from "./AdminPayment.styles";
+import { Container, Title, ToggleContainer, ToggleButton, ContentContainer, ToggleEvent } from "./AdminPayment.styles";
 
 const AdminPayment = () => {
     const [activeTab, setActiveTab] = useState("user");
 
     return (
         <Container>
+            <ToggleEvent>
             <Title>Admin Payment Management</Title>
 
             {/* Toggle Buttons */}
@@ -25,6 +26,7 @@ const AdminPayment = () => {
                     Vendor Payments
                 </ToggleButton>
             </ToggleContainer>
+            </ToggleEvent>
 
             {/* Render Component Based on Active Tab */}
             <ContentContainer>

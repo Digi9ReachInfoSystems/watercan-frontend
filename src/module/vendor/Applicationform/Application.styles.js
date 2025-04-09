@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   // flex-direction: row;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   background-color:rgb(159, 211, 235);
 
@@ -56,21 +56,18 @@ export const FormContainer = styled.div`
   display: flex;
   width: 40%;
   flex-direction: column;
-  // max-width: 650px;
-  // margin: auto;
   padding: 30px;
-  // border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   font-family: Arial, sans-serif;
-  // margin: 20px;
   justify-content: center;
   background-color:rgb(159, 211, 235);
 
-  @media (max-width: 1170px) {
-    width: 50%;
-    
-  }
+  @media (max-width: 1360px) {
+    width: 40%;
+    padding: 20px;
+}
+
 
   @media (max-width: 768px) {
     width: 100%;
@@ -84,10 +81,16 @@ export const FormTitle = styled.h2`
   margin-bottom: 50px;
   font-size: 2.5rem;
   color: #333;
-  text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 1300px) {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 `;
 
@@ -101,6 +104,19 @@ export const StyledForm = styled.form`
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 10px;
+
+    @media (max-width: 1300px) {
+      height: 30px;
+    }
+  }
+
+  .ant-select-multiple {
+    font-size: 12px;
+}
+
+.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder {
+  font-size: 0.7rem;
+  padding: 10px;
   }
 
 .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
@@ -110,9 +126,17 @@ export const StyledForm = styled.form`
            padding: 8px;
   }
 
+ .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+ padding: 0px;
+ }
+
   .form-row{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 1300px) {
     gap: 20px;
   }
 
@@ -143,6 +167,26 @@ export const StyledForm = styled.form`
       grid-template-columns: 1fr;
     }
   }
+
+  .upload-button{
+        display: inline-block;
+        padding: 8px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+        background: #fff;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+        color: #ccc;
+
+        @media (max-width: 1300px) {
+          font-size: 0.7rem;
+          padding: 8px;
+        }
+  }
 `;
 
 export const InputField = styled.input`
@@ -163,6 +207,11 @@ export const InputField = styled.input`
     color: #ccc;
     font-weight:300;
   }
+
+  @media (max-width: 1300px) {
+  font-size: 0.7rem;
+  padding: 8px;
+}
     
 `;
 
@@ -179,6 +228,12 @@ export const SubmitButton = styled.button`
 
   &:hover {
     background-color: #0056b3;
+  }
+
+  @media (max-width: 1300px) {
+    font-size: 0.7rem;
+    padding: 8px;
+    margin-top: 20px;
   }
 `;
 
@@ -223,6 +278,11 @@ export const DatePickerContainer = styled.div`
     &::placeholder {
       color: #ccc;
       font-weight: 300;
+    }
+
+    @media (max-width: 1300px) {
+      font-size: 0.7rem;
+      padding: 8px;
     }
   }
 `;

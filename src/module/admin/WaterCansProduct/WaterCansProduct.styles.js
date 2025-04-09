@@ -3,16 +3,13 @@ import { Table } from "antd";
 
 export const Container = styled.div`
   padding: 20px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 100%;
   margin-left: 35px;
   text-align: center;
 `;
 
 export const StyledButton = styled.button`
-  background: #1890ff;
+  background: #2290AC;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -23,7 +20,7 @@ export const StyledButton = styled.button`
   text-align: center;
 
   &:hover {
-    background: #40a9ff;
+    background: #2290ac60;
   }
 `;
 
@@ -69,7 +66,6 @@ export const CloseButton = styled.button`
 
 export const StyledTable = styled(Table)`
   .ant-table {
-    border: 1px solid #ddd; 
     border-radius: 8px; 
     overflow: hidden;
   }
@@ -85,6 +81,24 @@ export const StyledTable = styled(Table)`
     text-align: center;
     padding: 12px;
   }
+
+.ant-table-tbody > tr {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  position: relative; /* important to allow transform without affecting layout */
+}
+
+.ant-table-tbody > tr:hover {
+  background-color: #2290AC20 !important;
+  transform:  translateY(-4px) translateZ(-4px)  ; /* move up slightly */
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+
+:where(.css-dev-only-do-not-override-tjsggz).ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover {
+    background: none;
+}
 
   .ant-table-row:hover {
     background-color: #f0f5ff !important; 
