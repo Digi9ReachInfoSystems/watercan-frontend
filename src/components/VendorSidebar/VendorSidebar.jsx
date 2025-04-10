@@ -1,5 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
-import { SideBarwrapper, Logo, HamburgerMenu } from "./VendorSidebar.styles";
+
+
+
+import React, { useState } from "react";
+import {
+  SideBarwrapper,
+  Logo,
+  Hamburger,
+  Overlay,
+} from "./VendorSidebar.styles";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaHandHoldingWater, FaBars } from "react-icons/fa";
@@ -7,53 +15,45 @@ import logo from "../../assets/logo.png";
 
 const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
-  const sidebarRef = useRef(null);
 
   const SidebarItem = [
     { id: 1, name: "Dashboard", path: "/vendor", icon: <MdDashboard /> },
-    {
-      id: 2,
-      name: "Orders",
-      path: "/vendor/Orders",
-      icon: <FaHandHoldingWater />,
-    },
+    { id: 2, name: "Orders", path: "/vendor/Orders", icon: <FaHandHoldingWater /> },
   ];
 
-  // Handle outside click to close sidebar
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target) &&
-        isMobileExpanded
-      ) {
-        setIsMobileExpanded(false);
-      }
-    };
+  const handleHamburgerClick = () => {
+    if (window.innerWidth <= 576) {
+      setIsMobileExpanded(!isMobileExpanded);
+    } else {
+      setIsCollapsed(!isCollapsed);
+    }
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isMobileExpanded]);
+  const handleOverlayClick = () => {
+    if (window.innerWidth <= 576) {
+      setIsMobileExpanded(false);
+    }
+  };
 
   return (
-    <SideBarwrapper
-      ref={sidebarRef}
-      isCollapsed={isCollapsed}
-      isMobileExpanded={isMobileExpanded}
-      onMouseEnter={() => setIsCollapsed(false)}
-      onMouseLeave={() => setIsCollapsed(true)}
-    >
-      <div>
-      {/* Show Hamburger only if menu is NOT expanded */}
-      {!isMobileExpanded && (
-        <HamburgerMenu onClick={() => setIsMobileExpanded(true)}>
-          <FaBars />
-        </HamburgerMenu>
-      )}
+    <>
+      <Hamburger onClick={handleHamburgerClick}>
+        <FaBars />
+      </Hamburger>
 
-      {/* Show Logo only after mobile menu is expanded OR on wider screens */}
-      {(isMobileExpanded || window.innerWidth > 480) && (
-        <Logo isCollapsed={isCollapsed} isMobileExpanded={isMobileExpanded}>
+      {isMobileExpanded && <Overlay onClick={handleOverlayClick} />}
+
+      <SideBarwrapper
+        isCollapsed={isCollapsed}
+        isMobileExpanded={isMobileExpanded}
+        onMouseEnter={() => {
+          if (window.innerWidth > 576) setIsCollapsed(false);
+        }}
+        onMouseLeave={() => {
+          if (window.innerWidth > 576) setIsCollapsed(true);
+        }}
+      >
+        <Logo isCollapsed={isCollapsed}>
           <img
             src={logo}
             alt="Logo"
@@ -61,35 +61,32 @@ const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
             style={{ borderRadius: "50%" }}
           />
         </Logo>
-      )}
-      </div>
 
-      <div className="menu">
-        <ul className="menu-list">
-          {SidebarItem.map((item) => (
-            <li className="menu-item" key={item.id}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  isActive ? "menu-link active" : "menu-link"
-                }
-                onClick={() => {
-                  setTitle(item.name);
-                  localStorage.setItem("title", JSON.stringify(item.name));
-                  setIsMobileExpanded(false); // Close on link click
-                }}
-                end
-              >
-                <span className="menu-link-icon">{item.icon}</span>
-                {!isCollapsed && (
+        <div className="menu">
+          <ul className="menu-list">
+            {SidebarItem.map((item) => (
+              <li className="menu-item" key={item.id}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    isActive ? "menu-link active" : "menu-link"
+                  }
+                  onClick={() => {
+                    setTitle(item.name);
+                    localStorage.setItem("title", JSON.stringify(item.name));
+                    setIsMobileExpanded(false);
+                  }}
+                  end
+                >
+                  <span className="menu-link-icon">{item.icon}</span>
                   <span className="menu-link-text">{item.name}</span>
-                )}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </SideBarwrapper>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </SideBarwrapper>
+    </>
   );
 };
 

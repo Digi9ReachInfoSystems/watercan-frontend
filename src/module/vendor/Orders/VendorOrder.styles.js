@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  // padding: 20px;
+  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 
   @media (max-width: 480px) {
-    // padding: 10px;
+    padding: 10px;
     width: 100%;
   }
 
@@ -41,7 +41,7 @@ export const Tab = styled.div`
   color: ${(props) => (props.active ? "#FA8072" : "gray")};
 
   @media (max-width: 480px) {
-    font-size: 14px;
+    font-size: 12px;
     padding: 8px 10px;
     // color: #rgb(184, 12, 132);
   }
@@ -132,9 +132,13 @@ export const UserStatus = styled.div`
     padding: 5px 6px;
   }
 
-  @media (max-width: 480px) {
-  width: 30%;
-  }
+
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 5px 6px;
+      width: 30%;
+    }
 `;
 
 export const ViewMoreIcon = styled.div`
