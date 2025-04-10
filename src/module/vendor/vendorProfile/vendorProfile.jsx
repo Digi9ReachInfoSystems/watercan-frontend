@@ -201,7 +201,7 @@ const UserProfile = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 download
-                                style={{ color: "#0e5b9d", fontSize: "14px" }}
+                                style={{ color: "#0e5b9d", fontSize: "12px" }}
                             >
                                 Download Proof
                             </a>
@@ -211,10 +211,6 @@ const UserProfile = () => {
                     )}
 
                 </FieldGroup>
-
-
-
-
 
                 <SaveButton disabled={!isEditable} onClick={handleSave}>
                     Save

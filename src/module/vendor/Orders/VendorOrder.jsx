@@ -9,7 +9,6 @@ import {
   ModalOverlay,
   ModalContent,
   CloseButton,
-  ModalFooter,
   Username,
   Cans,
   UserStatus,
@@ -149,7 +148,7 @@ const VendorOrder = () => {
             <UserStatus status={order.orderStatus}>{order.orderStatus}</UserStatus>   
 
             <ViewMoreIcon onClick={() => setSelectedOrder(order)}>
-            <TbDotsVertical />
+            <TbDotsVertical/>
             </ViewMoreIcon>
           </OrderCard>
         ))
@@ -165,26 +164,25 @@ const VendorOrder = () => {
             <CloseButton onClick={closeModal}>
               <FaTimes />
             </CloseButton>
-            <h3>Order Details</h3>
-            <p>
+            <h3 className="orderTitle">Order Details</h3>
+            <p className="orderDetails">
               <strong>Order ID:</strong> {selectedOrder._id}
             </p>
-            <p>
+            <p className="orderDetails">
               <strong>Name:</strong> {selectedOrder.user_id?.name}
             </p>
-            <p>
+            <p className="orderDetails">
               <strong>Address:</strong> {selectedOrder.user_id?.email}
             </p>
-            <p>
+            <p className="orderDetails">
               <strong>Phone:</strong> {selectedOrder.user_id?.phoneNumber}
             </p>
-            <p>
+            <p className="orderDetails">
               <strong>No of WaterCans:</strong> {selectedOrder.watercan_id?.capacityInLiters}
             </p>
-            <p>
+            <p className="orderDetails">
               <strong>Brand:</strong> {selectedOrder.watercan_id?.Brand}
             </p>
-            <ModalFooter></ModalFooter>
           </ModalContent>
         </ModalOverlay>
       )}

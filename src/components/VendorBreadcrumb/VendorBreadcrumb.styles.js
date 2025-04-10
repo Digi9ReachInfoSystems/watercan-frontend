@@ -10,8 +10,15 @@ export const AppBarWrap = styled.div`
   margin-left: 40px;
   margin-top: 20px;
   font-family: "Montserrat", sans-serif;
+
       @media screen and (max-width: 480px) {
         margin-left: 0px;
+    }
+
+    @media (max-width: 1360px) {
+      margin-top: 0px;
+      font-size: 10px;
+      padding: 5px 20px;
     }
 
   .ant-breadcrumb a {

@@ -64,7 +64,7 @@ const VendorHeader = () => {
           <ProfileContainer ref={dropdownRef}>
             <p>Welcome, {vendorName}!</p>
             <ProfileIcon onClick={toggleDropdown}>
-              <FaUserCircle size={24} />
+              <FaUserCircle />
             </ProfileIcon>
 
             {dropdownOpen && (
