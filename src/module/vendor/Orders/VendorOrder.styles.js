@@ -10,10 +10,15 @@ export const Container = styled.div`
     width: 100%;
   }
 
-  @media (min-width: 1920px) {
-    max-width: 1500px;
-    padding: 30px;
+  // @media (min-width: 1920px) {
+  //   max-width: 1500px;
+  //   padding: 30px;
+  // }
+
+  @media (max-width: 1360px) {
+    max-width: 900px;
   }
+
 `;
 
 export const TabContainer = styled.div`
@@ -41,9 +46,9 @@ export const Tab = styled.div`
     // color: #rgb(184, 12, 132);
   }
 
-  @media (min-width: 1920px) {
-    font-size: 18px;
-    padding: 12px 20px;
+  @media (max-width: 1360px) {
+    font-size: 12px;
+    padding: 7px 10px;
   }
 `;
 
@@ -63,9 +68,10 @@ export const OrderCard = styled.div`
 //     padding: 10px;
 //   }
 
-  @media (min-width: 1920px) {
-    padding: 20px;
-    font-size: 18px;
+  @media (max-width: 1360px) {
+    padding: 10px;
+    font-size: 12px;
+    padding: 10px;
   }
 `;
 
@@ -78,19 +84,27 @@ export const UserInfo = styled.div`
     font-size: 14px;
   }
 
-  @media (min-width: 1920px) {
-    font-size: 18px;
-  }
+  // @media (min-width: 1920px) {
+  //   font-size: 18px;
+  // }
 `;
 
 export const Username = styled.div`
   font-weight: bold;
   color: #008080;
   font-size: 16px;
+
+  @media (max-width: 1360px) {
+    font-size: 14px;
+  }
 `;
 
 export const Cans = styled.div`
   color: #333;
+
+  @media (max-width: 1360px) {
+    font-size: 12px;
+  }
 `;
 
 export const UserStatus = styled.div`
@@ -98,7 +112,7 @@ export const UserStatus = styled.div`
   padding: 7px 8px;
   border-radius: 10px;
   display: inline-block; 
-  width: 30%;
+  width: 20%;
   text-align: center;
   
   color: ${({ status }) =>
@@ -112,6 +126,15 @@ export const UserStatus = styled.div`
     status === "Shipped" ? "rgba(146, 59, 146, 0.29)" :
     status === "Delivered" ? "rgba(20, 255, 71, 0.4)" :
     status === "Cancelled" ? "rgba(255, 0, 0, 0.3)" : "rgba(200, 200, 200, 0.3)"};
+
+    @media (max-width: 1360px) {
+    width: 15%;
+    padding: 5px 6px;
+  }
+
+  @media (max-width: 480px) {
+  width: 30%;
+  }
 `;
 
 export const ViewMoreIcon = styled.div`
@@ -120,17 +143,16 @@ export const ViewMoreIcon = styled.div`
   color: blue;
 
   @media (max-width: 480px) {
-    font-size: 16px;
+    font-size: 12px;
   }
 
-  @media (min-width: 1920px) {
-    font-size: 24px;
+  @media (max-width: 1360px) {
+    font-size: 10px;
   }
 `;
 
 export const NoOrders = styled.div`
   text-align: center;
-  font-size: 18px;
   color: gray;
   // margin-top: 20px;
   height: 50vh;
@@ -143,7 +165,22 @@ export const NoOrders = styled.div`
     width: 200px; 
     height: auto;
     margin-top: 10px;
+
+    @media (max-width: 1360px) {
+      width: 150px;
+    }
   }
+
+  p {
+    margin-top: 15px;
+    font-size: 24px;
+
+    @media (max-width: 1360px) {
+      font-size: 16px;
+    }
+  }
+
+
 `;
 
 export const ModalOverlay = styled.div`
@@ -161,18 +198,39 @@ export const ModalOverlay = styled.div`
 export const ModalContent = styled.div`
   position: relative;
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 10px;
-  width: 300px;
-  text-align: center;
+  width: 450px;
 
   @media (max-width: 480px) {
     width: 90%;
   }
 
-  @media (min-width: 1920px) {
-    width: 400px;
-    padding: 30px;
+  @media (max-width: 1360px) {
+    width: 350px;
+    padding: 20px;
+  }
+
+  
+  .orderTitle{
+    text-align: center;
+    font-size: 26px;
+    color: #008080;
+    margin-bottom: 20px;
+
+    @media (max-width: 1360px){
+    font-size: 18px;
+    }
+  }
+
+  .orderDetails{
+    font-size: 20px;
+    margin-top: 12px;
+
+    @media (max-width: 1360px){
+    font-size: 14px;
+    }
+    
   }
 `;
 
@@ -187,39 +245,9 @@ export const CloseButton = styled.div`
     font-size: 16px;
   }
 
-  @media (min-width: 1920px) {
-    font-size: 24px;
-  }
-`;
-
-export const ModalFooter = styled.div`
-  margin-top: 15px;
-
-  @media (max-width: 480px) {
-    margin-top: 10px;
-  }
-
-  @media (min-width: 1920px) {
-    margin-top: 20px;
-  }
-`;
-
-export const CloseTextButton = styled.button`
-  background: red;
-  color: white;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-
-  @media (max-width: 480px) {
+  @media (max-width: 1360px) {
     font-size: 12px;
-    padding: 6px 12px;
-  }
-
-  @media (min-width: 1920px) {
-    font-size: 16px;
-    padding: 10px 18px;
   }
 `;
+
+

@@ -11,7 +11,11 @@ export const ProfileContainer = styled.div`
 
   @media (max-width: 768px) {
     padding: 10px;
-  }
+   }
+
+   @media (max-width: 1360px) {
+   height: 100vh;
+   }
 `;
 
 export const FormWrapper = styled.div`
@@ -39,6 +43,13 @@ export const FormWrapper = styled.div`
     padding: 10px;
     margin: 0px;
   }
+
+  @media (max-width: 1360px) {
+    padding: 18px;
+    margin: 10px;
+    max-width: 560px;
+    height: 90vh;
+  }
 `;
 
 export const HeaderBackground = styled.div`
@@ -53,6 +64,10 @@ export const HeaderBackground = styled.div`
 
   @media (max-width: 480px) {
     height: 40px;
+  }
+
+  @media (max-width: 1360px) {
+    height: 50px;
   }
 `;
 
@@ -79,6 +94,11 @@ export const ProfileImage = styled.img`
     width: 50px;
     height: 50px;
   }
+
+  @media (max-width: 1360px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 export const EditIcon = styled.span`
@@ -104,6 +124,12 @@ export const EditIcon = styled.span`
     font-size: 12px;
     padding: 5px 12px;
   }
+
+  @media (max-width: 1360px) {
+    width: 20%;
+    font-size: 10px;
+    padding: 4px 10px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -117,12 +143,21 @@ export const Title = styled.h2`
     font-size: 18px;
     margin-top: 10px;
   }
+
+    @media (max-width: 1360px) {
+    font-size: 12px;
+    margin-top: 15px;
+  }
 `;
 
 export const FieldGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin: 10px 0;
+
+  @media (max-width: 1360px) {
+    margin: 2px 0;
+  }
 
   label {
     font-size: 14px;
@@ -131,6 +166,11 @@ export const FieldGroup = styled.div`
 
     @media (max-width: 480px) {
       font-size: 12px;
+    }
+
+    @media (max-width: 1360px) {
+      font-size: 10px;
+      margin-bottom: 3px;
     }
   }
 
@@ -149,6 +189,11 @@ export const FieldGroup = styled.div`
 
     @media (max-width: 480px) {
       font-size: 12px;
+    }
+
+    @media (max-width: 1360px) {
+      font-size: 10px;
+      padding: 8px;
     }
   }
 `;
@@ -179,5 +224,12 @@ export const SaveButton = styled.button`
     padding: 8px;
     margin-top: 15px;
     margin-bottom: 10px;
+  }
+
+   @media (max-width: 1360px) {
+    font-size: 12px;
+    padding: 6px;
+    margin-bottom: 10px;
+    margin-top: 5px;
   }
 `;

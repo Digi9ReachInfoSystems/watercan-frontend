@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-    height: 70px;
+    // height: 70px;
     // background-color: rgb(247, 245, 245);
     color: #1d1d1d;
     display: flex;
@@ -30,6 +30,12 @@ export const HeaderWrapper = styled.div`
     padding-right: 5px;
     
 font-family: "Montserrat", sans-serif;
+
+    @media (max-width: 1360px) {
+        height: 50px;
+        padding-right: 10px;
+        font-size: 16px;
+    }
 `;
 
 export const HeaderTitle = styled.h1`
@@ -55,6 +61,10 @@ export const ProfileIcon = styled.div`
     font-size: 24px;
     color: #333;
     cursor: pointer;
+
+    @media (max-width: 1360px) {
+        font-size: 18px;
+    }
 `;
 
 export const DropdownMenu = styled.div`
@@ -80,6 +90,11 @@ export const DropdownMenu = styled.div`
         &:hover {
             background: #f0f0f0;
         }
+
+        @media (max-width: 1360px) {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
     }
 `;
 
@@ -95,9 +110,17 @@ export const SidebarContainer = styled.div`
   z-index: 999;
 //   overflow-y: auto;
 
+@media (max-width: 1360px) {
+    max-width: 400px;
+  }
+
   @media (max-width: 480px) {
     max-width: 80%;
   }
+
+  // @media (max-width: 1360px) {
+  //   max-width: 30%;
+  // }
 `;
 
 export const Overlay = styled.div`

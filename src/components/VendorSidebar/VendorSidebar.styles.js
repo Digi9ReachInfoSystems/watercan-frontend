@@ -21,6 +21,10 @@ export const SideBarwrapper = styled.div`
   padding-top: 20px;
   padding: 10px;
 
+   @media (max-width: 1360px){
+    width: ${({ isCollapsed }) => (isCollapsed ? "60px" : "200px")};
+  }
+
      .logo {
      display: flex;
      justify-content: center;
@@ -30,6 +34,10 @@ export const SideBarwrapper = styled.div`
      font-size: ${({ isCollapsed }) => (isCollapsed ? "18px" : "24px")};
      transition: font-size 0.3s ease-in-out;
      font-weight: bold;
+
+     @media (max-width: 1360px) {
+       font-size: ${({ isCollapsed }) => (isCollapsed ? "10px" : "10px")};
+     }
    }
 
       .menu {
@@ -51,6 +59,11 @@ export const SideBarwrapper = styled.div`
  
    .menu-item {
      width: 100%;
+
+     @media (max-width: 1360px) {
+       width: ${({ isCollapsed }) => (isCollapsed ? "80%" : "100%")};
+       margin: 0 auto;
+     }
    }
  
    .menu-link {
@@ -69,6 +82,10 @@ export const SideBarwrapper = styled.div`
      overflow: hidden;
      font-family: "Montserrat", sans-serif;
     //  margin-top: 60px; 
+
+     @media (max-width: 1360px) {
+       padding: 8px;
+     }
      &:hover {
       background:rgba(165, 170, 179, 0.71);
        color: #1f2937;
@@ -94,6 +111,11 @@ export const SideBarwrapper = styled.div`
      align-items: center;
      color: white;
      transition: color 0.3s ease-in-out;
+
+     @media (max-width: 1360px) {
+       font-size: 16px;
+       padding: ${({ isCollapsed }) => (isCollapsed ? "0px" : "5px")};
+     }
    }
  
    .menu-link.active .menu-link-icon {
@@ -103,6 +125,10 @@ export const SideBarwrapper = styled.div`
    .menu-link-text {
      display: ${({ isCollapsed }) => (isCollapsed ? "none" : "inline")};
      color: white;
+
+     @media (max-width: 1360px) {
+       font-size: 14px;
+     }
    }
 
    .menu-link.active .menu-link-text {
@@ -147,6 +173,10 @@ export const Logo = styled.div`
   .sidebar-logo {
     width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
     transition: width 0.3s ease-in-out;
+
+    @media (max-width: 1360px) {
+  width: ${({ isCollapsed }) => (isCollapsed ? "30px" : "50px")};
+  }
   }
 
   @media (max-width: 480px) {

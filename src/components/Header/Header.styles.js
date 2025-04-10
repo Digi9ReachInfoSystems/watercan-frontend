@@ -27,9 +27,9 @@ export const HeaderWrapper = styled.div`
 font-family: "Montserrat", sans-serif;
 
 @media (max-width: 1360px) {
-height: 60px;
+height: 50px;
     padding-right: 10px;
-    font-size: 18px;
+    font-size: 16px;
 }
 `;
 
