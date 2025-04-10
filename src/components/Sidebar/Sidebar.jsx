@@ -11,7 +11,7 @@ import logo from "../../assets/logo.png";
 
 const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [
-    { id: 1, name: "Dashboard", path: "/", icon: <MdDashboard /> },
+    { id: 1, name: "Dashboard", path: "/admin", icon: <MdDashboard /> },
     { id: 2, name: "Orders", path: "/admin/Orders", icon: <FaHandHoldingWater /> },
     { id: 3, name: "Payment", path: "/admin/payment", icon: <RiMoneyRupeeCircleFill /> },
     { id: 4, name: "Vendor", path: "/admin/vendorlist", icon: <FaUsers />  },

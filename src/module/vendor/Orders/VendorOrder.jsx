@@ -51,31 +51,6 @@ const VendorOrder = () => {
     fetchVendorOrders();
   }, []);
 
-  // const fetchVendorOrders = async () => {
-  //   try {
-  //     const data = await getOrdersByVendor();
-  //     console.log("Fetched orders from API:", data);
-
-  //     if (!data || data.length === 0) {
-  //       console.warn("No orders received from API");
-  //       setOrders([]);
-  //       return;
-  //     }
-
-  //     // Normalize time slots before storing orders
-  //     const normalizedOrders = data.map((order) => ({
-  //       ...order,
-  //       timeSlot: normalizeTimeSlot(order.timeSlot),
-  //     }));
-
-  //     setOrders(normalizedOrders);
-  //   } catch (error) {
-  //     console.error("Error fetching vendor orders:", error);
-  //   }
-  // };
-
-  // Filter orders based on selected tab
-
   const fetchVendorOrders = async () => {
     try {
       const firebaseId = localStorage.getItem("FUID");
