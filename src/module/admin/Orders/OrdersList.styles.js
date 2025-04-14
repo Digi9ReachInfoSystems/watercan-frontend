@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Modal } from "antd";
 
 export const Container = styled.div`
-    padding: 20px;
+    padding: 20px 0;
     margin-left: 40px;
 `;
 
@@ -84,6 +84,24 @@ export const StyledTable = styled.div`
     a:hover {
         text-decoration: underline;
     }
+
+    @media (max-width: 1360px) {
+        .ant-table-thead > tr > th {
+            font-size: 12px;
+        }
+
+        .ant-table-tbody > tr > td {
+            font-size: 10px;
+        }
+
+              .ant-pagination .ant-pagination-item {
+            font-size: 10px;
+            min-width: 22px;
+            height: 22px;
+            line-height: 20px;
+            margin: auto 0;
+        }
+    }
 `;
 
 export const StyledModal = styled(Modal)`
@@ -95,6 +113,16 @@ export const StyledModal = styled(Modal)`
     text-align: center;
     font-size: 22px;
     font-weight: bold;
+  }
+
+  @media (max-width: 1360px) {
+    .ant-modal-title {
+      font-size: 18px;
+    }
+      .ant-modal-content{
+      padding: 10px;
+      width: 350px;
+      margin: 0 auto;}
   }
 `;
 
@@ -112,6 +140,15 @@ export const DetailRow = styled.p`
     font-weight: 600;
     color: #222;
   }
+
+    @media (max-width: 1360px) {
+        font-size: 12px;
+        margin-bottom: 5px;
+        strong {
+            font-size: 14px;
+        }
+
+    }
 `;
 
 export const OrderStatus = styled.div`
@@ -119,7 +156,7 @@ export const OrderStatus = styled.div`
   padding: 7px 8px;
   border-radius: 10px;
   display: inline-block; 
-  width: 80%;
+  width: 40%;
   text-align: center;
   
 color: ${({ status }) =>
@@ -142,10 +179,17 @@ border: 0.5px solid ${({ status }) =>
     status === "Shipped" ? "purple" :
     status === "Delivered" ? "green" :
     status === "Cancelled" ? "red" : "black"};
+
+    @media (max-width: 1360px) {
+        font-size: 10px;
+        width: 60%;
+        padding: 5px 8px;
+    }
 `;
 
 export const TitleContent = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px
 `;
