@@ -1,8 +1,8 @@
+// Replace Ant Design Modal with a custom modal component
 import React, { useEffect, useState } from "react";
-import { Table, Modal, Button, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Table, Button, Select } from "antd";
 import { getApplication, rejectApplication, approveApplication } from "../../../api/serviceapi";
-import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer, OrderStatus } from "./VendorList.styles";
+import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContainer, OrderStatus, CustomModalOverlay, CustomModalWrapper, CustomModalBox, CloseButton } from "./VendorList.styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
@@ -97,22 +97,23 @@ const VendorList = () => {
                 </OrderStatus>
             )
         }
-        
     ];
 
     return (
         <Container>
             <ToastContainer />
-            <Title>Vendor List</Title>
-            <FilterContainer>
-                <span style={{ marginTop: "8px" }}>Filter by Status: </span>
-                <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
-                    <Option value="All">All</Option>
-                    <Option value="pending">Pending</Option>
-                    <Option value="approved">Approved</Option>
-                    <Option value="rejected">Rejected</Option>
-                </Select>
-            </FilterContainer>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Title>Vendor List</Title>
+                <FilterContainer>
+                    <span style={{ marginTop: "8px" }}>Filter by Status: </span>
+                    <Select defaultValue="All" style={{ width: 150 }} onChange={handleStatusFilterChange}>
+                        <Option value="All">All</Option>
+                        <Option value="pending">Pending</Option>
+                        <Option value="approved">Approved</Option>
+                        <Option value="rejected">Rejected</Option>
+                    </Select>
+                </FilterContainer>
+            </div>
             <StyledTable>
                 <Table 
                     columns={columns} 
@@ -121,32 +122,34 @@ const VendorList = () => {
                     rowKey="_id" 
                 />
             </StyledTable>
-            <Modal
-                title="Vendor Details"
-                open={isModalOpen}
-                onCancel={() => setIsModalOpen(false)}
-                footer={null}
-                centered
-            >
-                {selectedVendor && (
-                    <ModalContent>
-                        <p><strong>Name:</strong> {selectedVendor.name}</p>
-                        <p><strong>Email:</strong> {selectedVendor.email}</p>
-                        <p><strong>Phone Number:</strong> {selectedVendor.phoneNumber}</p>
-                        <p><strong>Address:</strong> {selectedVendor.address}</p>
-                        <p><strong>City:</strong> {selectedVendor.city}</p>
-                        <p><strong>State:</strong> {selectedVendor.state}</p>
-                        <p><strong>Pincode:</strong> {selectedVendor.pincode}</p>
-                        <p><strong>Delivery Start Time:</strong> {moment(selectedVendor.delivery_start_time).format("h:mm A")}</p>
-                        <p><strong>Delivery End Time:</strong> {moment(selectedVendor.delivery_end_time).format("h:mm A")}</p>
-                        <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverable_water_cans.length}</p>
-                        <ButtonGroup>
-                            <Button type="primary" onClick={handleApprove} disabled={selectedVendor?.status === "approved"}>Approve</Button>
-                            <Button type="primary" onClick={handleReject} disabled={selectedVendor?.status === "rejected"}>Reject</Button>
-                        </ButtonGroup>
-                    </ModalContent>
-                )}
-            </Modal>
+
+            {isModalOpen && (
+                <CustomModalOverlay>
+                    <CustomModalWrapper>
+                        <CustomModalBox>
+                            <CloseButton onClick={() => setIsModalOpen(false)}>&times;</CloseButton>
+                            {selectedVendor && (
+                                <ModalContent>
+                                    <p><strong>Name:</strong> {selectedVendor.name}</p>
+                                    <p><strong>Email:</strong> {selectedVendor.email}</p>
+                                    <p><strong>Phone Number:</strong> {selectedVendor.phoneNumber}</p>
+                                    <p><strong>Address:</strong> {selectedVendor.address}</p>
+                                    <p><strong>City:</strong> {selectedVendor.city}</p>
+                                    <p><strong>State:</strong> {selectedVendor.state}</p>
+                                    <p><strong>Pincode:</strong> {selectedVendor.pincode}</p>
+                                    <p><strong>Delivery Start Time:</strong> {moment(selectedVendor.delivery_start_time).format("h:mm A")}</p>
+                                    <p><strong>Delivery End Time:</strong> {moment(selectedVendor.delivery_end_time).format("h:mm A")}</p>
+                                    <p><strong>Deliverable Cans:</strong> {selectedVendor.deliverable_water_cans.length}</p>
+                                    <ButtonGroup>
+                                        <Button type="primary" onClick={handleApprove} disabled={selectedVendor?.status === "approved"}>Approve</Button>
+                                        <Button type="primary" onClick={handleReject} disabled={selectedVendor?.status === "rejected"}>Reject</Button>
+                                    </ButtonGroup>
+                                </ModalContent>
+                            )}
+                        </CustomModalBox>
+                    </CustomModalWrapper>
+                </CustomModalOverlay>
+            )}
         </Container>
     );
 };

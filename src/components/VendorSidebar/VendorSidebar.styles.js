@@ -252,12 +252,12 @@ export const SideBarwrapper = styled.div`
 
 export const Hamburger = styled.button`
   display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
   z-index: 5;
-  background: #2290ac;
-  color: white;
+  background: none;
+  color: black;
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -268,7 +268,7 @@ export const Hamburger = styled.button`
   }
 
   &:hover {
-    background-color: #1a7183;
+    // background-color: #1a7183;
     cursor: pointer;
   }
 `;
