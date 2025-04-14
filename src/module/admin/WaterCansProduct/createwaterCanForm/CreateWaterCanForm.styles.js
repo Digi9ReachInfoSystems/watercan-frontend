@@ -33,9 +33,48 @@ export const FormContainer = styled.div`
   .ant-form-item .ant-form-item-control-input{
       min-height: 0px;
   }
+
+  @media (max-width: 1360px) {
+    padding: 10px;
+
+    form {
+      flex-direction: column;
+    }
+
+    .ant-form-item {
+      margin-bottom: 5px;
+    }
+
+    .ant-btn {
+      font-size: 12px;
+      padding: 2px 5px;
+      width: 100px;
+    }
+
+    .ant-form-item .ant-form-item-label >label{
+      font-size: 12px;
+    }
+
+    :where(.css-dev-only-do-not-override-tjsggz).ant-input{
+      font-size: 10px;
+    }
+
+    :where(.css-dev-only-do-not-override-tjsggz).ant-form-vertical .ant-form-item:not(.ant-form-item-horizontal) .ant-form-item-label{
+      padding: 0px;
+    }
+
+  }
+
+
+
 `;
 
 export const Title = styled.h2`
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 1360px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 `;

@@ -48,6 +48,8 @@ export const SideBarwrapper = styled.div`
      margin-top: 10px;
      font-family: "Montserrat", sans-serif;
      width: 100%;
+
+
    }
         .menu-list {
      list-style: none;
@@ -135,7 +137,7 @@ export const SideBarwrapper = styled.div`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    // margin-top: 20px;
     width: 100%;
   }
 
@@ -219,12 +221,8 @@ export const SideBarwrapper = styled.div`
     display: ${({ isMobileExpanded }) => (isMobileExpanded ? "flex" : "none")};
     flex-direction: column;
     align-items: center;
-    padding-top: 60px;
+    // padding-top: 60px;
     transition: all 0.3s ease-in-out;
-
-    .sidebar-logo {
-      width: 80px;
-    }
 
     .menu-link {
       justify-content: flex-start;
@@ -276,23 +274,20 @@ export const Hamburger = styled.button`
 `;
 
 export const Logo = styled.div`
-  .sidebar-logo {
+  .logo {
     width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
     transition: width 0.3s ease-in-out;
 
     @media (max-width: 1360px) {
-  width: ${({ isCollapsed }) => (isCollapsed ? "30px" : "50px")};
+  width: ${({ isCollapsed }) => (isCollapsed ? "70px" : "130px")};
   }
   }
 
-  @media (max-width: 480px) {
-    margin-top: 20px;
-    margin-bottom: -40px;
-
-    @media (max-width: 576px) {
-      width: 80px;
-    }
-  }
+   @media (max-width: 576px) {
+   .logo {
+    width: ${({ isCollapsed }) => (isCollapsed ? "130px" : "150px")};
+}
+}
 `;
 
 export const Overlay = styled.div`
