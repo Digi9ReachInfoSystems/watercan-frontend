@@ -17,6 +17,40 @@ const FormContainer = styled.div`
   .ant-btn {
     width: 150px;
   }
+
+  @media (max-width: 1360px) {
+    padding: 10px;
+
+    form {
+      flex-direction: column;
+    }
+
+    .ant-form-item {
+      margin-bottom: 5px;
+    }
+
+    .ant-btn {
+      font-size: 12px;
+      padding: 2px 5px;
+      width: 100px;
+    }
+
+    .ant-form-item .ant-form-item-label >label{
+      font-size: 12px;
+    }
+
+    :where(.css-dev-only-do-not-override-tjsggz).ant-input{
+      font-size: 10px;
+    }
+
+    :where(.css-dev-only-do-not-override-tjsggz).ant-form-vertical .ant-form-item:not(.ant-form-item-horizontal) .ant-form-item-label{
+      padding: 0px;
+    }
+.ant-input-number .ant-input-number-input {
+  font-size: 12px;
+  padding: 2px 5px;}
+  }
+
 `;
 
 const SubmitButton = styled.button`
@@ -31,11 +65,23 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+
+  @media (max-width: 1360px) {
+    width: 100px;
+    font-size: 12px;
+    padding: 5px;
+    margin-top: 10px;
+  }
 `;
 
 const Title = styled.h2`
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 1360px) {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 `;
 
 const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {

@@ -22,6 +22,12 @@ export const StyledButton = styled.button`
   &:hover {
     background: #2290ac60;
   }
+
+  @media (max-width: 1360px) {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
 `;
 
 export const StyledHeading = styled.h2`
@@ -29,6 +35,10 @@ export const StyledHeading = styled.h2`
   font-size: 24px;
   margin-bottom: 15px;
   text-align: center;
+
+  @media (max-width: 1360px) {
+    font-size: 18px;
+  }
 `;
 
 
@@ -52,6 +62,10 @@ export const ModalContent = styled.div`
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   width: 500px;
+
+  @media (max-width: 1360px) {
+    width: 400px;
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -62,6 +76,11 @@ export const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 22px;
+
+  @media (max-width: 1360px) {
+    font-size: 18px;
+  }
+
 `;
 
 export const StyledTable = styled(Table)`
@@ -104,4 +123,27 @@ export const StyledTable = styled(Table)`
     background-color: #f0f5ff !important; 
   }
 
+
+  @media (max-width: 1360px) {
+    .ant-table-thead > tr > th {
+      font-size: 12px;
+      padding: 10px;
+    }
+
+    .ant-table-tbody > tr > td {
+      font-size: 10px;
+      padding: 8px;
+    }
+
+    .ant-table-tbody > tr > td {
+      padding: 10px;
+    }
+              .ant-pagination .ant-pagination-item {
+            font-size: 10px;
+            min-width: 22px;
+            height: 22px;
+            line-height: 20px;
+            margin: auto 0;
+        }
+  }
 `;

@@ -57,7 +57,7 @@ const VendorSidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
           <img
             src={logo}
             alt="Logo"
-            className="sidebar-logo"
+            className="logo"
             style={{ borderRadius: "50%" }}
           />
         </Logo>

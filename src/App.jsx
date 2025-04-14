@@ -16,6 +16,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import OrdersList from "./module/admin/Orders/OrdersList";
 import VendorOrder from "./module/vendor/Orders/VendorOrder";
 import WaterCansProduct from "./module/admin/WaterCansProduct/WaterCansProduct";
+import ApprovedVendors from "./module/admin/ApprovedVendor/ApprovedVendors";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/admin/payment" element={<AdminPayment />} />
         <Route path="/admin/Orders" element={<OrdersList />} />
         <Route path="/admin/waterCan" element={<WaterCansProduct />} />
+        <Route path="/admin/approvedVendor" element={<ApprovedVendors />} />
         
         
 
