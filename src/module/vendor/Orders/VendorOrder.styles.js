@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const Container = styled.div`
   padding: 20px;
@@ -254,4 +254,38 @@ export const CloseButton = styled.div`
   }
 `;
 
+const shimmer = keyframes`
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+`;
 
+export const ShimmerCard = styled.div`
+  height: 80px;
+  border-radius: 12px;
+  background-color: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 1000px 100%;
+  animation: ${shimmer} 1.5s linear infinite;
+  margin-bottom: 16px;
+  padding: 16px;
+   animation-delay: 2s;
+`;
+
+export const ShimmerText = styled.div`
+  height: 14px;
+  background: #e0e0e0;
+  margin: 8px 0;
+  border-radius: 8px;
+  width: ${(props) => props.width || "100%"};
+`;

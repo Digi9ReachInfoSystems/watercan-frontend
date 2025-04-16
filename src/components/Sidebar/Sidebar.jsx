@@ -7,7 +7,7 @@ import { MdDashboard } from "react-icons/md";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaHandHoldingWater } from "react-icons/fa";
 import { GiWaterGallon } from "react-icons/gi";
-import logo from "../../assets/logo.png"; 
+import logo from "../../assets/Companylogo.png"; 
 
 const Sidebar = ({ setTitle, isCollapsed, setIsCollapsed }) => {
   const SidebarItem = [

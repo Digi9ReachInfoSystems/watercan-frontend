@@ -275,11 +275,11 @@ export const Hamburger = styled.button`
 
 export const Logo = styled.div`
   .logo {
-    width: ${({ isCollapsed }) => (isCollapsed ? "40px" : "80px")};
+    width: ${({ isCollapsed }) => (isCollapsed ? "80px" : "100px")};
     transition: width 0.3s ease-in-out;
 
     @media (max-width: 1360px) {
-  width: ${({ isCollapsed }) => (isCollapsed ? "70px" : "130px")};
+  width: ${({ isCollapsed }) => (isCollapsed ? "70px" : "100px")};
   }
   }
 

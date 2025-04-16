@@ -3,6 +3,7 @@ import {
   Container,
   StyledHeading,
   StyledTable,
+  SkeletonWrapper,
 } from "./ApprovedVendors.styles";
 import {
   getApprovedVendors,
@@ -13,14 +14,18 @@ import { Button, message, Popconfirm } from "antd";
 
 const ApprovedVendors = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
       const response = await getApprovedVendors();
-      console.log("Approved vendors data:", response.data); // Debug
-      setData(response.data);
+      setTimeout(() => {
+        setData(response.data);
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       console.error("Error fetching approved vendors:", error);
+      setLoading(false);
     }
   };
 
@@ -29,26 +34,22 @@ const ApprovedVendors = () => {
   }, []);
 
   const handleRestrict = async (id) => {
-    console.log("Restricting vendor with ID:", id);
     try {
       await restrictVendorById(id);
       message.success("Vendor restricted successfully");
-      fetchData(); // Refresh the list
+      fetchData();
     } catch (error) {
-      message.error("Failed to restrict vendor");
-      console.error("Restrict error:", error);
+      message.error("Failed to restrict vendor", error);
     }
   };
 
   const handleUnrestrict = async (id) => {
-    console.log("Unrestricting vendor with ID:", id);
     try {
       await unrestrictVendorById(id);
       message.success("Vendor unrestricted successfully");
-      fetchData(); // Refresh the list
+      fetchData();
     } catch (error) {
-      message.error("Failed to unrestrict vendor");
-      console.error("Unrestrict error:", error);
+      message.error("Failed to unrestrict vendor", error);
     }
   };
 
@@ -84,9 +85,7 @@ const ApprovedVendors = () => {
       key: "action",
       render: (_, record) => (
         <Popconfirm
-          title={`Are you sure you want to ${
-            record.restricted ? "unrestrict" : "restrict"
-          } this vendor?`}
+          title={`Are you sure you want to ${record.restricted ? "unrestrict" : "restrict"} this vendor?`}
           onConfirm={() =>
             record.restricted
               ? handleUnrestrict(record._id)
@@ -109,12 +108,26 @@ const ApprovedVendors = () => {
   return (
     <Container>
       <StyledHeading>Approved Vendors List</StyledHeading>
-      <StyledTable
-        rowKey="_id"
-        dataSource={data}
-        columns={columns}
-        pagination={{ pageSize: 5 }}
-      />
+      {loading ? (
+        <SkeletonWrapper>
+          {[...Array(5)].map((_, index) => (
+            <div className="skeleton-row" key={index}>
+              <div className="skeleton-cell react-loading-skeleton"></div>
+              <div className="skeleton-cell react-loading-skeleton"></div>
+              <div className="skeleton-cell react-loading-skeleton"></div>
+              <div className="skeleton-cell react-loading-skeleton"></div>
+              <div className="skeleton-cell react-loading-skeleton"></div>
+            </div>
+          ))}
+        </SkeletonWrapper>
+      ) : (
+        <StyledTable
+          rowKey="_id"
+          dataSource={data}
+          columns={columns}
+          pagination={{ pageSize: 5 }}
+        />
+      )}
     </Container>
   );
 };

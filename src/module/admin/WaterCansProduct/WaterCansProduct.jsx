@@ -19,9 +19,11 @@ import EditWaterCan from "./EditWaterCans/EditWaterCans";
 import { IoClose } from "react-icons/io5";
 import { FiEdit3 } from "react-icons/fi";
 import CreateWaterCanForm from "./createwaterCanForm/CreateWaterCanForm";
+import { SkeletonWrapper } from "./WaterCansProduct.styles"; // Import shimmer styles
 
 const WaterCansProduct = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
   const [editingWaterCan, setEditingWaterCan] = useState(null);
@@ -29,17 +31,25 @@ const WaterCansProduct = () => {
 
   const fetchData = async () => {
     try {
-      const response = await getAllWaterCans();
-      setData(
-        response.data.map((item) => ({
-          ...item,
-          key: item._id,
-        }))
-      );
+      setLoading(true);
+  
+      // Simulate delay
+      setTimeout(async () => {
+        const response = await getAllWaterCans();
+        setData(
+          response.data.map((item) => ({
+            ...item,
+            key: item._id,
+          }))
+        );
+        setLoading(false);
+      }, 2000); 
     } catch (error) {
       console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -55,7 +65,6 @@ const WaterCansProduct = () => {
   };
 
   const handleCreate = () => {
-    // setIsEditMode(false);
     setEditingWaterCan(null);
     setIsModalCreateOpen(true);
   };
@@ -97,7 +106,7 @@ const WaterCansProduct = () => {
       dataIndex: "action",
       key: "action",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "20px" , justifyContent: "center"}}>
+        <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
           <FiEdit3
             style={{ color: "green", cursor: "pointer" }}
             onClick={() => handleEdit(record._id)}
@@ -115,17 +124,35 @@ const WaterCansProduct = () => {
     },
   ];
 
+  const renderSkeleton = () => {
+    return Array.from({ length: 5 }).map((_, index) => (
+      <SkeletonWrapper key={index}>
+        <div className="skeleton-row">
+          <div className="skeleton-cell react-loading-skeleton"></div>
+          <div className="skeleton-cell react-loading-skeleton"></div>
+          <div className="skeleton-cell react-loading-skeleton"></div>
+          <div className="skeleton-cell react-loading-skeleton"></div>
+          <div className="skeleton-cell react-loading-skeleton"></div>
+        </div>
+      </SkeletonWrapper>
+    ));
+  };
+
   return (
     <>
       <Container>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <StyledHeading>Water Cans List</StyledHeading>
+          <StyledHeading>Water Cans List</StyledHeading>
           <StyledButton type="primary" onClick={handleCreate}>
             Create Water Can
           </StyledButton>
         </div>
-        
-        <StyledTable columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+
+        {loading ? (
+          renderSkeleton()
+        ) : (
+          <StyledTable columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+        )}
       </Container>
 
       {isModalOpen && (
@@ -152,7 +179,7 @@ const WaterCansProduct = () => {
           <ModalContent>
             <CreateWaterCanForm
               onSuccess={() => {
-                // fetchData();
+                fetchData();
                 setIsModalCreateOpen(false);
               }}
               onClose={() => setIsModalCreateOpen(false)}
