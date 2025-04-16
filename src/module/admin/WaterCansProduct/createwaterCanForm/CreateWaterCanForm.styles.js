@@ -64,9 +64,6 @@ export const FormContainer = styled.div`
     }
 
   }
-
-
-
 `;
 
 export const Title = styled.h2`

@@ -2,19 +2,23 @@ import styled from "styled-components";
 
 // Full screen height container with scroll support
 export const ProfileContainer = styled.div`
-  background-color: rgb(241, 217, 218);
   // overflow-y: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  // height: auto;
 
-  @media (max-width: 768px) {
+   @media (max-width: 1360px) {
+  //  height: 100vh;
+   }
+
+    @media (max-width: 768px) {
     padding: 10px;
    }
 
-   @media (max-width: 1360px) {
-   height: 100vh;
+   @media (max-width: 480px) {
+    margin-top: 15px;
+    margin-bottom: 15px;
    }
 `;
 
@@ -22,6 +26,8 @@ export const FormWrapper = styled.div`
   background: #ffffff;
   border-radius: 25px;
   width: 90%;
+  // max-height: 100vh;
+  // height: 90%;
   max-width: 600px;
   margin: 20px;
   padding: 20px;
@@ -34,21 +40,22 @@ export const FormWrapper = styled.div`
     justify-content: flex-end;
   }
 
+    @media (max-width: 1360px) {
+    padding: 18px;
+    margin: 10px;
+  }
+
   @media (max-width: 768px) {
     padding: 15px;
   }
 
   @media (max-width: 480px) {
-    width: 90%;
+    width: 95%;
     padding: 10px;
     margin: 0px;
-  }
-
-  @media (max-width: 1360px) {
-    padding: 18px;
-    margin: 10px;
-    max-width: 560px;
-    height: 90vh;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -62,12 +69,12 @@ export const HeaderBackground = styled.div`
   left: 0;
   width: 100%;
 
-  @media (max-width: 480px) {
-    height: 40px;
-  }
-
   @media (max-width: 1360px) {
     height: 50px;
+  }
+
+  @media (max-width: 480px) {
+    height: 60px;
   }
 `;
 
@@ -79,8 +86,12 @@ export const ProfileImageWrapper = styled.div`
   align-items: center;
   z-index: 2;
 
+  @media (max-width: 1360px) {
+    top: 10px;
+  }
+
   @media (max-width: 480px) {
-    top: 5px;
+    top: 20px;
   }
 `;
 
@@ -90,14 +101,14 @@ export const ProfileImage = styled.img`
   border-radius: 50%;
   border: 4px solid #ffffff9d;
 
-  @media (max-width: 480px) {
-    width: 50px;
-    height: 50px;
-  }
-
   @media (max-width: 1360px) {
     width: 40px;
     height: 40px;
+  }
+
+   @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
   }
 `;
 
@@ -119,14 +130,14 @@ export const EditIcon = styled.span`
     background-color: #0056b3;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 1360px) {
     width: 25%;
-    font-size: 12px;
-    padding: 5px 12px;
+    font-size: 10px;
+    padding: 5px 10px;
   }
 
-  @media (max-width: 1360px) {
-    width: 20%;
+    @media (max-width: 480px) {
+    width: 25%;
     font-size: 10px;
     padding: 4px 10px;
   }
@@ -139,14 +150,14 @@ export const Title = styled.h2`
   font-size: 20px;
   color: #333;
 
-  @media (max-width: 480px) {
-    font-size: 18px;
-    margin-top: 10px;
-  }
-
     @media (max-width: 1360px) {
     font-size: 12px;
     margin-top: 15px;
+  }
+
+   @media (max-width: 480px) {
+    font-size: 18px;
+    margin-top: 18px;
   }
 `;
 
@@ -164,13 +175,14 @@ export const FieldGroup = styled.div`
     margin-bottom: 5px;
     color: #333;
 
-    @media (max-width: 480px) {
-      font-size: 12px;
-    }
-
     @media (max-width: 1360px) {
       font-size: 10px;
       margin-bottom: 3px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      margin-bottom: 8px;
     }
   }
 
@@ -187,13 +199,14 @@ export const FieldGroup = styled.div`
       border-color: #0e5b9d;
     }
 
-    @media (max-width: 480px) {
-      font-size: 12px;
-    }
-
     @media (max-width: 1360px) {
       font-size: 10px;
       padding: 8px;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
     }
   }
 `;
@@ -203,8 +216,8 @@ export const SaveButton = styled.button`
   color: white;
   width: 100%;
   padding: 10px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   font-weight: bold;
   border: none;
   border-radius: 25px;
@@ -219,17 +232,17 @@ export const SaveButton = styled.button`
     background-color: #094478;
   }
 
-  @media (max-width: 480px) {
+   @media (max-width: 1360px) {
+    font-size: 12px;
+    padding: 6px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+  }
+
+    @media (max-width: 480px) {
     font-size: 14px;
     padding: 8px;
     margin-top: 15px;
     margin-bottom: 10px;
-  }
-
-   @media (max-width: 1360px) {
-    font-size: 12px;
-    padding: 6px;
-    margin-bottom: 10px;
-    margin-top: 5px;
   }
 `;

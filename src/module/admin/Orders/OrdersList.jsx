@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Select } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import { Container, Title, StyledTable, FilterContainer, StyledModal, ModalContent, DetailRow, OrderStatus, TitleContent } from "./OrdersList.styles";
+import { Container, Title, StyledTable, FilterContainer, StyledModal, ModalContent, DetailRow, OrderStatus, TitleContent, SkeletonWrapper } from "./OrdersList.styles";
 import { getAllOrders } from "../../../api/serviceapi";
 import moment from "moment";
 
@@ -20,8 +20,8 @@ const OrdersList = () => {
             setLoading(true);
             try {
                 const response = await getAllOrders();
-                console.log("API Response:", response); // Debugging
-
+                console.log("API Response:", response);
+    
                 if (response && response.data) {
                     const formattedOrders = response.data.map((order) => ({
                         ...order,
@@ -31,22 +31,26 @@ const OrdersList = () => {
                         cans: order.watercan_id?.capacityInLiters,
                         status: order.orderStatus,
                     }));
-
-                    setOrders(formattedOrders);
-                    setFilteredOrders(formattedOrders);
+    
+                    // Delay the update by 2 seconds
+                    setTimeout(() => {
+                        setOrders(formattedOrders);
+                        setFilteredOrders(formattedOrders);
+                        setLoading(false);
+                    }, 2000);
                 } else {
                     console.error("Invalid API response:", response);
+                    setLoading(false);
                 }
             } catch (error) {
                 console.error("Error fetching orders:", error);
-            } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchOrders();
     }, []);
-
+    
 
     useEffect(() => {
         if (statusFilter === "All") {
@@ -96,39 +100,52 @@ const OrdersList = () => {
     return (
         <Container>
             <TitleContent>
-            <Title>Orders List</Title>
+                <Title>Orders List</Title>
 
-            <FilterContainer>
-                <span className="span">Filter by Status:</span>
-                <Select
-  defaultValue="All"
-  style={{ width: 150 }}
-  className="custom-select"
-  dropdownClassName="custom-select-dropdown"
-  onChange={handleStatusFilterChange}
->
-  <Option value="All">All</Option>
-  <Option value="Order placed">Order Placed</Option>
-  <Option value="confirmed">Confirmed</Option>
-  <Option value="Shipped">Shipped</Option>
-  <Option value="Delivered">Delivered</Option>
-  <Option value="Cancelled">Cancelled</Option>
-</Select>
-
-            </FilterContainer>
+                <FilterContainer>
+                    <span className="span">Filter by Status:</span>
+                    <Select
+                        defaultValue="All"
+                        style={{ width: 150 }}
+                        className="custom-select"
+                        dropdownClassName="custom-select-dropdown"
+                        onChange={handleStatusFilterChange}
+                    >
+                        <Option value="All">All</Option>
+                        <Option value="Order placed">Order Placed</Option>
+                        <Option value="confirmed">Confirmed</Option>
+                        <Option value="Shipped">Shipped</Option>
+                        <Option value="Delivered">Delivered</Option>
+                        <Option value="Cancelled">Cancelled</Option>
+                    </Select>
+                </FilterContainer>
             </TitleContent>
 
-            <StyledTable>
-                <Table
-                    columns={columns}
-                    dataSource={filteredOrders}
-                    pagination={{ pageSize: 5, showSizeChanger: false }}
-                    rowKey="_id"
-                    loading={loading}
-                />
-            </StyledTable>
-
-
+            {/* Show shimmer effect when loading */}
+            {loading ? (
+                <SkeletonWrapper>
+                    {/* Render shimmer rows matching your table structure */}
+                    {[...Array(5)].map((_, index) => (
+                        <div className="skeleton-row" key={index}>
+                            <div className="skeleton-cell"></div>
+                            <div className="skeleton-cell"></div>
+                            <div className="skeleton-cell"></div>
+                            <div className="skeleton-cell"></div>
+                            <div className="skeleton-cell"></div>
+                        </div>
+                    ))}
+                </SkeletonWrapper>
+            ) : (
+                <StyledTable>
+                    <Table
+                        columns={columns}
+                        dataSource={filteredOrders}
+                        pagination={{ pageSize: 5, showSizeChanger: false }}
+                        rowKey="_id"
+                        loading={loading}
+                    />
+                </StyledTable>
+            )}
 
             <StyledModal
                 title="Order Details"
@@ -154,9 +171,6 @@ const OrdersList = () => {
                         <DetailRow>
                             <strong>Phone No.:</strong> {selectedOrder.user_id?.phoneNumber}
                         </DetailRow>
-                        {/* <OrderStatus>
-            <strong>Order Status:</strong> {selectedOrder.orderStatus}
-          </OrderStatus> */}
                         <DetailRow>
                             <strong>Order Date:</strong> {moment(selectedOrder.createdAt).format("MMMM Do YYYY, h:mm A")}
                         </DetailRow>

@@ -103,24 +103,24 @@ export const SidebarContainer = styled.div`
   top: 0;
   right: ${({ open }) => (open ? "0" : "-100%")};
   width: 100%;
+  height: 100%;
   max-width: 450px;
   background-color: #ffffff;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   transition: right 0.3s ease-in-out;
   z-index: 999;
-//   overflow-y: auto;
+  background-color: rgb(241, 217, 218);
+  overflow-y: auto;
 
 @media (max-width: 1360px) {
-    max-width: 400px;
+    max-width: 300px;
   }
 
   @media (max-width: 480px) {
     max-width: 80%;
+    // height: 100%;
+    max-height: 100vh;
   }
-
-  // @media (max-width: 1360px) {
-  //   max-width: 30%;
-  // }
 `;
 
 export const Overlay = styled.div`

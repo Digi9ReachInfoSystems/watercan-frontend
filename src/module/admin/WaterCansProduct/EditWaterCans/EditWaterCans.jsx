@@ -111,7 +111,7 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
   const handleSubmit = async (values) => {
     setIsLoading(true);
     const { MRP, selling_price } = values;
-  
+
     try {
       await updateWaterCan(initialData._id, { MRP, selling_price });
       toast.success("Water Can updated successfully!");
@@ -124,7 +124,7 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
       onClose();
     }
   };
-  
+
 
   return (
     <FormContainer>
@@ -141,54 +141,52 @@ const EditWaterCan = ({ onSuccess, onClose, isEditMode, initialData }) => {
             },
           ]}
         >
-          <Input placeholder="Enter brand"  disabled/>
+          <Input placeholder="Enter brand" disabled />
         </Form.Item>
 
         <Form.Item
-  label="MRP"
-  name="MRP"
-  rules={[{ required: true, message: "Please enter MRP" }]}
->
-  <InputNumber
-    min={1}
-    style={{ width: "100%" }}
-    onKeyPress={(e) => {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault(); // block non-digit keys
-      }
-    }}
-    onPaste={(e) => {
-      const pasted = e.clipboardData.getData("text");
-      if (!/^\d+$/.test(pasted)) {
-        e.preventDefault(); // block pasted content if not all digits
-      }
-    }}
-  />
-</Form.Item>
+          label="MRP"
+          name="MRP"
+          rules={[{ required: true, message: "Please enter MRP" }]}
+        >
+          <InputNumber
+            min={1}
+            style={{ width: "100%" }}
+            onKeyPress={(e) => {
+              if (!/[0-9]/.test(e.key)) {
+                e.preventDefault(); // block non-digit keys
+              }
+            }}
+            onPaste={(e) => {
+              const pasted = e.clipboardData.getData("text");
+              if (!/^\d+$/.test(pasted)) {
+                e.preventDefault(); // block pasted content if not all digits
+              }
+            }}
+          />
+        </Form.Item>
 
-<Form.Item
-  label="Selling Price"
-  name="selling_price"
-  rules={[{ required: true, message: "Please enter selling price" }]}
->
-  <InputNumber
-    min={1}
-    style={{ width: "100%" }}
-    onKeyPress={(e) => {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
-    }}
-    onPaste={(e) => {
-      const pasted = e.clipboardData.getData("text");
-      if (!/^\d+$/.test(pasted)) {
-        e.preventDefault();
-      }
-    }}
-  />
-</Form.Item>
-
-
+        <Form.Item
+          label="Selling Price"
+          name="selling_price"
+          rules={[{ required: true, message: "Please enter selling price" }]}
+        >
+          <InputNumber
+            min={1}
+            style={{ width: "100%" }}
+            onKeyPress={(e) => {
+              if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+              }
+            }}
+            onPaste={(e) => {
+              const pasted = e.clipboardData.getData("text");
+              if (!/^\d+$/.test(pasted)) {
+                e.preventDefault();
+              }
+            }}
+          />
+        </Form.Item>
         <Form.Item
           label="Capacity (Litres)"
           name="capacityInLiters"

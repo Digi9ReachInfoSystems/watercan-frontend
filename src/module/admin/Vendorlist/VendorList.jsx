@@ -1,4 +1,3 @@
-// Replace Ant Design Modal with a custom modal component
 import React, { useEffect, useState } from "react";
 import { Table, Button, Select } from "antd";
 import { getApplication, rejectApplication, approveApplication } from "../../../api/serviceapi";
@@ -6,6 +5,7 @@ import { Container, Title, StyledTable, ModalContent, ButtonGroup, FilterContain
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
+import { SkeletonWrapper } from "./VendorList.styles"; // Import SkeletonWrapper
 
 const { Option } = Select;
 
@@ -15,6 +15,7 @@ const VendorList = () => {
     const [selectedVendor, setSelectedVendor] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [statusFilter, setStatusFilter] = useState("All");
+    const [loading, setLoading] = useState(true); // Track loading state
 
     useEffect(() => {
         const fetchVendors = async () => {
@@ -23,8 +24,13 @@ const VendorList = () => {
                 const sortedVendors = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setVendors(sortedVendors);
                 setFilteredVendors(sortedVendors);
+                // Adding a delay of 2 seconds before setting loading to false
+                setTimeout(() => {
+                    setLoading(false); // Set loading to false after a 2-second delay
+                }, 2000);
             } catch (error) {
                 console.error("Error fetching vendor applications:", error);
+                setLoading(false); // Set loading to false in case of error
             }
         };
         fetchVendors();
@@ -114,13 +120,29 @@ const VendorList = () => {
                     </Select>
                 </FilterContainer>
             </div>
+
             <StyledTable>
-                <Table 
-                    columns={columns} 
-                    dataSource={filteredVendors} 
-                    pagination={{ pageSize: 5, showSizeChanger: false }} 
-                    rowKey="_id" 
-                />
+                {loading ? (
+                    // Render skeleton loader when loading
+                    <SkeletonWrapper>
+                        {[...Array(5)].map((_, index) => (
+                            <div className="skeleton-row" key={index}>
+                                <div className="skeleton-cell"></div>
+                                <div className="skeleton-cell"></div>
+                                <div className="skeleton-cell"></div>
+                                <div className="skeleton-cell"></div>
+                                <div className="skeleton-cell"></div>
+                            </div>
+                        ))}
+                    </SkeletonWrapper>
+                ) : (
+                    <Table 
+                        columns={columns} 
+                        dataSource={filteredVendors} 
+                        pagination={{ pageSize: 5, showSizeChanger: false }} 
+                        rowKey="_id" 
+                    />
+                )}
             </StyledTable>
 
             {isModalOpen && (
